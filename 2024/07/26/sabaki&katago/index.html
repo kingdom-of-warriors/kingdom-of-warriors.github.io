@@ -22,16 +22,16 @@
     <meta name="description" content="如何在ubuntu22.04上部署围棋AIkatago（利用sabaki界面）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在ubuntu上部署Sabaki以及围棋引擎katago">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/07/26/page/index.html">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/07/26/sabaki&katago/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
 <meta property="og:description" content="如何在ubuntu22.04上部署围棋AIkatago（利用sabaki界面）">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Sabaki.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/sabaki/sabaki.png">
 <meta property="article:published_time" content="2024-07-26T09:36:49.000Z">
-<meta property="article:modified_time" content="2024-07-26T12:09:13.413Z">
+<meta property="article:modified_time" content="2024-07-27T03:14:53.075Z">
 <meta property="article:author" content="Ray">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/Sabaki.png">
+<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/sabaki/sabaki.png">
   
   
   
@@ -278,7 +278,7 @@
               <div class="markdown-body">
                 
                 <h1 id="一、Sabaki的部署"><a href="#一、Sabaki的部署" class="headerlink" title="一、Sabaki的部署"></a>一、Sabaki的部署</h1><p>想要配置一个可以用于分析的图像界面katago，需要一个可视化的图形界面（Lizzieyzy、Sabaki等等）和katago引擎。在Ubuntu上，我推荐使用Sabaki，因为它下载即可打开使用，而Lizzieyzy虽然功能更齐全，但它需要java环境而且容易报错。</p>
-<p><img src="/img/Sabaki.png" srcset="/img/loading.gif" lazyload alt="Sabaki界面"></p>
+<p><img src="/./img/sabaki/sabaki.png" srcset="/img/loading.gif" lazyload alt="Sabaki界面"></p>
 <h2 id="1-1-下载Sabaki"><a href="#1-1-下载Sabaki" class="headerlink" title="1.1 下载Sabaki"></a>1.1 下载Sabaki</h2><p>Sabaki可在github上下载，下载各个版本的链接为<a target="_blank" rel="noopener" href="https://github.com/SabakiHQ/Sabaki/releases/tag/v0.52.2">Sabaki</a>，对于Ubuntu选择<strong>linux-x64.AppImage</strong>的版本。在下载到本地后，右键“属性-权限”赋予它执行权限，点击即可运行。</p>
 <h2 id="1-2-创造快捷方式"><a href="#1-2-创造快捷方式" class="headerlink" title="1.2 创造快捷方式"></a>1.2 创造快捷方式</h2><p>首先下载它的<a target="_blank" rel="noopener" href="https://github.com/SabakiHQ/Sabaki/blob/master/logo.png">Logo</a>，然后创建.desktop文件，具体代码可参考如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">[Desktop Entry]<br>Name=Sabaki<br>Exec=/path/to/Sabaki.AppImage<br>Icon=/path/to/logo.png<br>Terminal=false<br><span class="hljs-type">Type</span>=Application<br></code></pre></td></tr></table></figure>
@@ -288,7 +288,7 @@
 <h2 id="2-1-OpenCL版本"><a href="#2-1-OpenCL版本" class="headerlink" title="2.1 OpenCL版本"></a>2.1 OpenCL版本</h2><h3 id="2-1-1-下载OpenCL版katago引擎"><a href="#2-1-1-下载OpenCL版katago引擎" class="headerlink" title="2.1.1 下载OpenCL版katago引擎"></a>2.1.1 下载OpenCL版katago引擎</h3><p>如果你的电脑有一个不错的独显并且希望快速开始的话，OpenCL是最好的选择，它不需要配置CUDA或者cuDNN。<br>在<a target="_blank" rel="noopener" href="https://github.com/lightvector/KataGo/releases/tag/v1.14.1">下载界面</a>选择katago-v1.14.1-opencl-linux-x64.zip这个安装包，其中后缀有bs29的是娱乐版本，它支持29 $\times$ 29的超大棋盘，不过对电脑性能的要求也更高，想玩的就可以下载带bs29的版本。<br>在合适的位置新建文件夹katago，在下面再新建一个文件夹katago_opencl，将这个安装包解压至katago_opencl下，结果如下所示。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">├── katago_opencl<br>    ├── analysis_example.cfg<br>    ├── cacert.pem<br>    ├── contribute_example.cfg<br>    ├── default_gtp.cfg<br>    ├── katago<br>    ├── katago-v1.14.1-opencl-linux-x64.zip<br>    ├── match_example.cfg<br>    └── README.txt<br></code></pre></td></tr></table></figure>
 
-<h3 id="2-1-2-下载katago权重"><a href="#2-1-2-下载katago权重" class="headerlink" title="2.1.2 下载katago权重"></a>2.1.2 下载katago权重</h3><p>有了引擎，还需要下载katago的权重<a target="_blank" rel="noopener" href="https://katagotraining.org/networks/">下载地址</a>。其中标了绿色的那一行就是elo分最高（最厉害）的权重。在Network File下点击download，将下载下来的bin.gz文件剪切到katago&#x2F;katago_opencl文件夹下。<br><img src="/img/weight.png" srcset="/img/loading.gif" lazyload alt="权重下载网页"></p>
+<h3 id="2-1-2-下载katago权重"><a href="#2-1-2-下载katago权重" class="headerlink" title="2.1.2 下载katago权重"></a>2.1.2 下载katago权重</h3><p>有了引擎，还需要下载katago的权重<a target="_blank" rel="noopener" href="https://katagotraining.org/networks/">下载地址</a>。其中标了绿色的那一行就是elo分最高（最厉害）的权重。在Network File下点击download，将下载下来的bin.gz文件剪切到katago&#x2F;katago_opencl文件夹下。<br><img src="/./img/sabaki/weight.png" srcset="/img/loading.gif" lazyload alt="权重下载网页"></p>
 <h3 id="2-1-3-配置OpenCL版katago"><a href="#2-1-3-配置OpenCL版katago" class="headerlink" title="2.1.3 配置OpenCL版katago"></a>2.1.3 配置OpenCL版katago</h3><p>打开Sakabi，在左上角点开File-Preferences然后切换语言为中文并重启Sakabi。接着点开文件–首选项–引擎，新建文件夹sabari_log作为日志保存目录。<br>还是在引擎这里，点击“新增”，会出现四行需要我们填的东西，分别为：</p>
 <ol>
 <li>引擎的名字（任意取）</li>
@@ -296,12 +296,12 @@
 <li>运行参数：gtp -model &lt;权重文件名&gt;.bin.gz -config default_gtp.cfg</li>
 <li>启动参数：time_settings 0 5 1</li>
 </ol>
-<p>示例如下：<br><img src="/img/parameters.png" srcset="/img/loading.gif" lazyload alt="启动参数（参考）"><br>然后点击”关闭“，点击左上角的小三角并选中配置的引擎，就开始初始化啦。第一次初始化的时间会在两三分钟左右，耐心等待～～<br>出现”GTP ready, beginning main protocol loop“则配置成功！</p>
+<p>示例如下：<br><img src="/img/sabaki/opencl_para.png" srcset="/img/loading.gif" lazyload alt="启动参数（参考）"><br>然后点击”关闭“，点击左上角的小三角并选中配置的引擎，就开始初始化啦。第一次初始化的时间会在两三分钟左右，耐心等待～～<br>出现”GTP ready, beginning main protocol loop“则配置成功！</p>
 <h3 id="2-1-4-遇到问题及解决"><a href="#2-1-4-遇到问题及解决" class="headerlink" title="2.1.4 遇到问题及解决"></a>2.1.4 遇到问题及解决</h3><ol>
 <li><p>问题：在初始化引擎的时候，我遇到了<strong>error while loading shared libraries: libzip.so.5: cannot open shared object file: No such file or directory</strong>的问题，这是因为linux系统缺少libzip5造成的。</p>
 </li>
 <li><p>解决：首先我们需要下载zlib库。zlib下载方式见这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/lushixuan12345/article/details/122545491">blog</a>，不过注意把下载网址<a target="_blank" rel="noopener" href="http://www.zlib.net/zlib-1.2.11.tar.gz%E6%94%B9%E4%B8%BAhttp://www.zlib.net/fossils/zlib-1.2.11.tar.gz%E3%80%82">http://www.zlib.net/zlib-1.2.11.tar.gz改为http://www.zlib.net/fossils/zlib-1.2.11.tar.gz。</a><br>有了zlib库后，这是libzip5的<a target="_blank" rel="noopener" href="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/libzip/1.5.1-0ubuntu1/libzip_1.5.1.orig.tar.xz">下载网址</a>，我们根据这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/iamhuanyu/article/details/129603632">blog</a>的步骤来下载libzip5，再在其中找到libzip.so.5文件，并创建<strong>软链接到&#x2F;usr&#x2F;lib&#x2F;上</strong>，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo ln -s &quot;libzip.so.5文件所在位置&quot; /usr/lib/libzip.so.5<br>比如我的电脑中，命令应该为：<br>sudo ln -s /usr/local/lib/libzip.so.5 /usr/lib/libzip.so.5<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo ln -s &quot;libzip.so.5文件所在位置&quot; /usr/lib/libzip.so.5<br><span class="hljs-meta prompt_"># </span><span class="language-bash">比如我的电脑中，命令应该为：</span><br>sudo ln -s /usr/local/lib/libzip.so.5 /usr/lib/libzip.so.5<br></code></pre></td></tr></table></figure>
 
 <p>其他同类型的报错解决方式也是如出一辙。先在电脑中找找有没有该文件，如果有就创建软链接，如果没有就下载所需要的库，再创建相应的软链接。</p>
 </li>
@@ -310,7 +310,7 @@
 <h3 id="2-2-1-CUDA安装"><a href="#2-2-1-CUDA安装" class="headerlink" title="2.2.1 CUDA安装"></a>2.2.1 CUDA安装</h3><p>在katago引擎的<a target="_blank" rel="noopener" href="https://github.com/lightvector/KataGo/releases/tag/v1.14.1">下载链接</a>找到有cuda和cudnn的那个版本，发现最新版需要12.1的CUDA和8.9.7的cuDNN。在电脑上通过</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nvidia-smi<br></code></pre></td></tr></table></figure>
 
-<p>来查看是否支持12.1的CUDA版本（显示的值要大于等于12.1，我这里是12.2），如果比12.1低的话可以下载更低版本的引擎。<br><img src="/img/nvidia-smi.png" srcset="/img/loading.gif" lazyload alt="指令输出，右上角显示12.2"></p>
+<p>来查看是否支持12.1的CUDA版本（显示的值要大于等于12.1，我这里是12.2），如果比12.1低的话可以下载更低版本的引擎。<br><img src="/./img/sabaki/nvidia-smi.png" srcset="/img/loading.gif" lazyload alt="指令输出，右上角显示12.2"></p>
 <p>于是我们在官网找到CUDA12.1的<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-12-1-0-download-archive">下载网址</a>，选择”linux–x86_64–Ubuntu–22.04–runfile(local)”（这个要根据具体ubuntu版本进行调整），下面就会出现安装的指令。<br><img src="/img/cuda.png" srcset="/img/loading.gif" lazyload alt="命令行安装"><br>运行.run文件后会出现一个图形化的安装界面，可以根据<a target="_blank" rel="noopener" href="https://blog.csdn.net/Sihang_Xie/article/details/127347139">这篇文章</a>的指导来做。</p>
 <h3 id="2-2-2-遇到问题及解决"><a href="#2-2-2-遇到问题及解决" class="headerlink" title="2.2.2 遇到问题及解决"></a>2.2.2 遇到问题及解决</h3><ol>
 <li>问题：在运行.run文件时，我遇到了安装失败的问题，安装日志显示</li>
@@ -356,7 +356,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>在ubuntu上部署Sabaki以及围棋引擎katago</div>
-      <div>https://kingdom-of-warriors.github.io/2024/07/26/page/</div>
+      <div>https://kingdom-of-warriors.github.io/2024/07/26/sabaki&amp;katago/</div>
     </div>
     <div class="license-meta">
       
