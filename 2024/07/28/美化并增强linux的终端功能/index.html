@@ -19,24 +19,24 @@
   <meta name="author" content="Ray">
   <meta name="keywords" content="">
   
-    <meta name="description" content="leetcode 主站239">
+    <meta name="description" content="用zsh、oh my zsh和powerlevel10k来替代linux的bash终端">
 <meta property="og:type" content="article">
-<meta property="og:title" content="经典单调队列问题">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/07/27/leetcode-main239/index.html">
+<meta property="og:title" content="ubuntu美化教程2-美化并增强linux的终端功能">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/07/28/%E7%BE%8E%E5%8C%96%E5%B9%B6%E5%A2%9E%E5%BC%BAlinux%E7%9A%84%E7%BB%88%E7%AB%AF%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="leetcode 主站239">
+<meta property="og:description" content="用zsh、oh my zsh和powerlevel10k来替代linux的bash终端">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/leetcode/leetcode_c++.jpg">
-<meta property="article:published_time" content="2024-07-27T10:20:02.000Z">
-<meta property="article:modified_time" content="2024-07-27T10:38:33.219Z">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/linux_shell/zsh_image.jpg">
+<meta property="article:published_time" content="2024-07-28T06:24:50.000Z">
+<meta property="article:modified_time" content="2024-07-28T11:28:40.842Z">
 <meta property="article:author" content="Ray">
-<meta property="article:tag" content="leetcode">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/leetcode/leetcode_c++.jpg">
+<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/linux_shell/zsh_image.jpg">
   
   
   
-  <title>经典单调队列问题 - kingdom-of-warriors</title>
+  <title>ubuntu美化教程2-美化并增强linux的终端功能 - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="经典单调队列问题"></span>
+            <span id="subtitle" data-typed-text="ubuntu美化教程2-美化并增强linux的终端功能"></span>
           
         </div>
 
@@ -217,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-27 18:20" pubdate>
-          2024年7月27日 晚上
+        <time datetime="2024-07-28 14:24" pubdate>
+          2024年7月28日 下午
         </time>
       </span>
     
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          589 字
+          680 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -277,28 +277,43 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">经典单调队列问题</h1>
+            <h1 id="seo-header">ubuntu美化教程2-美化并增强linux的终端功能</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
-<p>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sliding-window-maximum/description/">239：滑动窗口最大值</a><br>给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字，且滑动窗口每次只向右移动一位。<br>返回每个滑动窗口看到的最大值的序列。</p>
-</blockquote>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>这种题看上去就要用单调队列来减少时间复杂度。</p>
-<p>朴素的想法是一次遍历，每次拿出最大值的过程应该是O(k)的时间复杂度。但实际上每次滑动框移动一次，<strong>（最多）只会导致一个老元素过时和一个新元素出现</strong>，所以在每次遍历拿出最大值的过程中，会重复扫描很多元素。于是我们可以维护一个单调递减的队列q，将每次取最大值的时间复杂度降为$O(1)$。</p>
-<p>每次滑动框移动一次，都会导致一个老元素过时和一个新元素出现，我们只需要在这个过程中维护单调递减队列。</p>
-<h1 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h1><ol>
-<li>在遍历的过程中，首先判断队首元素$q[0]$是否已经过时，如果过时就让其出列;</li>
-<li>再考虑新元素加入队列的过程，由于新元素一定要在队列中，于是从尾部开始pop队列的元素，直到新元素可以顺利加入并形成单调队列;</li>
-<li>将队首元素$q[0]$加入$result$中。</li>
+                <h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="/img/linux_shell/zsh.png" srcset="/img/loading.gif" lazyload alt="这是配置好之后的效果图"><br>可以看出，它不仅有自动提示功能，还可以显示出时间、系统信息等，甚至还可以显示你的git文件的状态（有几个在暂存区、几个还没同步等等）。我的安装由<a target="_blank" rel="noopener" href="https://xxyqwq.github.io/2023/07/31/build-linux-terminal/">元神</a>的博客和网上的<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_72357534/article/details/135453423">资料</a>整合而成。</p>
+<h2 id="安装要求"><a href="#安装要求" class="headerlink" title="安装要求"></a>安装要求</h2><ol>
+<li>linux操作系统，我用的是ubuntu22.04版本。</li>
+<li>需要电脑上装有git、vim和curl，否则使用指令安装。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install git<br><span class="hljs-built_in">sudo</span> apt install vim<br><span class="hljs-built_in">sudo</span> apt install curl<br></code></pre></td></tr></table></figure></li>
+<li>需要VPN或者使用镜像网站。</li>
 </ol>
-<h1 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h1><ul>
-<li>时间复杂度：$O(N)$</li>
-<li>空间复杂度：$O(N)$</li>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="更换linux字体"><a href="#更换linux字体" class="headerlink" title="更换linux字体"></a>更换linux字体</h3><p>首先我们需要安装<code>Hack Nerd Fonts</code>，这是适配powerlevel10k的字体，安装时间可能会在5分钟左右。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/ryanoasis/nerd-fonts.git<br><span class="hljs-built_in">cd</span> nerd-fonts<br><span class="hljs-built_in">chmod</span> +x install.sh <span class="hljs-comment"># 给执行权限</span><br>./install.sh <span class="hljs-comment"># 安装字体</span><br>reboot <span class="hljs-comment"># 重启系统</span><br></code></pre></td></tr></table></figure>
+<p>接下来打开终端，找到右上角三个点，点开并选择配置文件首选项，再点击未命名，在自定义字体这一栏找到Hack Nerd Fonts字体并选择。</p>
+<h3 id="安装zshell"><a href="#安装zshell" class="headerlink" title="安装zshell"></a>安装zshell</h3><ol>
+<li>用apt安装zsh，检查它的可用性。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install zsh<br><span class="hljs-built_in">cat</span> /etc/shells <span class="hljs-comment"># 输出里面有/usr/bin/zsh</span><br></code></pre></td></tr></table></figure></li>
+<li>用curl安装oh-my-zsh，并修改默认shell为zsh。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sh -c <span class="hljs-string">&quot;<span class="hljs-subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span><br>chsh -s /bin/zsh <span class="hljs-comment"># 修改默认shell</span><br>reboot <span class="hljs-comment"># 重启系统以加载修改</span><br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$SHELL</span> <span class="hljs-comment"># 输出为/bin/zsh则修改成功</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="安装并配置powerlevel10k"><a href="#安装并配置powerlevel10k" class="headerlink" title="安装并配置powerlevel10k"></a>安装并配置<code>powerlevel10k</code></h3><ol>
+<li>下载<code>powerlevel10k</code> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/romkatv/powerlevel10k.git <span class="hljs-variable">$ZSH_CUSTOM</span>/themes/powerlevel10k<br></code></pre></td></tr></table></figure></li>
+<li>更改主题为<code>powerlevel10k</code> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim ~/.zshrc<br></code></pre></td></tr></table></figure>
+ 找到<code>ZSH_THEME=&quot;robbyrussell&quot;</code>这一行，将其注释掉并加上 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs txt">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;<br>POWERLEVEL9K_MODE=&quot;awesome-patched&quot;<br></code></pre></td></tr></table></figure>
+ 如果有修改点不动的情况，建议学习一下vim的基础操作。<br> 退出修改，执行 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> ~/.zshrc <span class="hljs-comment"># 使配置生效</span><br></code></pre></td></tr></table></figure>
+ 接下来便会进入引导配置环节。如果没有进入引导配置或是配置好以后想重新配置的，输入下列命令： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">p10k configure<br></code></pre></td></tr></table></figure>
+ 配置的具体选择见<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_72357534/article/details/135453423">资料</a>，里面有每个问题详细的解释。</li>
+</ol>
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><p>从github上下载两个插件<code>zsh-autosuggestions</code>和<code>zsh-syntax-highlighting</code>，分别用于自动补全和自动高亮。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="hljs-variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions<br>git <span class="hljs-built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$ZSH_CUSTOM</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
+<p>接下来通过修改<code>.zshrc</code>来配置插件，和上面一样，输入<code>vim ~/.zshrc</code>，找到<code>plugins=(git)</code>这一行，将其修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">plugins=(git zsh-autosuggestions zsh-syntax-highlighting)<br></code></pre></td></tr></table></figure>
+<p>再执行<code>source ~/.zshrc</code>来同步配置就可以了！</p>
+<h2 id="插件使用以及小提示"><a href="#插件使用以及小提示" class="headerlink" title="插件使用以及小提示"></a>插件使用以及小提示</h2><ul>
+<li>当你输入执行过的命令时，<code>zsh</code>会以灰色提示你，按<code>→</code>或<code>ctrl+f</code>可自动补全。</li>
+<li>如果在别的要使用命令行的应用（比如vscode）里，要把字体都改成<code>Hack Nerd Fonts</code>。</li>
+<li>如果已经在<code>~/.bashrc</code>中配置了一些环境变量，记得把它们都复制到<code>~/.zshrc</code>中。否则某一天你会发现：conda不见了！cuda不见了！</li>
 </ul>
-<h1 id="code"><a href="#code" class="headerlink" title="code"></a>code</h1><p>代码实现时，这种双端都要进出的结构应该用deque（双端队列）实现。<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21989927/article/details/109403054">这里</a>有deque的基本用法介绍。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">maxSlidingWindow</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; heights, <span class="hljs-type">int</span> limit)</span> </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; res;<br>        deque&lt;<span class="hljs-type">int</span>&gt; q;<br><br>        <span class="hljs-keyword">if</span>(heights.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> res; <span class="hljs-comment">//空队列情况</span><br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= heights.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(i - limit &gt;= <span class="hljs-number">0</span> &amp;&amp; q[<span class="hljs-number">0</span>] == heights[i - limit]) <span class="hljs-comment">//要被剔除</span><br>            &#123;<br>                q.<span class="hljs-built_in">pop_front</span>();<br>            &#125;<br>            <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>() &amp;&amp; q.<span class="hljs-built_in">back</span>() &lt; heights[i]) <span class="hljs-comment">//将列表中所有小于加入元素的数删掉，以保证队列的递减性</span><br>            &#123;<br>                q.<span class="hljs-built_in">pop_back</span>();<br>            &#125;<br>            q.<span class="hljs-built_in">push_back</span>(heights[i]); <span class="hljs-comment">//加入新元素</span><br><br>            <span class="hljs-keyword">if</span>(i &gt;= limit - <span class="hljs-number">1</span>) res.<span class="hljs-built_in">push_back</span>(q[<span class="hljs-number">0</span>]); <span class="hljs-comment">//在窗口完整后，向res中加答案</span><br>        &#125;<br><br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
@@ -316,12 +331,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/algorithm/" class="category-chain-item">algorithm</a>
+  <a href="/categories/linux/" class="category-chain-item">linux</a>
   
   
     <span>></span>
     
-  <a href="/categories/algorithm/mono-queue/" class="category-chain-item">mono-queue</a>
+  <a href="/categories/linux/beautification/" class="category-chain-item">beautification</a>
   
   
 
@@ -338,7 +353,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/leetcode/" class="print-no-link">#leetcode</a>
+        <a href="/tags/linux/" class="print-no-link">#linux</a>
       
     </div>
   
@@ -350,8 +365,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>经典单调队列问题</div>
-      <div>https://kingdom-of-warriors.github.io/2024/07/27/leetcode-main239/</div>
+      <div>ubuntu美化教程2-美化并增强linux的终端功能</div>
+      <div>https://kingdom-of-warriors.github.io/2024/07/28/美化并增强linux的终端功能/</div>
     </div>
     <div class="license-meta">
       
@@ -363,7 +378,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月27日</div>
+          <div>2024年7月28日</div>
         </div>
       
       
@@ -395,18 +410,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/27/ubuntu-22-04%E7%BE%8E%E5%8C%96%E6%95%99%E7%A8%8B/" title="ubuntu美化教程1">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ubuntu美化教程1</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/27/leetcode_main10_LCR317/" title="动态规划解决正则匹配问题">
-                        <span class="hidden-mobile">动态规划解决正则匹配问题</span>
+                      <a href="/2024/07/27/ubuntu-22-04%E7%BE%8E%E5%8C%96%E6%95%99%E7%A8%8B/" title="ubuntu美化教程1">
+                        <span class="hidden-mobile">ubuntu美化教程1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -429,7 +438,7 @@
         var options = Object.assign(
           {"clientID":"Ov23liz6eV0VasfLM4z1","clientSecret":"65c93e1b98781b2517f0ae355361bb087488e8f7","repo":"https://github.com/kingdom-of-warriors/kingdom-of-warriors.github.io","owner":"kingdom-of-warriors","admin":["kingdom-of-warriors"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'bba53e0890820605b632b7ad25cdef85'
+            id: '3416622a9be462859e54e6ceb8b1e2bd'
           }
         )
         var gitalk = new Gitalk(options);
@@ -490,12 +499,6 @@
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -688,49 +691,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
