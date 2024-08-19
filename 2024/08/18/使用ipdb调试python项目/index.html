@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/ipdb/ipdb.png">
 <meta property="article:published_time" content="2024-08-18T12:53:26.000Z">
-<meta property="article:modified_time" content="2024-08-18T14:58:35.950Z">
+<meta property="article:modified_time" content="2024-08-18T15:12:04.137Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          357 字
+          477 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          3 分钟
+          4 分钟
         
       </span>
     
@@ -343,7 +343,20 @@
 </ol>
 <p>接下来就让我们实战一下吧！</p>
 <h1 id="例子">例子</h1>
-<p>下面是一道leetcode的算法题题解，我们来利用ipdb调试它。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maxArea</span>(<span class="hljs-params">self, height</span>):<br>        l, r = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(height) - <span class="hljs-number">1</span><br>        ans = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">while</span> l &lt; r:<br>            area = <span class="hljs-built_in">min</span>(height[l], height[r]) * (r - l)<br>            ans = <span class="hljs-built_in">max</span>(ans, area)<br>            <span class="hljs-keyword">if</span> height[l] &lt;= height[r]: l += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>: r -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> ans<br><br><span class="hljs-built_in">print</span>(<span class="hljs-number">123</span>)<br>solution = Solution()<br>height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br>max_water_area = solution.maxArea(height)<br><span class="hljs-built_in">print</span>(max_water_area) <br></code></pre></td></tr></table></figure></p>
+<p>下面是一道leetcode的算法题题解，我们来利用ipdb调试它。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maxArea</span>(<span class="hljs-params">self, height</span>):<br>        l, r = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(height) - <span class="hljs-number">1</span><br>        ans = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">while</span> l &lt; r:<br>            area = <span class="hljs-built_in">min</span>(height[l], height[r]) * (r - l)<br>            ans = <span class="hljs-built_in">max</span>(ans, area)<br>            <span class="hljs-keyword">if</span> height[l] &lt;= height[r]: l += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>: r -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> ans<br><br><span class="hljs-built_in">print</span>(<span class="hljs-number">123</span>)<br>solution = Solution()<br>height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br>max_water_area = solution.maxArea(height)<br><span class="hljs-built_in">print</span>(max_water_area) <br></code></pre></td></tr></table></figure> 输入<code>python -m ipdb project.py</code>开始调试。</p>
+<ol type="1">
+<li>首先我们的断点要设在第15行，所以有两种办法：</li>
+</ol>
+<ul>
+<li>在命令行输入<code>b 10</code></li>
+<li>在源代码中第15行加上<code>ipdb.set_trace()</code>，如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br><span class="hljs-keyword">import</span> ipdb<br>ipdb.set_trace()<br>max_water_area = solution.maxArea(height)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2" type="1">
+<li>让程序运行到断点所在位置，指令为<code>c</code>;</li>
+<li>让调试进入类的内部，指令为<code>s</code>;</li>
+<li>在类内部调试，指令为<code>n+ENTER</code>，查看变量<code>area</code>的值，指令为<code>p area</code>;</li>
+<li><code>q</code>退出调试。</li>
+</ol>
 
                 
               </div>
