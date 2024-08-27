@@ -282,76 +282,90 @@
             
               <div class="markdown-body">
                 
-                <h1 id="前提">前提</h1>
+                <h1>前提</h1>
 <p>之前我调试python代码或者是项目的时候，用的都是<code>print</code>来进行各种调试，这样显然不太方便（尤其是在处理python项目的时候）。于是我找到了<code>ipdb</code>这个工具，它能帮助你更方便的、像C++一样逐行调试代码。</p>
-<h1 id="使用">使用</h1>
-<ol type="1">
-<li><p>安装：相当简单，<code>pip install ipdb</code>即可。</p></li>
-<li><p>进入调试模式： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -m ipdb project.py<br></code></pre></td></tr></table></figure></p></li>
-<li><p>常用命令：</p>
+<h1>使用</h1>
+<ol>
+<li>
+<p>安装：相当简单，<code>pip install ipdb</code>即可。</p>
+</li>
+<li>
+<p>进入调试模式：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python -m ipdb project.py<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>常用命令：</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>字母</th>
 <th>意义</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>b</td>
 <td>breakpoint，给程序某一行打断点，例如<code>b breakpoint_num</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>c</td>
 <td>让程序运行到第一个断点那里</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>n</td>
 <td>next，单步运行下一行代码（不进入函数）</td>
 </tr>
-<tr class="even">
+<tr>
 <td>s</td>
 <td>step，单步运行下一行代码（进入函数）</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>q</td>
 <td>quit，退出调试器并终止程序</td>
 </tr>
-<tr class="even">
+<tr>
 <td>l</td>
 <td>查看位置附近的代码</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>p</td>
 <td>print，打印变量的值</td>
 </tr>
-<tr class="even">
+<tr>
 <td>h</td>
 <td>help，查看帮助信息，例如<code>h command_name</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>u</td>
 <td>向上移动一层调用栈</td>
 </tr>
-<tr class="even">
+<tr>
 <td>d</td>
 <td>向下移动一层调用栈</td>
 </tr>
 </tbody>
-</table></li>
-<li><p>另一种打断点方式：在要打断点的地方的上一行写上 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> ipdb<br>ipdb.set_trace()<br></code></pre></td></tr></table></figure> 这样打断点的方式比较适合在有很多文件的python项目里面进行调试。</p></li>
+</table>
+</li>
+<li>
+<p>另一种打断点方式：在要打断点的地方的上一行写上</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> ipdb<br>ipdb.set_trace()<br></code></pre></td></tr></table></figure>
+<p>这样打断点的方式比较适合在有很多文件的python项目里面进行调试。</p>
+</li>
 </ol>
 <p>接下来就让我们实战一下吧！</p>
-<h1 id="例子">例子</h1>
-<p>下面是一道leetcode的算法题题解，我们来利用ipdb调试它。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maxArea</span>(<span class="hljs-params">self, height</span>):<br>        l, r = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(height) - <span class="hljs-number">1</span><br>        ans = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">while</span> l &lt; r:<br>            area = <span class="hljs-built_in">min</span>(height[l], height[r]) * (r - l)<br>            ans = <span class="hljs-built_in">max</span>(ans, area)<br>            <span class="hljs-keyword">if</span> height[l] &lt;= height[r]: l += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>: r -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> ans<br><br><span class="hljs-built_in">print</span>(<span class="hljs-number">123</span>)<br>solution = Solution()<br>height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br>max_water_area = solution.maxArea(height)<br><span class="hljs-built_in">print</span>(max_water_area) <br></code></pre></td></tr></table></figure> 输入<code>python -m ipdb project.py</code>开始调试。</p>
-<ol type="1">
+<h1>例子</h1>
+<p>下面是一道leetcode的算法题题解，我们来利用ipdb调试它。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maxArea</span>(<span class="hljs-params">self, height</span>):<br>        l, r = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(height) - <span class="hljs-number">1</span><br>        ans = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">while</span> l &lt; r:<br>            area = <span class="hljs-built_in">min</span>(height[l], height[r]) * (r - l)<br>            ans = <span class="hljs-built_in">max</span>(ans, area)<br>            <span class="hljs-keyword">if</span> height[l] &lt;= height[r]: l += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>: r -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> ans<br><br><span class="hljs-built_in">print</span>(<span class="hljs-number">123</span>)<br>solution = Solution()<br>height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br>max_water_area = solution.maxArea(height)<br><span class="hljs-built_in">print</span>(max_water_area) <br></code></pre></td></tr></table></figure>
+<p>输入<code>python -m ipdb project.py</code>开始调试。</p>
+<ol>
 <li>首先我们的断点要设在第15行，所以有两种办法：</li>
 </ol>
 <ul>
 <li>在命令行输入<code>b 10</code></li>
-<li>在源代码中第15行加上<code>ipdb.set_trace()</code>，如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br><span class="hljs-keyword">import</span> ipdb<br>ipdb.set_trace()<br>max_water_area = solution.maxArea(height)<br></code></pre></td></tr></table></figure></li>
+<li>在源代码中第15行加上<code>ipdb.set_trace()</code>，如下：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">height = [<span class="hljs-number">1</span>, <span class="hljs-number">8</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>]<br><span class="hljs-keyword">import</span> ipdb<br>ipdb.set_trace()<br>max_water_area = solution.maxArea(height)<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
-<ol start="2" type="1">
+<ol start="2">
 <li>让程序运行到断点所在位置，指令为<code>c</code>;</li>
 <li>让调试进入类的内部，指令为<code>s</code>;</li>
 <li>在类内部调试，指令为<code>n+ENTER</code>，查看变量<code>area</code>的值，指令为<code>p area</code>;</li>

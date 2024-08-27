@@ -48,6 +48,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -229,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          986 字
+          1.1k 字
         
       </span>
     
@@ -282,40 +284,58 @@
             
               <div class="markdown-body">
                 
-                <h1 id="题目描述">题目描述</h1>
+                <h1>题目描述</h1>
 <blockquote>
-<p>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/zheng-ze-biao-da-shi-pi-pei-lcof/description/">LCR 137. 模糊搜索验证</a> 设计一个程序来支持用户在文本编辑器中的模糊搜索功能。用户输入内容中可能使用到如下两种通配符： - '.' 匹配任意单个字符。 - '*' 匹配零个或多个前面的那一个元素。</p>
+<p>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/zheng-ze-biao-da-shi-pi-pei-lcof/description/">LCR 137. 模糊搜索验证</a><br>
+设计一个程序来支持用户在文本编辑器中的模糊搜索功能。用户输入内容中可能使用到如下两种通配符：</p>
+<ul>
+<li>‘.’ 匹配任意单个字符。</li>
+<li>‘*’ 匹配零个或多个前面的那一个元素。</li>
+</ul>
 <p>请返回用户输入内容 input 所有字符是否可以匹配原文字符串 article。</p>
 </blockquote>
-<h1 id="思路">思路</h1>
-<p>这题是一个正则匹配题，可以用动态规划来解决。具体来说，<span class="math inline">\(dp[i][j]\)</span>表示<span class="math inline">\(s\)</span>的前<span class="math inline">\(i-1\)</span>项和<span class="math inline">\(p\)</span>的前<span class="math inline">\(j-1\)</span>项是否可以匹配，我们要通过<span class="math inline">\(dp[a][b](a\leq i, b\leq j)来计算得出它\)</span>。注意这里假设字符串的第0位为空，因此<span class="math inline">\(dp[0][0]\)</span>一定为true，它代表了两个空字符串是可以匹配的。</p>
-<h1 id="解题过程">解题过程</h1>
+<h1>思路</h1>
+<p>这题是一个正则匹配题，可以用动态规划来解决。具体来说，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>表示<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>的前<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7429em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>项和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>的前<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>项是否可以匹配，我们要通过<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>a</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>b</mi><mo stretchy="false">]</mo><mo stretchy="false">(</mo><mi>a</mi><mo>≤</mo><mi>i</mi><mo separator="true">,</mo><mi>b</mi><mo>≤</mo><mi>j</mi><mo stretchy="false">)</mo><mtext>来计算得出它</mtext></mrow><annotation encoding="application/x-tex">dp[a][b](a\leq i, b\leq j)来计算得出它</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">a</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal">b</span><span class="mclose">]</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">)</span><span class="mord cjk_fallback">来计算得出它</span></span></span></span>。注意这里假设字符串的第0位为空，因此<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[0][0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span></span></span></span>一定为true，它代表了两个空字符串是可以匹配的。</p>
+<h1>解题过程</h1>
 <h2 id="初始化">初始化</h2>
-<p>我们可以考虑初始化第一行还是初始化第一列。 对第一列来说，除了<span class="math inline">\(dp[0][0]\)</span>为true之外其他的一定都是false,因为一个非空的真实字符串不可能匹配一个空的模糊字符串；但是第一行不一样，一个非空的模糊字符串是可能匹配一个空的字符串的，例如“空”和“a*”就是匹配的。于是我们选择初始化第一列： <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> n = s.<span class="hljs-built_in">size</span>(); <span class="hljs-type">int</span> m = p.<span class="hljs-built_in">size</span>();<br>vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(m + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>)); <span class="hljs-comment">// 初始化dp全都为false</span><br>dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>; <span class="hljs-comment">//空序列对空序列，可以匹配</span><br></code></pre></td></tr></table></figure> 由于我们初始化的是第一列，因此我们计算动态规划的顺序应该为先对列遍历，再对行遍历： <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j++)  <span class="hljs-comment">// 计算dp[i][j]的值</span><br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt;= n; i++)&#123;&#125;<br>            ...<br>        &#125;<br></code></pre></td></tr></table></figure> ## 转移方程</p>
-<p>我们可以根据 <span class="math inline">\(p[j-1]\)</span> 的值来进行分类讨论：</p>
-<h3 id="pj-1"><span class="math inline">\(p[j-1]\)</span>="*"</h3>
+<p>我们可以考虑初始化第一行还是初始化第一列。<br>
+对第一列来说，除了<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[0][0]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span></span></span></span>为true之外其他的一定都是false,因为一个非空的真实字符串不可能匹配一个空的模糊字符串；但是第一行不一样，一个非空的模糊字符串是可能匹配一个空的字符串的，例如“空”和“a*”就是匹配的。于是我们选择初始化第一列：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">int</span> n = s.<span class="hljs-built_in">size</span>(); <span class="hljs-type">int</span> m = p.<span class="hljs-built_in">size</span>();<br>vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(m + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>)); <span class="hljs-comment">// 初始化dp全都为false</span><br>dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>; <span class="hljs-comment">//空序列对空序列，可以匹配</span><br></code></pre></td></tr></table></figure>
+<p>由于我们初始化的是第一列，因此我们计算动态规划的顺序应该为先对列遍历，再对行遍历：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j++)  <span class="hljs-comment">// 计算dp[i][j]的值</span><br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt;= n; i++)&#123;&#125;<br>            ...<br>        &#125;<br></code></pre></td></tr></table></figure>
+<h2 id="转移方程">转移方程</h2>
+<p>我们可以根据 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">p[j-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 的值来进行分类讨论：</p>
+<h3 id="p-j-1-“-”"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">p[j-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>=“*”</h3>
 <p>这个情况比较复杂，需要考虑三种情况：</p>
-<ol type="1">
-<li><p><strong><code>*</code>前面的字母出现0次是否匹配</strong>：</p>
-<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">bool</span> a = (j &gt;= <span class="hljs-number">2</span>) &amp;&amp; dp[i][j - <span class="hljs-number">2</span>]; <span class="hljs-comment">// 0个*前的字母是否使其成立</span><br></code></pre></td></tr></table></figure></p></li>
-<li><p><strong><code>*</code>前面的字母出现一次或者一次以上是否匹配</strong>：</p>
-<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">bool</span> b = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; (j &gt;= <span class="hljs-number">2</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j] &amp;&amp; (p[j - <span class="hljs-number">2</span>] == s[i - <span class="hljs-number">1</span>]);<br></code></pre></td></tr></table></figure></p></li>
-<li><p><strong><code>*</code>前面的字母是"."时，只需要考虑</strong>：</p>
-<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">bool</span> c = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j];<br></code></pre></td></tr></table></figure></p></li>
+<ol>
+<li>
+<p><strong><code>*</code>前面的字母出现0次是否匹配</strong>：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">bool</span> a = (j &gt;= <span class="hljs-number">2</span>) &amp;&amp; dp[i][j - <span class="hljs-number">2</span>]; <span class="hljs-comment">// 0个*前的字母是否使其成立</span><br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong><code>*</code>前面的字母出现一次或者一次以上是否匹配</strong>：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">bool</span> b = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; (j &gt;= <span class="hljs-number">2</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j] &amp;&amp; (p[j - <span class="hljs-number">2</span>] == s[i - <span class="hljs-number">1</span>]);<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong><code>*</code>前面的字母是&quot;.&quot;时，只需要考虑</strong>：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">bool</span> c = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j];<br></code></pre></td></tr></table></figure>
+</li>
 </ol>
 <p>只要 <code>a</code>, <code>b</code>, <code>c</code> 中有一个为 <code>true</code>，那么 <code>$dp[i][j]$</code> 就为 <code>true</code>。</p>
-<h3 id="pj-1."><span class="math inline">\(p[j-1]\)</span>="."</h3>
+<h3 id="p-j-1-“-”-2"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">p[j-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>=“.”</h3>
 <p>只要前一个序列相互配对即可：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">dp[i][j] = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>];<br></code></pre></td></tr></table></figure>
-<h3 id="pj-1字母"><span class="math inline">\(p[j-1]\)</span>=字母</h3>
-<p>这样更简单，只要当前字母匹配且前一个序列可以相互匹配就行。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">dp[i][j] = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] &amp;&amp; (s[i - <span class="hljs-number">1</span>] == p[j - <span class="hljs-number">1</span>]);<br></code></pre></td></tr></table></figure> 不难发现2.1的b，c两种情况可以结合，结合之后就得到了正确完整的的代码。</p>
-<h1 id="复杂度">复杂度</h1>
+<h3 id="p-j-1-字母"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">p[j-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>=字母</h3>
+<p>这样更简单，只要当前字母匹配且前一个序列可以相互匹配就行。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">dp[i][j] = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] &amp;&amp; (s[i - <span class="hljs-number">1</span>] == p[j - <span class="hljs-number">1</span>]);<br></code></pre></td></tr></table></figure>
+<p>不难发现2.1的b，c两种情况可以结合，结合之后就得到了正确完整的的代码。</p>
+<h1>复杂度</h1>
 <ul>
-<li>时间复杂度: <span class="math inline">\(O(mn)\)</span></li>
-<li>空间复杂度: <span class="math inline">\(O(mn)\)</span></li>
-<li>这题应该可以用状态压缩把空间优化到<span class="math inline">\(O(\max(m,n))\)</span>的，但我没去写，什么时候把它补上。</li>
+<li>时间复杂度: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>m</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(mn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">mn</span><span class="mclose">)</span></span></span></span></li>
+<li>空间复杂度: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>m</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(mn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">mn</span><span class="mclose">)</span></span></span></span></li>
+<li>这题应该可以用状态压缩把空间优化到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>m</mi><mo separator="true">,</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\max(m,n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">n</span><span class="mclose">))</span></span></span></span>的，但我没去写，什么时候把它补上。</li>
 </ul>
-<h1 id="code">Code</h1>
+<h1>Code</h1>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">articleMatch</span><span class="hljs-params">(string s, string p)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n = s.<span class="hljs-built_in">size</span>(); <span class="hljs-type">int</span> m = p.<span class="hljs-built_in">size</span>();<br>        vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(m + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>)); <span class="hljs-comment">// 初始化dp全都为false</span><br>        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>; <span class="hljs-comment">//空序列对空序列，可以匹配</span><br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j++)  <span class="hljs-comment">// 计算dp[i][j]的值</span><br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt;= n; i++)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(p[j - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;*&#x27;</span>)<br>                &#123;<br>                    <span class="hljs-type">bool</span> a = (j &gt;= <span class="hljs-number">2</span>) &amp;&amp; dp[i][j - <span class="hljs-number">2</span>]; <span class="hljs-comment">// 0个*前的字母是否使其成立</span><br>                    <span class="hljs-type">bool</span> b = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; (j &gt;= <span class="hljs-number">2</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j] &amp;&amp; ((p[j - <span class="hljs-number">2</span>] == s[i - <span class="hljs-number">1</span>]) || p[j - <span class="hljs-number">2</span>] == <span class="hljs-string">&#x27;.&#x27;</span>);  <br>                    <span class="hljs-comment">//  &gt;=1个*前的字母是否使其成立，或者是特殊情况p[j - 2] = &#x27;.&#x27;</span><br>                    dp[i][j] = a || b;            <br>                &#125;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(p[j - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;.&#x27;</span>) dp[i][j] = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]; <span class="hljs-comment">// 是&#x27;.&#x27;</span><br>                <span class="hljs-keyword">else</span> dp[i][j] = (i &gt;= <span class="hljs-number">1</span>) &amp;&amp; dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] &amp;&amp; (s[i - <span class="hljs-number">1</span>] == p[j - <span class="hljs-number">1</span>]); <span class="hljs-comment">// 是字母</span><br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> dp[n][m];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
@@ -521,7 +541,6 @@
 
 
 
-
     
 
     
@@ -707,49 +726,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
