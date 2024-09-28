@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Arm/head.png">
 <meta property="article:published_time" content="2024-09-28T05:29:18.000Z">
-<meta property="article:modified_time" content="2024-09-28T09:02:15.554Z">
+<meta property="article:modified_time" content="2024-09-28T15:18:56.754Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
@@ -521,6 +521,35 @@ V：当运算产生有符号溢出时被设置</li>
 <p>函数局部变量存放在函数栈桢中。它们在分配栈帧时被一起分配，在返回前释放栈帧时释放，通过SP相对地址引用 (例如<code>ldr x1, [sp, #8]</code>)。</p>
 <h3 id="一个例子">一个例子</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">long</span> <span class="hljs-title function_">caller</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">long</span> arg1 = <span class="hljs-number">534</span>;<br>    <span class="hljs-type">long</span> arg2 = <span class="hljs-number">1057</span>;<br>    <span class="hljs-type">long</span> sum = swap_add(&amp;arg1, &amp;arg2);<br>    <span class="hljs-type">long</span> diff = arg1 - arg2;<br><br>    <span class="hljs-keyword">return</span> sum * diff;<br>&#125;<br><br><span class="hljs-type">long</span> <span class="hljs-title function_">swap_add</span><span class="hljs-params">(<span class="hljs-type">long</span> *xp, <span class="hljs-type">long</span> *yp)</span><br>&#123;<br>    <span class="hljs-type">long</span> x = *xp;<br>    <span class="hljs-type">long</span> y = *yp;<br><br>    *xp = y;<br>    *yp = x;<br>    <span class="hljs-keyword">return</span> x + y;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><br></code></pre></td></tr></table></figure>
+<div style="display: flex; align-items: flex-start;">
+  <div style="flex: 1;">
+    <pre>
+<code>
+void foo(int n)
+&#123;
+    int i;
+    for (i = 0; i < n; ++i) &#123;
+        asm volatile("nop");
+    &#125;
+&#125;
+<p>int square(int n)<br>
+&#123;<br>
+foo(n);<br>
+return n * n;<br>
+&#125;</p>
+<p>int cube(int n)<br>
+&#123;<br>
+return n * square(n);<br>
+&#125;<br>
+</code><br>
+</pre></p>
+  </div>
+  <div style="flex: 1; padding-left: 10px;">
+    <img src="https://via.placeholder.com/150" srcset="/img/loading.gif" lazyload alt="Example Image" />
+  </div>
+</div>
+<img align="right" src=/img/Arm/df.png width="50%" height="50%">
 
                 
               </div>
