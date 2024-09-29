@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>docker学习笔记</title>
+    <link href="/2024/09/29/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <url>/2024/09/29/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<!-- toc --><ul><li><a href="#----">学习要求</a></li><li><a href="#--ubuntu-----docker">在 ubuntu 上安装 docker</a></li><li><a href="#---docker-pull------">解决 docker pull 太慢的方法</a></li><li><a href="#docker-----">docker 常用指令</a></li></ul><!-- tocstop --><h2 id="学习要求">学习要求</h2><ol><li>有可以稳定访问 <code>github</code> 的代理；</li><li>最好是 <code>Linux</code> 系统。</li></ol><h2 id="在-ubuntu-上安装-docker">在 ubuntu 上安装 docker</h2><ol><li>卸载之前的 docker 并安装需要的包： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get remove docker docker-engine docker.io containerd runc<br><span class="hljs-built_in">sudo</span> apt install  curl software-properties-common gnupg lsb-release<br></code></pre></td></tr></table></figure></li><li>添加并更新 apt 源： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#添加 Docker 官方 GPG key</span><br>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="hljs-built_in">sudo</span> gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br><br><span class="hljs-comment">#Docker官方源</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [arch=<span class="hljs-subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu <span class="hljs-subst">$(lsb_release -cs)</span> stable&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null<br><br><span class="hljs-built_in">sudo</span> apt update; <span class="hljs-built_in">sudo</span> apt-get update <span class="hljs-comment">#更新源</span><br></code></pre></td></tr></table></figure></li><li>安装 docker： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br><span class="hljs-built_in">sudo</span> docker version <span class="hljs-comment">#查看Docker版本</span><br><span class="hljs-built_in">sudo</span> systemctl status docker <span class="hljs-comment">#查看Docker运行状态</span><br></code></pre></td></tr></table></figure></li><li>让用户能以 root 权限来运行 docker 指令： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> groupadd docker <span class="hljs-comment"># 添加docker用户组，一般已存在，不需要执行</span><br><span class="hljs-built_in">sudo</span> gpasswd -a <span class="hljs-variable">$USER</span> docker <span class="hljs-comment"># 将登陆用户加入到docker用户组中</span><br>newgrp docker <span class="hljs-comment"># 更新用户组</span><br>docker version <span class="hljs-comment"># 测试docker命令是否可以使用sudo正常使用</span><br></code></pre></td></tr></table></figure></li></ol><p>当然，由于安装过程可能会发生变化，这里更建议去官网查看安装教程，网址<a href="https://docs.docker.com/desktop/install/linux/ubuntu/">在这</a>。</p><h2 id="解决-docker-pull-太慢的方法">解决 docker pull 太慢的方法</h2><p>在安装好 docker 后，我发现在有 vpn 的情况下，拉取一些小的镜像还是很快速的，但是大的镜像就死活拉取不下来（比如一个完整的 <code>pytorch</code>，最少都有3～4个G）。于是我在 <code>github</code> 上找到了一个库，可以比较好的解决问题（可惜没有完全解决）。</p><ol><li><p>fork 一下这个<a href="https://github.com/wukongdaily/DockerTarBuilder">项目</a>；</p></li><li><p>点进自己仓库中的这个项目，找到左上角的 <code>Action</code>，点击进入；</p></li><li><p>根据指令集的架构来选择合适的 workflow，一般来说都选择 x86_64；<br><img src=/img/docker/workflow.png width="70%" height="70%"></p></li><li><p>点击 <code>Run workflow</code>，并输入要下载的镜像名称，再点击 <code>Run workflow</code>；<br><img src=/img/docker/workflow2.png width="70%" height="70%"></p></li><li><p>跑完以后点进你的工作流，点击右下角的下载图标，把离线镜像下载下来；<br><img src=/img/docker/workflow3.png width="70%" height="70%"></p></li><li><p>这个下载下来的文件需要解压两次，假设解压出来为<code>pytorch_pytorch:1.9.0-cuda10.2-cudnn7-devel-amd64.tar</code>，那么将其导入 docker 的指令为</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker load -i pytorch_pytorch:1.9.0-cuda10.2-cudnn7-devel-amd64.tar<br></code></pre></td></tr></table></figure><p>这样就可以在 docker 上发现这个镜像了！</p></li></ol><p>缺点：实测7.23G的 pytorch 镜像无法下载，报错为空间不够。</p><h2 id="docker-常用指令">docker 常用指令</h2>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>linux</tag>
+      
+      <tag>docker</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>操作系统笔记</title>
     <link href="/2024/09/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/"/>
     <url>/2024/09/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/</url>

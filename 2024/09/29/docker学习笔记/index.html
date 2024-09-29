@@ -19,24 +19,23 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="如何将ubuntu22.04美化为macOS的样子">
+    <meta name="description" content="学习要求 在 ubuntu 上安装 docker 解决 docker pull 太慢的方法 docker 常用指令   学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统。  在 ubuntu 上安装 docker  卸载之前的 docker 并安装需要的包： 12sudo apt-get remove docker docker-engine docker.io c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu美化教程1">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/07/27/ubuntu-22-04%E7%BE%8E%E5%8C%96%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:title" content="docker学习笔记">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/09/29/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="如何将ubuntu22.04美化为macOS的样子">
+<meta property="og:description" content="学习要求 在 ubuntu 上安装 docker 解决 docker pull 太慢的方法 docker 常用指令   学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统。  在 ubuntu 上安装 docker  卸载之前的 docker 并安装需要的包： 12sudo apt-get remove docker docker-engine docker.io c">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/ubuntu_beautification/ubuntu&macOS.jpg">
-<meta property="article:published_time" content="2024-07-27T15:42:01.000Z">
-<meta property="article:modified_time" content="2024-07-29T16:16:52.991Z">
+<meta property="article:published_time" content="2024-09-29T15:18:15.000Z">
+<meta property="article:modified_time" content="2024-09-29T16:05:35.002Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="linux">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/ubuntu_beautification/ubuntu&macOS.jpg">
   
   
   
-  <title>ubuntu美化教程1 - kingdom-of-warriors</title>
+  <title>docker学习笔记 - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ubuntu美化教程1"></span>
+            <span id="subtitle" data-typed-text="docker学习笔记"></span>
           
         </div>
 
@@ -217,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-27 23:42" pubdate>
-          2024年7月27日 晚上
+        <time datetime="2024-09-29 23:18" pubdate>
+          2024年9月29日 晚上
         </time>
       </span>
     
@@ -229,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          886 字
+          551 字
         
       </span>
     
@@ -240,7 +239,7 @@
         
         
         
-          8 分钟
+          5 分钟
         
       </span>
     
@@ -277,54 +276,65 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">ubuntu美化教程1</h1>
+            <h1 id="seo-header">docker学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="效果图">效果图</h2>
-<p><img src="/img/ubuntu_beautification/desktop.png" srcset="/img/loading.gif" lazyload alt="完成后的效果"><br>
-美化后的桌面与mac的桌面几乎一致，比ubuntu原生桌面好看了不少。我的操作过程大体上基于<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=2kPC9HSBrPQ">视频</a>，但改进并增加了dock和桌面的内容。</p>
-<h2 id="环境要求">环境要求</h2>
+                <!-- toc -->
 <ul>
-<li>linux操作系统，我用的是ubuntu22.04版本</li>
-<li>需要VPN，因为要在github上下载插件</li>
+<li><a href="#----">学习要求</a></li>
+<li><a href="#--ubuntu-----docker">在 ubuntu 上安装 docker</a></li>
+<li><a href="#---docker-pull------">解决 docker pull 太慢的方法</a></li>
+<li><a href="#docker-----">docker 常用指令</a></li>
 </ul>
-<h2 id="步骤">步骤</h2>
-<p>我用的是edge浏览器，因此跳过了视频中的卸载重装firefox的过程，实测edge也可以完成以下操作（当然可以跟着它把firefox卸掉）。</p>
-<h3 id="安装Gnome-Tweaks">安装Gnome Tweaks</h3>
-<p>指令为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install gnome-tweaks<br></code></pre></td></tr></table></figure>
-<p>接着就可以在应用程序列表的工具那一栏找到它，他的中文名称叫“优化”。</p>
-<h3 id="安装Chrome-gnome-shell">安装Chrome-gnome-shell</h3>
-<p>指令为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt install chrome-gnome-shell<br></code></pre></td></tr></table></figure>
-<p>接下来安装浏览器扩展功能。在浏览器中访问gnome官方<a target="_blank" rel="noopener" href="https://extensions.gnome.org">网站</a>，点击紫色框中的click here，在弹出的提示中选择continue to install，接下来的选项选择允许在私人窗口运行即可。<br>
-<img src="/img/ubuntu_beautification/gnome-shell.png" srcset="/img/loading.gif" lazyload alt="安装步骤示意"></p>
-<h3 id="安装苹果风格任务栏">安装苹果风格任务栏</h3>
-<p>这里需要特别注意！！<strong>千万不要像视频里一样下载dash to dock!!</strong> 因为我自己使用的时候发现，它会导致挂起过久之后linux系统崩溃，具体表现为不能按windows键，否则就会整机卡死只能重启。我关闭dash to dock以后就没有这个问题了。</p>
-<p>实际上不需要dash to dock也可以达到不错的效果。在设置–外观–Dock中调整，选择自动隐藏dock、关闭面板模式、将其调到底部，再点击“配置dock行为”，将显示卷和设备、显示回收站的按钮全部关闭，你就获得了一个不错的dock栏。<br>
-<img src="/img/ubuntu_beautification/dock.png" srcset="/img/loading.gif" lazyload alt="dock配置"></p>
-<h3 id="安装苹果风格的应用主题">安装苹果风格的应用主题</h3>
-<p>访问这个<a target="_blank" rel="noopener" href="https://gnome-look.org">网站</a>，在左边框点击“GTK3/4 theme”，再下拉右边栏找到“popularity“，点进排名第一的“White Sur GTK theme”，点进去，并在右边download选择有箭头的那一项，点击就可以进入github找到release，下载最新版本并解压缩、运行即可。具体指令如下：<br>
-<img src="/img/ubuntu_beautification/gtk_theme.jpg" srcset="/img/loading.gif" lazyload alt="下载选择"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压缩指令</span><br><span class="hljs-built_in">sudo</span> tar zxvf 下载/WhiteSur-gtk-theme-2024-05-01.tar.gz<br><span class="hljs-built_in">cd</span> WhiteSur-gtk-theme-2024-05-01 <span class="hljs-comment"># 进入目录</span><br><span class="hljs-built_in">sudo</span> ./install.sh <span class="hljs-comment"># 下载指令</span><br></code></pre></td></tr></table></figure>
-<p>完成上述步骤后，打开tweaks（即”优化“），在外观–应用程序即可找到刚刚下载的一系列WhiteSur主题，选择你喜欢的！</p>
-<h3 id="安装苹果风格的图标主题">安装苹果风格的图标主题</h3>
-<p>还是这个<a target="_blank" rel="noopener" href="https://gnome-look.org">网站</a>，在左边框找到“Full icon themes”，点击并下拉找到“WhiteSur Icon Themes”，在右边download选择“01-WhiteSur.tar.xz&quot;下载。<br>
-这个需要自己创建icons文件夹，具体指令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> .icons; <span class="hljs-built_in">cd</span> .icons<br><span class="hljs-built_in">sudo</span> tar xvJf ~/下载/01-WhiteSur.tar.xz<br></code></pre></td></tr></table></figure>
-<p>完成上述步骤后，打开tweaks，在外观–图标即可找到刚刚下载的一系列WhiteSur主题，选择你喜欢的！</p>
-<h3 id="安装苹果风格的光标主题">安装苹果风格的光标主题</h3>
-<p>还还是这个<a target="_blank" rel="noopener" href="https://gnome-look.org">网站</a>，在左边框找到“Cursors”，点击并下拉找到”Popularity“，找到“WhiteSur cursors”并下载。<br>
-这个安装可以使用上一步创建的.icons文件夹。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> .icons<br><span class="hljs-built_in">sudo</span> tar xvJf ~/下载/WhiteSur-cursors.tar.xz<br></code></pre></td></tr></table></figure>
-<p>完成上述步骤后，打开tweaks，在外观–光标即可找到刚刚下载的WhiteSur主题，选择它！</p>
-<h3 id="安装苹果风格的shell主题">安装苹果风格的shell主题</h3>
-<p>进入gnome官方<a target="_blank" rel="noopener" href="https://extensions.gnome.org">网站</a>，选择第一个“Users Themes”，点进去将off改为on即可自动下载。<br>
-完成上述步骤后，打开tweaks，在外观–shell即可找到WhiteSur主题，选择你喜欢的！</p>
-<h3 id="总结">总结</h3>
-<p>这一篇主要讲解了如何将ubuntu美化为macOS的样子，下一篇来讲怎么进一步美化并增强shell的功能。</p>
+<!-- tocstop -->
+<h2 id="学习要求">学习要求</h2>
+<ol>
+<li>有可以稳定访问 <code>github</code> 的代理；</li>
+<li>最好是 <code>Linux</code> 系统。</li>
+</ol>
+<h2 id="在-ubuntu-上安装-docker">在 ubuntu 上安装 docker</h2>
+<ol>
+<li>卸载之前的 docker 并安装需要的包： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get remove docker docker-engine docker.io containerd runc<br><span class="hljs-built_in">sudo</span> apt install  curl software-properties-common gnupg lsb-release<br></code></pre></td></tr></table></figure>
+</li>
+<li>添加并更新 apt 源： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#添加 Docker 官方 GPG key</span><br>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="hljs-built_in">sudo</span> gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg<br><br><span class="hljs-comment">#Docker官方源</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deb [arch=<span class="hljs-subst">$(dpkg --print-architecture)</span> signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu <span class="hljs-subst">$(lsb_release -cs)</span> stable&quot;</span> | <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null<br><br><span class="hljs-built_in">sudo</span> apt update; <span class="hljs-built_in">sudo</span> apt-get update <span class="hljs-comment">#更新源</span><br></code></pre></td></tr></table></figure>
+</li>
+<li>安装 docker： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br><span class="hljs-built_in">sudo</span> docker version <span class="hljs-comment">#查看Docker版本</span><br><span class="hljs-built_in">sudo</span> systemctl status docker <span class="hljs-comment">#查看Docker运行状态</span><br></code></pre></td></tr></table></figure>
+</li>
+<li>让用户能以 root 权限来运行 docker 指令： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> groupadd docker <span class="hljs-comment"># 添加docker用户组，一般已存在，不需要执行</span><br><span class="hljs-built_in">sudo</span> gpasswd -a <span class="hljs-variable">$USER</span> docker <span class="hljs-comment"># 将登陆用户加入到docker用户组中</span><br>newgrp docker <span class="hljs-comment"># 更新用户组</span><br>docker version <span class="hljs-comment"># 测试docker命令是否可以使用sudo正常使用</span><br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当然，由于安装过程可能会发生变化，这里更建议去官网查看安装教程，网址<a target="_blank" rel="noopener" href="https://docs.docker.com/desktop/install/linux/ubuntu/">在这</a>。</p>
+<h2 id="解决-docker-pull-太慢的方法">解决 docker pull 太慢的方法</h2>
+<p>在安装好 docker 后，我发现在有 vpn 的情况下，拉取一些小的镜像还是很快速的，但是大的镜像就死活拉取不下来（比如一个完整的 <code>pytorch</code>，最少都有3～4个G）。于是我在 <code>github</code> 上找到了一个库，可以比较好的解决问题（可惜没有完全解决）。</p>
+<ol>
+<li>
+<p>fork 一下这个<a target="_blank" rel="noopener" href="https://github.com/wukongdaily/DockerTarBuilder">项目</a>；</p>
+</li>
+<li>
+<p>点进自己仓库中的这个项目，找到左上角的 <code>Action</code>，点击进入；</p>
+</li>
+<li>
+<p>根据指令集的架构来选择合适的 workflow，一般来说都选择 x86_64；<br>
+<img src=/img/docker/workflow.png width="70%" height="70%"></p>
+</li>
+<li>
+<p>点击 <code>Run workflow</code>，并输入要下载的镜像名称，再点击 <code>Run workflow</code>；<br>
+<img src=/img/docker/workflow2.png width="70%" height="70%"></p>
+</li>
+<li>
+<p>跑完以后点进你的工作流，点击右下角的下载图标，把离线镜像下载下来；<br>
+<img src=/img/docker/workflow3.png width="70%" height="70%"></p>
+</li>
+<li>
+<p>这个下载下来的文件需要解压两次，假设解压出来为<code>pytorch_pytorch:1.9.0-cuda10.2-cudnn7-devel-amd64.tar</code>，那么将其导入 docker 的指令为</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker load -i pytorch_pytorch:1.9.0-cuda10.2-cudnn7-devel-amd64.tar<br></code></pre></td></tr></table></figure>
+<p>这样就可以在 docker 上发现这个镜像了！</p>
+</li>
+</ol>
+<p>缺点：实测7.23G的 pytorch 镜像无法下载，报错为空间不够。</p>
+<h2 id="docker-常用指令">docker 常用指令</h2>
 
                 
               </div>
@@ -333,39 +343,13 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/linux/" class="category-chain-item">linux</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/linux/beautification/" class="category-chain-item">beautification</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
         <a href="/tags/linux/" class="print-no-link">#linux</a>
+      
+        <a href="/tags/docker/" class="print-no-link">#docker</a>
       
     </div>
   
@@ -377,8 +361,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ubuntu美化教程1</div>
-      <div>https://kingdom-of-warriors.github.io/2024/07/27/ubuntu-22-04美化教程/</div>
+      <div>docker学习笔记</div>
+      <div>https://kingdom-of-warriors.github.io/2024/09/29/docker学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -390,7 +374,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月27日</div>
+          <div>2024年9月29日</div>
         </div>
       
       
@@ -422,18 +406,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/07/28/%E7%BE%8E%E5%8C%96%E5%B9%B6%E5%A2%9E%E5%BC%BAlinux%E7%9A%84%E7%BB%88%E7%AB%AF%E5%8A%9F%E8%83%BD/" title="ubuntu美化教程2-美化并增强linux的终端功能">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">ubuntu美化教程2-美化并增强linux的终端功能</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/07/27/leetcode-main239/" title="经典单调队列问题">
-                        <span class="hidden-mobile">经典单调队列问题</span>
+                      <a href="/2024/09/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/" title="操作系统笔记">
+                        <span class="hidden-mobile">操作系统笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -456,7 +434,7 @@
         var options = Object.assign(
           {"clientID":"Ov23liz6eV0VasfLM4z1","clientSecret":"65c93e1b98781b2517f0ae355361bb087488e8f7","repo":"kingdom-of-warriors.github.io","owner":"kingdom-of-warriors","admin":["kingdom-of-warriors"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '910599004147f20b36ec9a47506cacd5'
+            id: 'b58744ab67c9cfd7ccfa9bdf7ed9f600'
           }
         )
         var gitalk = new Gitalk(options);
