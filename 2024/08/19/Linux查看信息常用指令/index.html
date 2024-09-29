@@ -19,15 +19,15 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="查看挂载点空间大小： 1df -h  查看文件夹&#x2F;文件大小： 123du -h # 查看下面所有文件夹大小du -h -s # 只显示当前目录的总大小，或写作du -shdu -h -d 1 # 向下递归一层的每个文件总大小  查看文件结构： 1234tree # 查看当前文件夹下文件结构tree path&#x2F;to&#x2F;folder # 查看特定文件夹结构tree -L depth # 控制打印的深度">
+    <meta name="description" content="查看挂载点空间大小：  1df -h   查看文件夹&#x2F;文件大小：  123du -h # 查看下面所有文件夹大小du -h -s # 只显示当前目录的总大小，或写作du -shdu -h -d 1 # 向下递归一层的每个文件总大小   查看文件结构：  1234tree # 查看当前文件夹下文件结构tree path&#x2F;to&#x2F;folder # 查看特定文件夹结构tree -L depth # 控">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux查看信息常用指令">
 <meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/08/19/Linux%E6%9F%A5%E7%9C%8B%E4%BF%A1%E6%81%AF%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="查看挂载点空间大小： 1df -h  查看文件夹&#x2F;文件大小： 123du -h # 查看下面所有文件夹大小du -h -s # 只显示当前目录的总大小，或写作du -shdu -h -d 1 # 向下递归一层的每个文件总大小  查看文件结构： 1234tree # 查看当前文件夹下文件结构tree path&#x2F;to&#x2F;folder # 查看特定文件夹结构tree -L depth # 控制打印的深度">
+<meta property="og:description" content="查看挂载点空间大小：  1df -h   查看文件夹&#x2F;文件大小：  123du -h # 查看下面所有文件夹大小du -h -s # 只显示当前目录的总大小，或写作du -shdu -h -d 1 # 向下递归一层的每个文件总大小   查看文件结构：  1234tree # 查看当前文件夹下文件结构tree path&#x2F;to&#x2F;folder # 查看特定文件夹结构tree -L depth # 控">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-19T07:39:05.000Z">
-<meta property="article:modified_time" content="2024-09-17T04:16:57.601Z">
+<meta property="article:modified_time" content="2024-09-29T15:06:27.812Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          131 字
+          166 字
         
       </span>
     
@@ -281,14 +281,20 @@
               <div class="markdown-body">
                 
                 <ol>
-<li>查看挂载点空间大小： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span> -h<br></code></pre></td></tr></table></figure>
+<li>
+<p>查看挂载点空间大小：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">df</span> -h<br></code></pre></td></tr></table></figure>
 </li>
-<li>查看文件夹/文件大小： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">du</span> -h <span class="hljs-comment"># 查看下面所有文件夹大小</span><br><span class="hljs-built_in">du</span> -h -s <span class="hljs-comment"># 只显示当前目录的总大小，或写作du -sh</span><br><span class="hljs-built_in">du</span> -h -d 1 <span class="hljs-comment"># 向下递归一层的每个文件总大小</span><br></code></pre></td></tr></table></figure>
+<li>
+<p>查看文件夹/文件大小：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">du</span> -h <span class="hljs-comment"># 查看下面所有文件夹大小</span><br><span class="hljs-built_in">du</span> -h -s <span class="hljs-comment"># 只显示当前目录的总大小，或写作du -sh</span><br><span class="hljs-built_in">du</span> -h -d 1 <span class="hljs-comment"># 向下递归一层的每个文件总大小</span><br></code></pre></td></tr></table></figure>
 </li>
-<li>查看文件结构： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">tree <span class="hljs-comment"># 查看当前文件夹下文件结构</span><br>tree path/to/folder <span class="hljs-comment"># 查看特定文件夹结构</span><br>tree -L depth <span class="hljs-comment"># 控制打印的深度</span><br>tree &gt; output.md <span class="hljs-comment">#将结果输出为markdown文件</span><br></code></pre></td></tr></table></figure>
+<li>
+<p>查看文件结构：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">tree <span class="hljs-comment"># 查看当前文件夹下文件结构</span><br>tree path/to/folder <span class="hljs-comment"># 查看特定文件夹结构</span><br>tree -L depth <span class="hljs-comment"># 控制打印的深度</span><br>tree &gt; output.md <span class="hljs-comment">#将结果输出为markdown文件</span><br></code></pre></td></tr></table></figure>
 </li>
-<li>各种快捷键</li>
-</ol>
+<li>
+<p>各种快捷键</p>
 <table>
 <thead>
 <tr>
@@ -303,6 +309,14 @@
 </tr>
 </tbody>
 </table>
+</li>
+<li>
+<p>获取<code>Wallpaper engine</code>的图片：<br>
+在<code>E:\Steam\steamapps\workshop\content</code>地址下找到<code>.pkg</code>文件，输入</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">repkg extract <span class="hljs-string">&quot;~.pkg&quot;</span><br></code></pre></td></tr></table></figure>
+<p>即可得到输出的.jpg图片。</p>
+</li>
+</ol>
 
                 
               </div>
