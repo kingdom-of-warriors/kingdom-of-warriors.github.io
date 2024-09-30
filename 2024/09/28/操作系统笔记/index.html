@@ -19,16 +19,16 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ARM操作系统汇编语言  aarch64常见指令  寄存器间的数据搬移指令 寻址模式 跳转指令   函数调用  函数调用指令 函数栈帧（Stack Frame） 多级函数调用 函数参数与返回值   寄存器保存  通用寄存器保存 例子：cube函数   局部变量  一个例子   总结   系统ISA  特权级别  ARMv8.4特权级       ARM操作系统汇编语言 aarch64常见指令">
+    <meta name="description" content="ARM操作系统汇编语言  aarch64常见指令  寄存器间的数据搬移指令 寻址模式 跳转指令   函数调用  函数调用指令 函数栈帧（Stack Frame） 多级函数调用 函数参数与返回值   寄存器保存  通用寄存器保存 例子：cube函数   局部变量  一个例子   总结   系统ISA  特权级别  ARMv8.4特权级 用户态（EL0）和内核态（EL1） AArch64 中常见寄">
 <meta property="og:type" content="article">
 <meta property="og:title" content="操作系统笔记">
 <meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/09/28/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="ARM操作系统汇编语言  aarch64常见指令  寄存器间的数据搬移指令 寻址模式 跳转指令   函数调用  函数调用指令 函数栈帧（Stack Frame） 多级函数调用 函数参数与返回值   寄存器保存  通用寄存器保存 例子：cube函数   局部变量  一个例子   总结   系统ISA  特权级别  ARMv8.4特权级       ARM操作系统汇编语言 aarch64常见指令">
+<meta property="og:description" content="ARM操作系统汇编语言  aarch64常见指令  寄存器间的数据搬移指令 寻址模式 跳转指令   函数调用  函数调用指令 函数栈帧（Stack Frame） 多级函数调用 函数参数与返回值   寄存器保存  通用寄存器保存 例子：cube函数   局部变量  一个例子   总结   系统ISA  特权级别  ARMv8.4特权级 用户态（EL0）和内核态（EL1） AArch64 中常见寄">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Arm/head.png">
 <meta property="article:published_time" content="2024-09-28T05:29:18.000Z">
-<meta property="article:modified_time" content="2024-09-29T16:07:28.418Z">
+<meta property="article:modified_time" content="2024-09-30T15:10:47.907Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k 字
+          2.4k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          14 分钟
+          21 分钟
         
       </span>
     
@@ -320,6 +320,16 @@
 <li><a href="#----">特权级别</a>
 <ul>
 <li><a href="#armv84---">ARMv8.4特权级</a></li>
+<li><a href="#----el0------el1-">用户态（EL0）和内核态（EL1）</a></li>
+<li><a href="#aarch64------------------">AArch64 中常见寄存器在不同特权级的可见情况</a></li>
+</ul>
+</li>
+<li><a href="#-----">特权级切换</a>
+<ul>
+<li><a href="#---------">特权级切换的必要性</a></li>
+<li><a href="#----------------">何时发生特权级切换：在发生异常时</a></li>
+<li><a href="#------">异常处理函数</a></li>
+<li><a href="#------------------">用户态/内核态切换时的处理器状态变化</a></li>
 </ul>
 </li>
 </ul>
@@ -575,6 +585,61 @@ caller:
 <h2 id="特权级别">特权级别</h2>
 <h3 id="ARMv8-4特权级">ARMv8.4特权级</h3>
 <img src=/img/Arm/EL.png style="width: 85%; height: auto;">
+<h3 id="用户态（EL0）和内核态（EL1）">用户态（EL0）和内核态（EL1）</h3>
+<ul>
+<li>用户态（User-mode）：只能使用用户 ISA</li>
+<li>内核态（Kernel-mode）：可以同时使用系统 ISA 和用户ISA</li>
+</ul>
+<p>操作系统往往同时包含内核态与用户态的代码，如：Unix包含内核态的kernel 与用户态的 shell。</p>
+<h3 id="AArch64-中常见寄存器在不同特权级的可见情况">AArch64 中常见寄存器在不同特权级的可见情况</h3>
+<p><img src="/img/Arm/ISA.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h2 id="特权级切换">特权级切换</h2>
+<h3 id="特权级切换的必要性">特权级切换的必要性</h3>
+<p>将CPU控制权移交给内核，使应用程序可以向操作系统请求服务，使操作系统能够切换不同应用程序执行，否则无法处理错误/恶意程序死循环。</p>
+<h3 id="何时发生特权级切换：在发生异常时">何时发生特权级切换：在发生异常时</h3>
+<ul>
+<li>同步异常<br>
+执行当前指令触发异常。
+<ol>
+<li>用户程序主动发起：svc指令（OS利用eret指令返回）</li>
+<li>非主动，例如用户程序意外访问空指针：普通ldr指令（OS“杀死”出错程序）</li>
+</ol>
+</li>
+<li>异步异常<br>
+CPU收到中断信号。
+<ol>
+<li>从外设发来的中断，例如屏幕点击、鼠标、收到网络包；</li>
+<li>CPU时钟中断，例如定时器超时。</li>
+</ol>
+</li>
+</ul>
+<h3 id="异常处理函数">异常处理函数</h3>
+<p>异常处理函数属于操作系统的一部分，是运行在内核态的代码。异常处理函数完成异常处理后，将通过下述操作之一转移控制权：</p>
+<ol>
+<li>回到发生异常时正在执行的指令；</li>
+<li>回到发生异常时的下一条指令；</li>
+<li>切换到其它进程执行。</li>
+</ol>
+<ul>
+<li>异常向量表：操作系统内核预先在一张表，表中准备好不同类型异常的处理函数，基地址存储在VBAR_EL1寄存器中。</li>
+</ul>
+<h3 id="用户态-内核态切换时的处理器状态变化">用户态/内核态切换时的处理器状态变化</h3>
+<p><img src="/img/Arm/change.png" srcset="/img/loading.gif" lazyload alt=""><br>
+<font color=blue>从用户态到内核态（svc）的任务：</font></p>
+<ol>
+<li>将发生异常事件的指令地址保存在ELR_EL1中；</li>
+<li>将异常事件的原因保存在ESR_EL1。例如，是执行svc指令导致的，还是访存缺页导致的；</li>
+<li>将处理器的当前状态（即PSTATE）保存在SPSR_EL1；</li>
+<li>栈寄存器不再使用SP_EL0（用户态栈寄存器），开始使用SP_EL1（内核态栈寄存器，需要由操作系统提前设置）；</li>
+<li>修改PSTATE寄存器中的特权级标志位，设置为内核态；</li>
+<li>找到异常处理函数的入口地址，并将该地址写入PC，开始运行操作系统（根据VBAR_EL1寄存器保存的异常向量表基地址，以及发生异常事件的类型确定）。</li>
+</ol>
+<p><font color=blue>从用户态到内核态（eret）的任务：</font></p>
+<ol>
+<li>将SPSR_EL1中的处理器状态写入PSTATE中（处理器状态也从 EL1 切换到 EL0）；</li>
+<li>栈寄存器不再使用SP_EL1，开始使用SP_EL0（注意：SP_EL1的值并没有改变；下一次下陷时，操作系统依然会使用这个内核栈）；</li>
+<li>将ELR_EL1中的地址写入PC，并执行应用程序代码。</li>
+</ol>
 
                 
               </div>
