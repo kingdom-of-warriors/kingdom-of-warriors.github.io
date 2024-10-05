@@ -19,16 +19,16 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载之前的 docker 并安装需要的包： 12sudo apt-get remove docker">
+    <meta name="description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令 容器命令     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载之前的 docker 并安装需要的包： 12sudo apt-get remove do">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker学习笔记">
 <meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/09/29/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载之前的 docker 并安装需要的包： 12sudo apt-get remove docker">
+<meta property="og:description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令 容器命令     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载之前的 docker 并安装需要的包： 12sudo apt-get remove do">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/docker/Docker-Logo.png">
 <meta property="article:published_time" content="2024-09-29T15:18:15.000Z">
-<meta property="article:modified_time" content="2024-09-30T10:58:02.261Z">
+<meta property="article:modified_time" content="2024-10-05T17:51:47.457Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="docker">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          624 字
+          734 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -292,6 +292,7 @@
 <ul>
 <li><a href="#----">帮助启动</a></li>
 <li><a href="#----">镜像命令</a></li>
+<li><a href="#----">容器命令</a></li>
 </ul>
 </li>
 </ul>
@@ -389,6 +390,29 @@ SIZE：镜像大小<br>
 删除特定的镜像。<br>
 -f：强制删除</p>
 </li>
+</ul>
+<h3 id="容器命令">容器命令</h3>
+<ul>
+<li><code>docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</code></li>
+</ul>
+<ol>
+<li>
+<p>OPTIONS说明：</p>
+<ul>
+<li><code>--name=&quot;容器名字&quot;</code>：给容器指定一个名字</li>
+<li><code>-d</code>：后台运行容器并返回容器ID</li>
+<li><code>-i</code>：以交互模式运行容器，通常与<code>-t</code>一起使用</li>
+<li><code>-t</code>：给容器分配一个伪输入终端</li>
+<li><code>-P</code>：随机端口映射</li>
+<li><code>-p</code>：指定端口映射</li>
+<li><code>例</code>：<code>docker run -it --name test ubuntu:20.04</code> 启动ubuntu的docker</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><code>docker ps</code><br>
+查看正在运行的容器信息。<br>
+<img src="/img/docker/dockerps.png" srcset="/img/loading.gif" lazyload alt=""></li>
 </ul>
 
                 
