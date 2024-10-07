@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Arm/head.png">
 <meta property="article:published_time" content="2024-09-28T05:29:18.000Z">
-<meta property="article:modified_time" content="2024-09-30T15:10:47.907Z">
+<meta property="article:modified_time" content="2024-10-07T17:30:56.420Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          2.8k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          21 分钟
+          24 分钟
         
       </span>
     
@@ -330,6 +330,12 @@
 <li><a href="#----------------">何时发生特权级切换：在发生异常时</a></li>
 <li><a href="#------">异常处理函数</a></li>
 <li><a href="#------------------">用户态/内核态切换时的处理器状态变化</a></li>
+</ul>
+</li>
+<li><a href="#----">系统调用</a>
+<ul>
+<li><a href="#aarch64---linux-----">AArch64常见的Linux的系统调用</a></li>
+<li><a href="#------">系统调用例子</a></li>
 </ul>
 </li>
 </ul>
@@ -640,6 +646,103 @@ CPU收到中断信号。
 <li>栈寄存器不再使用SP_EL1，开始使用SP_EL0（注意：SP_EL1的值并没有改变；下一次下陷时，操作系统依然会使用这个内核栈）；</li>
 <li>将ELR_EL1中的地址写入PC，并执行应用程序代码。</li>
 </ol>
+<p><font color=blue>操作系统在切换过程中的任务：</font></p>
+<ol>
+<li>主要任务：将属于应用程序的 CPU 状态保存到内存中，用于之后恢复应用程序继续运行；</li>
+<li>应用程序需要保存的运行状态称为处理器上下文。处理器上下文（Processor Context），是应用程序在完成切换后恢复执行所需的最小处理器状态集合。处理器上下文中的寄存器具体包括：
+<ul>
+<li>通用寄存器 X0-X30；</li>
+<li>特殊寄存器，主要包括PC、SP和PSTATE；</li>
+<li>系统寄存器，包括页表基地址寄存器等。</li>
+</ul>
+</li>
+</ol>
+<h2 id="系统调用">系统调用</h2>
+<p>硬件提供了一对指令svc/eret指令在用户态/内核态间切换。系统调用是用户与操作系统之间，类似于过程调用的接口，它通过受限的方式访问内核提供的服务。<br>
+<img src="/img/Arm/%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="AArch64常见的Linux的系统调用">AArch64常见的Linux的系统调用</h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>名称</th>
+<th>描述</th>
+<th>编号</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17</td>
+<td>getcwd</td>
+<td>Get current working directory</td>
+<td>129</td>
+<td>kill</td>
+<td>Send signal to a process</td>
+</tr>
+<tr>
+<td>23</td>
+<td>dup</td>
+<td>Duplicate a file descriptor</td>
+<td>172</td>
+<td>getpid</td>
+<td>Get process ID</td>
+</tr>
+<tr>
+<td>56</td>
+<td>openat</td>
+<td>Open a file</td>
+<td>214</td>
+<td>brk</td>
+<td>Set the top of heap</td>
+</tr>
+<tr>
+<td>57</td>
+<td>close</td>
+<td>Close a file</td>
+<td>215</td>
+<td>munmap</td>
+<td>Unmap a file from memory</td>
+</tr>
+<tr>
+<td>63</td>
+<td>read</td>
+<td>Read a file</td>
+<td>220</td>
+<td>clone</td>
+<td>Create a process</td>
+</tr>
+<tr>
+<td>64</td>
+<td>write</td>
+<td>Write a file</td>
+<td>221</td>
+<td>execve</td>
+<td>Execute a program</td>
+</tr>
+<tr>
+<td>80</td>
+<td>fstat</td>
+<td>Get file status</td>
+<td>222</td>
+<td>mmap</td>
+<td>Map a file into memory</td>
+</tr>
+<tr>
+<td>93</td>
+<td>_exit</td>
+<td>Terminate the process</td>
+<td>260</td>
+<td>wait4</td>
+<td>Wait for process to stop</td>
+</tr>
+</tbody>
+</table>
+<h3 id="系统调用例子">系统调用例子</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    write(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;hello, world\n&quot;</span>, <span class="hljs-number">13</span>);<br>    _exit(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>汇编代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// First, call write(1, &quot;hello, world\n&quot;, 13)</span><br>movq 	x8, #<span class="hljs-number">0x40</span> 	 <span class="hljs-comment">//  write is system call 64</span><br>movq 	x0, #<span class="hljs-number">0x1</span> 	  <span class="hljs-comment">// Arg1:stdout has descriptor 1</span><br>adrp 	x3, .LC0  	<br>add x1,x3,:lo12:.LC0 <span class="hljs-comment">// Arg2:Hello world string</span><br>movq 	x2, #<span class="hljs-number">0xd</span>       <span class="hljs-comment">// Arg3:string length</span><br>svc     	  	  <span class="hljs-comment">// Make the system call</span><br><span class="hljs-comment">// Next, call exit(0)</span><br>movq 	x8, #<span class="hljs-number">0x5d</span>	 <span class="hljs-comment">//  _exit is system call 93</span><br>movq 	x0, #<span class="hljs-number">0x0</span>    <span class="hljs-comment">//   Arg1:exit status is 0</span><br>svc 		  	 <span class="hljs-comment">//  Make the system call</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>

@@ -19,27 +19,22 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ubuntu22.04上的vscode、git与github的互联工作流">
+    <meta name="description" content="Lab1 拆炸弹 phase_2 12345400788: a9bc7bfd        stp     x29, x30, [sp, #-64]!40078c: 910003fd        mov     x29, sp400790: a90153f3        stp     x19, x20, [sp, #16]400794: 910083e1        add     x1,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux上的vscode、git与github的互联工作流">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/07/26/git&github/index.html">
+<meta property="og:title" content="操作系统Lab思路">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/10/06/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FLab%E6%80%9D%E8%B7%AF/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="ubuntu22.04上的vscode、git与github的互联工作流">
+<meta property="og:description" content="Lab1 拆炸弹 phase_2 12345400788: a9bc7bfd        stp     x29, x30, [sp, #-64]!40078c: 910003fd        mov     x29, sp400790: a90153f3        stp     x19, x20, [sp, #16]400794: 910083e1        add     x1,">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/github&vscode/git_github.jpg">
-<meta property="article:published_time" content="2024-07-26T12:23:32.000Z">
-<meta property="article:modified_time" content="2024-09-21T08:49:45.409Z">
+<meta property="article:published_time" content="2024-10-06T14:42:49.000Z">
+<meta property="article:modified_time" content="2024-10-06T16:28:57.907Z">
 <meta property="article:author" content="Rayy">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="git">
-<meta property="article:tag" content="github">
-<meta property="article:tag" content="vscode">
+<meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/github&vscode/git_github.jpg">
   
   
   
-  <title>linux上的vscode、git与github的互联工作流 - kingdom-of-warriors</title>
+  <title>操作系统Lab思路 - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -209,7 +204,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="linux上的vscode、git与github的互联工作流"></span>
+            <span id="subtitle" data-typed-text="操作系统Lab思路"></span>
           
         </div>
 
@@ -220,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-26 20:23" pubdate>
-          2024年7月26日 晚上
+        <time datetime="2024-10-06 22:42" pubdate>
+          2024年10月6日 晚上
         </time>
       </span>
     
@@ -232,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          879 字
+          475 字
         
       </span>
     
@@ -243,7 +238,7 @@
         
         
         
-          8 分钟
+          4 分钟
         
       </span>
     
@@ -280,76 +275,23 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">linux上的vscode、git与github的互联工作流</h1>
+            <h1 id="seo-header">操作系统Lab思路</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>一、介绍与要求</h1>
-<ol>
-<li>介绍：我刚刚改到linux系统（ubuntu22.04）上进行学习和工作，深感到linux的方便快捷，于是想在此记录以下git和github的学习过程，也权当备忘录。</li>
-<li>要求：强烈建议使用梯子（VPN）进行操作，否则git指令很可能会卡顿，因为github的服务器在国外。本文默认电脑上已经装好git和vscode、已注册git的用户名和邮箱。</li>
-</ol>
-<h1>二、git和github联动</h1>
-<h2 id="2-1-git与github的连接">2.1  git与github的连接</h2>
-<p>首先输入指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -C &quot;git注册的邮箱&quot;<br></code></pre></td></tr></table></figure>
-<p>然后根据它的提示按三下回车，出现一个图案就表示密钥生成成功。在主文件夹（即/home/用户名称/）下找到id_rsa.pub文件，进入其中将它的内容<strong>全部</strong>复制下来。</p>
-<p>切换到github界面中，点击你的头像–Settings–SSH and GPG keys（在左边框上），点击new ssh key，在这个界面中，title就是你给这个密钥的命名，比如说这个是我linux设备的密钥，我就给他命名为“linux”，并把刚刚复制的公钥粘贴到key那个框中，点击add ssh key即可连接git与你的github账号。<br>
-<img src="/img/github&amp;vscode/ssh_key.png" srcset="/img/loading.gif" lazyload alt="ssh key添加界面"></p>
-<p>接下来在git中验证这件事。输入指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh -T git@github.com<br></code></pre></td></tr></table></figure>
-<p>第一次用这个命令需要输入一个&quot;yes&quot;，当出现你的github账号就代表连接成功！</p>
-<p><img src="/img/github&amp;vscode/success_connect.png" srcset="/img/loading.gif" lazyload alt="成功连接！"></p>
-<h2 id="2-2-git的操作">2.2 git的操作</h2>
-<p>这里以我在学习的Coursera的HTML课程为例，来实现git的基本操作。</p>
-<ol>
-<li>
-<p>拉取远程库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone &quot;https或ssh&quot;<br></code></pre></td></tr></table></figure>
-<p>https或ssh</p>
-</li>
-</ol>
-<p><img src="/img/github&amp;vscode/ssh.png" srcset="/img/loading.gif" lazyload alt="ssh网址">的具体位置在github库的这里，点进库中选择code键即可看见。</p>
-<p>我想拉取这个库的指令为</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone git@github.com:kingdom-of-warriors/Coursera-HTML.git<br></code></pre></td></tr></table></figure>
-<ol start="2">
-<li>添加暂存区<br>
-在修改文件后，应将它添加到暂存区。执行git status查看，修改过的文件应该是红色的。</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add &quot;改动的文件&quot;<br>git add . # 表示提交所有更改<br></code></pre></td></tr></table></figure>
-<p>再执行指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add index.html<br></code></pre></td></tr></table></figure>
-<p>后执行git status查看，这个文件将会变为绿色。</p>
-<ol start="3">
-<li>提交本地库</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -m &quot;日志信息&quot;<br></code></pre></td></tr></table></figure>
-<p>这个日志信息一般来说是描述你这次更改改了哪些地方，写什么都行。在本例中，我想表示我增加了css渲染内容，那么应该写的指令是</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -m &quot;增加css渲染内容&quot;<br></code></pre></td></tr></table></figure>
-<ol start="4">
-<li>创建别名<br>
-在github上创建一个新仓库，像2.2.1那样找到它的SSH或者HTTPS（我更推荐用SSH连接）。这个别名主要是为了<strong>方便推送代码</strong>，相当于给一大段复杂的网址取了一个别名，用这个别名就相当于在用这个网址，所以别名最好短小精悍一点。</li>
-</ol>
-<p>一般来说，github会给你的仓库去一个默认的别名叫origin，可以通过git remote -v 来查看。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote add 别名 &quot;SSH或HTTPS网址&quot;<br></code></pre></td></tr></table></figure>
-<p>如果我想给这个github仓库取一个别名叫HTML，那么指令应该如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote add HTML git@github.com:kingdom-of-warriors/Coursera-HTML.git<br></code></pre></td></tr></table></figure>
-<p>然后执行git remote -v就可以查看别名是否添加成功。<br>
-<img src="/img/github&amp;vscode/other_name.png" srcset="/img/loading.gif" lazyload alt="别名添加成功"></p>
-<ol start="5">
-<li>推送代码<br>
-使用别名可以很快的推送代码，指令为</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git push 别名 分支名<br></code></pre></td></tr></table></figure>
-<p>在本例中指令为</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git push HTML main<br></code></pre></td></tr></table></figure>
-<p>如果不用别名，指令将会是</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git push git@github.com:kingdom-of-warriors/Coursera-HTML.git main<br></code></pre></td></tr></table></figure>
-<p>，从此处也可以看出别名的方便之处。</p>
-<h1>三、vscode与git的方便操作（待更新）</h1>
-<h1>总结</h1>
-<p>这里的git操作介绍全部基于尚硅谷的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1vy4y1s7k6/?spm_id_from=333.999.0.0&amp;vd_source=217dcc16f6693d64dbc48b7cfad6b2fa">课程</a>，想详细学习git的同学们可以去看！</p>
+                <h1>Lab1 拆炸弹</h1>
+<h2 id="phase-2">phase_2</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-number">400788</span>: a9bc7bfd        stp     x29, x30, [sp, #<span class="hljs-number">-64</span>]!<br><span class="hljs-number">40078</span>c: <span class="hljs-number">910003f</span>d        mov     x29, sp<br><span class="hljs-number">400790</span>: a90153f3        stp     x19, x20, [sp, #<span class="hljs-number">16</span>]<br><span class="hljs-number">400794</span>: <span class="hljs-number">910083e1</span>        add     x1, sp, #<span class="hljs-number">0x20</span><br><span class="hljs-number">400798</span>: <span class="hljs-number">940000f</span>9        bl      <span class="hljs-number">400b</span>7c &lt;read_8_numbers&gt;<br></code></pre></td></tr></table></figure>
+<p>观察 <code>phase_2</code> 的汇编代码，栈上开辟了64位空间，看到一个<code>read_8_numbers</code>的函数，此时x1指向sp+32处，显然x1代表了一个数组的起始地址。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs C">│<span class="hljs-number">400b</span>7c: d10083ff        sub     sp, sp, #<span class="hljs-number">0x20</span><br>│<span class="hljs-number">400b</span>80: a9017bfd        stp     x29, x30, [sp, #<span class="hljs-number">16</span>]<br>│<span class="hljs-number">400b</span>84: <span class="hljs-number">910043f</span>d        add     x29, sp, #<span class="hljs-number">0x10</span><br>│<span class="hljs-number">400b</span>88: aa0103e2        mov     x2, x1<br>│<span class="hljs-number">400b</span>8c: <span class="hljs-number">91007021</span>        add     x1, x1, #<span class="hljs-number">0x1c</span><br>│<span class="hljs-number">400b</span>90: f90007e1        str     x1, [sp, #<span class="hljs-number">8</span>]<br>│<span class="hljs-number">400b</span>94: <span class="hljs-number">91006041</span>        add     x1, x2, #<span class="hljs-number">0x18</span><br>│<span class="hljs-number">400b</span>98: f90003e1        str     x1, [sp]<br>│<span class="hljs-number">400b</span>9c: <span class="hljs-number">91005047</span>        add     x7, x2, #<span class="hljs-number">0x14</span><br>│<span class="hljs-number">400b</span>a0: <span class="hljs-number">91004046</span>        add     x6, x2, #<span class="hljs-number">0x10</span><br>│<span class="hljs-number">400b</span>a4: <span class="hljs-number">91003045</span>        add     x5, x2, #<span class="hljs-number">0xc</span><br>│<span class="hljs-number">400b</span>a8: <span class="hljs-number">91002044</span>        add     x4, x2, #<span class="hljs-number">0x8</span><br>│<span class="hljs-number">400b</span>ac: <span class="hljs-number">91001043</span>        add     x3, x2, #<span class="hljs-number">0x4</span><br>│<span class="hljs-number">400b</span>b0: <span class="hljs-number">90000321</span>        adrp    x1, <span class="hljs-number">464000</span> &lt;free_mem+<span class="hljs-number">0x40</span>&gt;<br>│<span class="hljs-number">400b</span>b4: <span class="hljs-number">91216021</span>        add     x1, x1, #<span class="hljs-number">0x858</span><br>│<span class="hljs-number">400b</span>b8: <span class="hljs-number">94001872</span>        bl      <span class="hljs-number">406</span>d80 &lt;__isoc99_sscanf&gt;<br>│<span class="hljs-number">400b</span>bc: <span class="hljs-number">71001</span>c1f        cmp     w0, #<span class="hljs-number">0x7</span><br></code></pre></td></tr></table></figure>
+<p>再观察<code>read_8_numbers</code>代码，它是把内存中的值传递到寄存器（和栈上）中方便使用。<br>
+第六行将x1寄存器中的值（数组的第8个数，第10个参数的地址）写入内存（栈）上，同理第7行将x1寄存器中的值（数组的第7个数，第9个参数的地址）写入内存（栈）上；把剩下的数组剩下的6个地址写入寄存器x2-x7中。<br>
+以下是<code>read_8_numbers</code>C语言代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">void</span> <span class="hljs-title function_">read_8_numbers</span><span class="hljs-params">(<span class="hljs-type">char</span> *line, <span class="hljs-type">int</span> *buf)</span>&#123;<br>    <span class="hljs-type">int</span> ret;<br>    ret = <span class="hljs-built_in">sscanf</span>(line, <span class="hljs-string">&quot;%d %d %d %d %d %d %d %d&quot;</span>, <br>    &amp;buf[<span class="hljs-number">0</span>], &amp;buf[<span class="hljs-number">1</span>], &amp;buf[<span class="hljs-number">2</span>], &amp;buf[<span class="hljs-number">3</span>], <br>    &amp;buf[<span class="hljs-number">4</span>], &amp;buf[<span class="hljs-number">5</span>], &amp;buf[<span class="hljs-number">6</span>], &amp;buf[<span class="hljs-number">7</span>]);<br>    <span class="hljs-keyword">if</span>(ret &lt;= <span class="hljs-number">7</span>) explode();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>回看<code>phase_2</code>接下来的汇编代码，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs C">│<span class="hljs-number">40079</span>c: b94023e0        ldr     w0, [sp, #<span class="hljs-number">32</span>]<br>│<span class="hljs-number">4007</span>a0: <span class="hljs-number">7100041f</span>        cmp     w0, #<span class="hljs-number">0x1</span><br>│<span class="hljs-number">4007</span>a4: <span class="hljs-number">54000081</span>        b.ne    <span class="hljs-number">4007b</span>4 &lt;phase_2+<span class="hljs-number">0x2c</span>&gt;  <span class="hljs-comment">// b.any</span><br>│<span class="hljs-number">4007</span>a8: b94027e0        ldr     w0, [sp, #<span class="hljs-number">36</span>]<br>│<span class="hljs-number">4007</span>ac: <span class="hljs-number">7100041f</span>        cmp     w0, #<span class="hljs-number">0x1</span><br>│<span class="hljs-number">4007b</span>0: <span class="hljs-number">54000040</span>        b.eq    <span class="hljs-number">4007b</span>8 &lt;phase_2+<span class="hljs-number">0x30</span>&gt;  <span class="hljs-comment">// b.none</span><br>│<span class="hljs-number">4007b</span>4: <span class="hljs-number">940000</span>d0        bl      <span class="hljs-number">400</span>af4 &lt;explode&gt;<br>│<span class="hljs-number">4007b</span>8: <span class="hljs-number">910083f</span>3        add     x19, sp, #<span class="hljs-number">0x20</span><br>│<span class="hljs-number">4007b</span>c: <span class="hljs-number">9100e3</span>f4        add     x20, sp, #<span class="hljs-number">0x38</span><br>│<span class="hljs-number">4007</span>c0: <span class="hljs-number">14000004</span>        b       <span class="hljs-number">4007</span>d0 &lt;phase_2+<span class="hljs-number">0x48</span>&gt;<br>│<span class="hljs-number">4007</span>c4: <span class="hljs-number">91001273</span>        add     x19, x19, #<span class="hljs-number">0x4</span><br>│<span class="hljs-number">4007</span>c8: eb14027f        cmp     x19, x20<br>│<span class="hljs-number">4007</span>cc: <span class="hljs-number">54000140</span>        b.eq    <span class="hljs-number">4007f</span>4 &lt;phase_2+<span class="hljs-number">0x6c</span>&gt;  <span class="hljs-comment">// b.none</span><br>│<span class="hljs-number">4007</span>d0: b9400260        ldr     w0, [x19]<br>│<span class="hljs-number">4007</span>d4: b9400661        ldr     w1, [x19, #<span class="hljs-number">4</span>]<br>│<span class="hljs-number">4007</span>d8: <span class="hljs-number">0b010000</span>        add     w0, w0, w1<br>│<span class="hljs-number">4007</span>dc: <span class="hljs-number">11001000</span>        add     w0, w0, #<span class="hljs-number">0x4</span><br>│<span class="hljs-number">4007e0</span>: b9400a61        ldr     w1, [x19, #<span class="hljs-number">8</span>]<br>│<span class="hljs-number">4007e4</span>: <span class="hljs-number">6b</span>00003f        cmp     w1, w0<br>│<span class="hljs-number">4007e8</span>: <span class="hljs-number">54f</span>ffee0        b.eq    <span class="hljs-number">4007</span>c4 &lt;phase_2+<span class="hljs-number">0x3c</span>&gt;  <span class="hljs-comment">// b.none</span><br>│<span class="hljs-number">4007</span>ec: <span class="hljs-number">940000</span>c2        bl      <span class="hljs-number">400</span>af4 &lt;explode&gt;<br>│<span class="hljs-number">4007f</span>0: <span class="hljs-number">17f</span>ffff5        b       <span class="hljs-number">4007</span>c4 &lt;phase_2+<span class="hljs-number">0x3c</span>&gt;<br></code></pre></td></tr></table></figure>
+<p>第一行把数组指针的地址存到了sp+32处，那么[sp, #32]就代表line[0]的地址，[sp, #36]就代表line[1]的地址，以此类推。</p>
 
                 
               </div>
@@ -358,45 +300,11 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/tools/" class="category-chain-item">tools</a>
-  
-  
-    <span>></span>
-    
-  <a href="/categories/tools/github/" class="category-chain-item">github</a>
-  
-  
-
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/linux/" class="print-no-link">#linux</a>
-      
-        <a href="/tags/git/" class="print-no-link">#git</a>
-      
-        <a href="/tags/github/" class="print-no-link">#github</a>
-      
-        <a href="/tags/vscode/" class="print-no-link">#vscode</a>
+        <a href="/tags/notes/" class="print-no-link">#notes</a>
       
     </div>
   
@@ -408,8 +316,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>linux上的vscode、git与github的互联工作流</div>
-      <div>https://kingdom-of-warriors.github.io/2024/07/26/git&amp;github/</div>
+      <div>操作系统Lab思路</div>
+      <div>https://kingdom-of-warriors.github.io/2024/10/06/操作系统Lab思路/</div>
     </div>
     <div class="license-meta">
       
@@ -421,7 +329,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月26日</div>
+          <div>2024年10月6日</div>
         </div>
       
       
@@ -449,29 +357,6 @@
 
 
               
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/07/27/leetcode_main10_LCR317/" title="动态规划解决正则匹配问题">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">动态规划解决正则匹配问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/07/26/sabaki&amp;katago/" title="在ubuntu上部署Sabaki以及围棋引擎katago">
-                        <span class="hidden-mobile">在ubuntu上部署Sabaki以及围棋引擎katago</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
             </div>
 
             
@@ -487,7 +372,7 @@
         var options = Object.assign(
           {"clientID":"Ov23liz6eV0VasfLM4z1","clientSecret":"65c93e1b98781b2517f0ae355361bb087488e8f7","repo":"kingdom-of-warriors.github.io","owner":"kingdom-of-warriors","admin":["kingdom-of-warriors"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '6ebdce640e8836b79f2add9b2466262e'
+            id: '41eabc4b16022a277f90fc508970f227'
           }
         )
         var gitalk = new Gitalk(options);
