@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Arm/head.png">
 <meta property="article:published_time" content="2024-09-28T05:29:18.000Z">
-<meta property="article:modified_time" content="2024-10-13T10:22:33.359Z">
+<meta property="article:modified_time" content="2024-10-13T10:35:15.285Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
@@ -912,7 +912,7 @@ CPU按照OS配置的规则把虚拟地址翻译成物理地址，翻译对于应
 <li>写操作：从内存中复制m&gt;0个字节到文件中。</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-type">ssize_t</span> <span class="hljs-title function_">read</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> count)</span>;<br><span class="hljs-comment">// 返回值：成功(读到字节数)，遇到EOF(0)，失败(-1)</span><br><span class="hljs-type">ssize_t</span> <span class="hljs-title function_">write</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> count)</span>;<br><span class="hljs-comment">// 返回值：成功(写入字节数)，失败(-1)</span><br></code></pre></td></tr></table></figure>
-<p>读写事例：</p>
+<p>读写示例：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 打开文件 hello.txt。O_RDONLY 表示以只读方式打开</span><br>    <span class="hljs-type">int</span> fd = open(<span class="hljs-string">&quot;hello.txt&quot;</span>, O_RDONLY);<br>    <span class="hljs-type">char</span> result[<span class="hljs-number">14</span>];<br>    <span class="hljs-comment">// 从 fd 对应的文件中读取 13 个字节</span><br>    read(fd, result, <span class="hljs-number">13</span>);<br>    <span class="hljs-comment">// 向屏幕输出读取到的字符串</span><br>    write(<span class="hljs-number">1</span>, result, <span class="hljs-number">13</span>);<br>    close(fd);<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
