@@ -19,16 +19,16 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令 容器命令 docker 容器数据卷   Dockerfile  关键字含义     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载之前的 docker">
+    <meta name="description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令 容器命令 docker 容器数据卷   Dockerfile  关键字含义 构建镜像的命令 例子     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker学习笔记">
 <meta property="og:url" content="https://kingdom-of-warriors.github.io/2024/09/29/docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令 容器命令 docker 容器数据卷   Dockerfile  关键字含义     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载之前的 docker">
+<meta property="og:description" content="学习要求 在 ubuntu 上安装 docker 给 docker 配置代理 docker 常用指令  帮助启动 镜像命令 容器命令 docker 容器数据卷   Dockerfile  关键字含义 构建镜像的命令 例子     学习要求  有可以稳定访问 github 的代理； 最好是 Linux 系统，windows系统可以用wsl子系统。  在 ubuntu 上安装 docker  卸载">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/docker/Docker-Logo.png">
 <meta property="article:published_time" content="2024-09-29T15:18:15.000Z">
-<meta property="article:modified_time" content="2024-10-16T13:11:36.458Z">
+<meta property="article:modified_time" content="2024-10-16T15:32:44.483Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="docker">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.5k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          12 分钟
+          13 分钟
         
       </span>
     
@@ -299,6 +299,8 @@
 <li><a href="#dockerfile">Dockerfile</a>
 <ul>
 <li><a href="#-----">关键字含义</a></li>
+<li><a href="#-------">构建镜像的命令</a></li>
+<li><a href="#--">例子</a></li>
 </ul>
 </li>
 </ul>
@@ -488,7 +490,13 @@ Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一
 <li><code>RUN</code>：容器构建时运行的命令，有shell和exec两种格式；</li>
 <li><code>WORKDIR</code>：容器创建后默认的工作目录；</li>
 <li><code>ENV</code>：在构建镜像过程中设置环境变量；（例：ENV DEBIAN_FRONTEND=noninteractive）</li>
+<li><code>ADD</code>：</li>
 </ul>
+<h3 id="构建镜像的命令">构建镜像的命令</h3>
+<h3 id="例子">例子</h3>
+<p>以操作系统的Lab1为例。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">20.04</span><br><span class="hljs-keyword">ENV</span> DEBIAN_FRONTEND=noninteractive<br><span class="hljs-keyword">ENV</span> TZ=Asia/Shanghai<br><span class="hljs-keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span><br><span class="language-bash">    apt-get install -y \</span><br><span class="language-bash">    cmake=3.16.* \</span><br><span class="language-bash">    cmake-curses-gui=3.16.* \</span><br><span class="language-bash">    make \</span><br><span class="language-bash">    ninja-build \</span><br><span class="language-bash">    cpio \</span><br><span class="language-bash">    binutils \</span><br><span class="language-bash">    binutils-aarch64-linux-gnu \</span><br><span class="language-bash">    binutils-riscv64-linux-gnu \</span><br><span class="language-bash">    gcc=4:9.3.* \</span><br><span class="language-bash">    gcc-aarch64-linux-gnu=4:9.3.* \</span><br><span class="language-bash">    gcc-riscv64-linux-gnu=4:9.3.* \</span><br><span class="language-bash">    g++=4:9.3.* \</span><br><span class="language-bash">    g++-aarch64-linux-gnu=4:9.3.* \</span><br><span class="language-bash">    g++-riscv64-linux-gnu=4:9.3.* \</span><br><span class="language-bash">    grub-common \</span><br><span class="language-bash">    grub-pc-bin \</span><br><span class="language-bash">    xorriso &amp;&amp; \</span><br><span class="language-bash">    apt-get clean &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">rm</span> -rf /var/lib/apt/lists/*</span><br></code></pre></td></tr></table></figure>
+<p>新建文件Dockerfile，写入以上内容，然后运行 <code>docker build -t 镜像名：版本 .</code> 即可。</p>
 
                 
               </div>
