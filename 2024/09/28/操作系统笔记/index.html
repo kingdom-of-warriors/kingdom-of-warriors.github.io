@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Arm/head.png">
 <meta property="article:published_time" content="2024-09-28T05:29:18.000Z">
-<meta property="article:modified_time" content="2024-11-18T03:00:41.942Z">
+<meta property="article:modified_time" content="2024-11-18T10:43:43.859Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.9k 字
+          10k 字
         
       </span>
     
@@ -242,7 +242,7 @@
         
         
         
-          83 分钟
+          85 分钟
         
       </span>
     
@@ -338,6 +338,12 @@
 <ul>
 <li><a href="#aarch64---linux-----">AArch64常见的Linux的系统调用</a></li>
 <li><a href="#------">系统调用例子</a></li>
+</ul>
+</li>
+<li><a href="#------">系统调用优化</a>
+<ul>
+<li><a href="#vdso">VDSO</a></li>
+<li><a href="#flex-sc">Flex-SC</a></li>
 </ul>
 </li>
 </ul>
@@ -851,6 +857,13 @@ CPU收到中断信号。
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    write(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;hello, world\n&quot;</span>, <span class="hljs-number">13</span>);<br>    _exit(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>系统调用编号放在x8中，传参还是x0-x7。汇编代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">// First, call write(1, &quot;hello, world\n&quot;, 13)</span><br>movq 	x8, #<span class="hljs-number">0x40</span> 	 <span class="hljs-comment">//  write is system call 64</span><br>movq 	x0, #<span class="hljs-number">0x1</span> 	  <span class="hljs-comment">// Arg1:stdout has descriptor 1</span><br>adrp 	x3, .LC0  	<br>add x1,x3,:lo12:.LC0 <span class="hljs-comment">// Arg2:Hello world string</span><br>movq 	x2, #<span class="hljs-number">0xd</span>       <span class="hljs-comment">// Arg3:string length</span><br>svc     	  	  <span class="hljs-comment">// Make the system call</span><br><span class="hljs-comment">// Next, call exit(0)</span><br>movq 	x8, #<span class="hljs-number">0x5d</span>	 <span class="hljs-comment">//  _exit is system call 93</span><br>movq 	x0, #<span class="hljs-number">0x0</span>    <span class="hljs-comment">//   Arg1:exit status is 0</span><br>svc 		  	 <span class="hljs-comment">//  Make the system call</span><br></code></pre></td></tr></table></figure>
+<h2 id="系统调用优化">系统调用优化</h2>
+<h3 id="VDSO">VDSO</h3>
+<p>系统调用的时延不可忽略，其是调用非常频繁的情况。为了降低系统调用时延，如果没有特权级切换，那么就不需要保存恢复状态。</p>
+<p>“gettimeofday” 在编译时作为内核的一部分。在用户态运行时，将&quot;gettimeofday&quot;的代码加载到一块与应用共享的内存页，这个页称为：VDSO。Time 的值同样映射到用户态空间（只读），只有在内核态才能更新这个值。</p>
+<h3 id="Flex-SC">Flex-SC</h3>
+<p>在不切换状态的情况下实现系统调用。引入 <code>system call page</code> ，由 <code>user &amp; kernel</code> 共享。用户进程可以将系统调用的请求 push 到 <code>system call page</code>，内核会从<code>system call page</code> poll <code>system call</code> 请求。将系统调用的调用和执行解耦，可分布到不同的CPU核。</p>
+<p>单核也可以优化。</p>
 <h1>从应用视角看操作系统抽象</h1>
 <h2 id="进程">进程</h2>
 <p>分时复用有限的CPU资源。让多个应用程序轮流使用处理器核心。</p>
@@ -1286,7 +1299,8 @@ ADDR &amp; ~(SLAB_SIZE-1)<br>
 <li>FIFO策略：操作系统维护一个队列用于记录换入内存的物理页号，每换入一个物理页就把其页号加到队尾。<br>
 <span style="color: red;">Belady异常</span>：使用FIFO策略，物理资源增加反而导致了性能下降。</li>
 <li>Second Chance策略：FIFO 策略的一种改进版本：为每一个物理页号维护一个访问标志位。如果访问的页面号已经处在队列中，则置上其访问标志位。<br>
-换页时查看队头：1）无标志则换出；2）有标志则去除并放入队尾，继续寻找</li>
+换页时查看队头：1）无标志则换出；2）有标志则去除并放入队尾，继续寻找。</li>
+<li>时钟算法：</li>
 </ol>
 
                 
