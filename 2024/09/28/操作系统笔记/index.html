@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Arm/head.png">
 <meta property="article:published_time" content="2024-09-28T05:29:18.000Z">
-<meta property="article:modified_time" content="2024-12-05T13:59:00.994Z">
+<meta property="article:modified_time" content="2024-12-14T16:26:20.029Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="notes">
 <meta name="twitter:card" content="summary_large_image">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          13k 字
         
       </span>
     
@@ -242,7 +242,7 @@
         
         
         
-          98 分钟
+          109 分钟
         
       </span>
     
@@ -486,6 +486,19 @@
 <ul>
 <li><a href="#--------">进程切换基本步骤</a></li>
 <li><a href="#-------vs------">处理器上下文 vs. 进程上下文</a></li>
+<li><a href="#-------">进程切换全过程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#--">线程</a>
+<ul>
+<li><a href="#----">线程介绍</a></li>
+<li><a href="#------">如何使用线程</a></li>
+<li><a href="#--">线程</a>
+<ul>
+<li><a href="#------">多线程的进程</a></li>
+<li><a href="#-----------">用户态线程与内核态线程</a></li>
 </ul>
 </li>
 </ul>
@@ -1387,7 +1400,7 @@ ADDR &amp; ~(SLAB_SIZE-1)<br>
 SP：用户栈分配后才确定地址<br>
 PC（保存在<code>ELR_EL1</code>）：加载ELF后才知道入口所在地址<br>
 大部分寄存器初始值可直接赋为0。<br>
-<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%9D%E5%A7%8B%E5%8C%96.png" srcset="/img/loading.gif" lazyload alt="处理器上下文初始化"></p>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%9D%E5%A7%8B%E5%8C%96.png" srcset="/img/loading.gif" lazyload alt="处理器上下文初始化"><img src="image.png" srcset="/img/loading.gif" lazyload alt="alt text"></p>
 <h2 id="进程的退出与等待">进程的退出与等待</h2>
 <p>需要一个系统调用使进程显式退出（exit）。但使用return更为常规，此时可由libc的代码调用<code>process_exit</code>，退出进程。</p>
 <p>实现：销毁PCB及其中保存的所有内容，并告知内核选择其他进程执行（细节之后介绍）。<br>
@@ -1445,6 +1458,61 @@ PC（保存在<code>ELR_EL1</code>）：加载ELF后才知道入口所在地址<
 告知内核选择下一个执行的进程，也就涉及到了进程的切换。</p>
 </li>
 </ul>
+<h3 id="进程切换全过程">进程切换全过程</h3>
+<ol>
+<li>p0进入内核态，由硬件完成部分寄存器保存：PC和PSTATE分别自动保存到ELR_EL1和SPSR_EL1。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A21.png" srcset="/img/loading.gif" lazyload alt="进程切换过程1"></li>
+<li>p0处理器上下文保存：将处理器中的寄存器值保存到处理器上下文对应的位置。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A22.png" srcset="/img/loading.gif" lazyload alt="进程切换过程2"></li>
+<li>虚拟地址空间切换：设置页表相关寄存器（TTBR0_EL1），使用PCB中保存的页表基地址赋值给TTBR0_EL1。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A23.png" srcset="/img/loading.gif" lazyload alt="进程切换过程3"></li>
+<li>内核栈切换：设置内核中的栈寄存器SP_EL1，使用PCB中保存的内核栈顶地址赋值给SP_EL1。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A24.png" srcset="/img/loading.gif" lazyload alt="进程切换过程4"></li>
+<li>进程上下文切换：设置cur_proc为之后要执行的进程（p1），表明之后操作系统将以p1的身份运行。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A25.png" srcset="/img/loading.gif" lazyload alt="进程切换过程5"></li>
+<li>p1处理器上下文恢复：从处理器上下文中加载各寄存器的值，放入对应寄存器中。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A26.png" srcset="/img/loading.gif" lazyload alt="进程切换过程6"></li>
+<li>p1处理器上下文恢复：由硬件自动恢复部分寄存器，将ELR_EL1和SPSR_EL1中的值自动保存到PC和PSTATE中。<br>
+<img src="/img/Arm/%E8%BF%9B%E7%A8%8B/%E5%88%87%E6%8D%A27.png" srcset="/img/loading.gif" lazyload alt="进程切换过程7"></li>
+</ol>
+<h1>线程</h1>
+<p>多核调度简单方法：进程数量一般远超过CPU核数，通过简单分配，使每个核至少分得一个进程。<br>
+存在局限：单一进程无法利用多核资源，一个进程同一时刻只能被调度到其中一个核上运行。<br>
+如果一个程序想同时利用多核，该怎么办呢？<strong>使用 FORK ！</strong><br>
+FORK局限：进程间隔离过强，共享数据困难，各进程拥有独立的地址空间，共享需以页为粒度，协调困难，需要复杂的通信机制（如管道）。而且进程管理开销较大，创建是地址空间复制，切换是页表切换。</p>
+<h2 id="线程介绍">线程介绍</h2>
+<p>线程只包含运行时的状态，静态部分由进程提供，包括了执行所需的最小状态（主要是寄存器和栈）。<br>
+一个进程可以包含多个线程，每个线程共享同一地址空间（方便数据共享和交互），允许进程内并行。</p>
+<h2 id="如何使用线程">如何使用线程</h2>
+<ul>
+<li>常用库：POSIX threads（pthreads），包含约60个函数的标准接口，实现的功能与进程相关系统调用相似。</li>
+<li>创建：pthread_create</li>
+<li>回收：pthread_join</li>
+<li>退出：pthread_exit<br>
+<strong>注意</strong>：一个线程执行系统调用，可能影响该进程的所有线程，如exit会使所有线程退出。</li>
+</ul>
+<p>一个示例代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">/* pthreads &quot;hello, world&quot; program */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-comment">/* thread routine */</span> <span class="hljs-comment">// 子线程</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">thread</span><span class="hljs-params">(<span class="hljs-type">void</span> *vargp)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, world!\n&quot;</span>); <br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123; <span class="hljs-comment">// 主线程 </span><br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-comment">// &amp;tid是子线程ID，thread是子线程执行起点</span><br>    pthread_create(&amp;tid, <span class="hljs-literal">NULL</span>, thread, <span class="hljs-literal">NULL</span>); <span class="hljs-comment">// 创建线程接口</span><br>    pthread_join(tid, <span class="hljs-literal">NULL</span>); <span class="hljs-comment">// NULL为线程返回值</span><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>主线程创建子线程后，两线程独立执行。若子线程先执行，则exit被调用，子线程直接被终止，如何避免？加入join操作！<br>
+<img src="/img/Arm/%E7%BA%BF%E7%A8%8B/join.png" srcset="/img/loading.gif" lazyload alt="加入join后的程序控制流"><br>
+基于join的方法存在什么问题？需要主线程手动调用回收资源，若主线程未调用则可能出现资源溢出。<br>
+解决方案：加入detach操作。调用detach可使线程进入“分离”状态，分离线程不能被其他线程杀死或回收，退出时资源自动回收。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">thread</span><span class="hljs-params">(<span class="hljs-type">void</span> *vargp)</span> &#123;<br>    pthread_detach(pthread_self()); <span class="hljs-comment">// 返回自身线程ID</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, world!\n&quot;</span>); <br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) pthread_create(&amp;tid, <span class="hljs-literal">NULL</span>, thread, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果detach和join一起使用会怎么样？会返回22，22代表illegal arguments，因为这个线程无法join。<br>
+detach代表线程完全独立了吗？没有。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">thread</span><span class="hljs-params">(<span class="hljs-type">void</span> *vargp)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, world!\n&quot;</span>); <br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">pthread_t</span> tid;<br>    pthread_create(&amp;tid, <span class="hljs-literal">NULL</span>, thread, <span class="hljs-literal">NULL</span>);<br>    pthread_detach(tid);<br>    pthread_exit(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样不会有任何输出，核心原因是主函数返回后隐式调用exit，强制终止所有线程。<br>
+解决方案：加入pthread_exit（见上面），只退出当前线程（参数为返回值）。</p>
+<h2 id="线程">线程</h2>
+<h3 id="多线程的进程">多线程的进程</h3>
+<p>一个进程可以包含多个线程，一个进程的多线程可以在不同处理器上同时执行。调度的基本单元由进程变为了线程，每个线程都有自己的执行状态，切换的单位由进程变为了线程。<br>
+每个线程拥有自己的栈，内核中也有为线程准备的内核栈，其它区域共享（数据、代码、堆）。</p>
+<h3 id="用户态线程与内核态线程">用户态线程与内核态线程</h3>
+<p>根据线程是否受内核管理，可以将线程分为两类：</p>
+<ol>
+<li>内核态线程：内核可见，受内核管理，由内核创建，线程相关信息存放在内核中；</li>
+<li>用户态线程：内核不可见，不受内核直接管理，在应用态创建，线程相关信息主要存放在应用数据中。</li>
+</ol>
 
                 
               </div>
