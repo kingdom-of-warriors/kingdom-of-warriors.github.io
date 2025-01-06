@@ -27,8 +27,13 @@
 <meta property="og:description" content="RoboSuite 论文 地址 Introduction robosuite 由 MuJoCo 引擎驱动，主要作用是通过物理仿真模拟机械臂与环境交互，提供一系列的 API，可以从中获取数据进行数据驱动的强化学习和模拟学习。 最新版本：1.5，支持 7 种 机器人（robot），8 种抓取臂（gripper），6 种控制模式和 9 种标准任务。 系统模块   模型 API：用模块或程序去定义、描述仿">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/low_dim.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/submodule.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/image_mode.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/change.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/datasize.png">
 <meta property="article:published_time" content="2024-12-28T16:09:48.000Z">
-<meta property="article:modified_time" content="2025-01-04T08:05:35.761Z">
+<meta property="article:modified_time" content="2025-01-06T05:00:07.426Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
@@ -230,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          2.7k 字
         
       </span>
     
@@ -241,7 +246,7 @@
         
         
         
-          17 分钟
+          23 分钟
         
       </span>
     
@@ -538,6 +543,56 @@
 <p>“low-dim”：训练 2000 轮，100 个梯度过程，50 轮验证一次；<br>
 “image”：训练 600 轮，500 个梯度过程，20 轮验证一次。</p>
 <h3 id="实验">实验</h3>
+<h4 id="PH-数据集和-MH-数据集">PH 数据集和 MH 数据集</h4>
+<p><img src="/img/robosuite/low_dim.png" srcset="/img/loading.gif" lazyload alt="不同模型在low_dim模式下的观测"><br>
+结论：</p>
+<ul>
+<li>有历史记录功能的模型（BC-RNN）比 BC 表现要好。模型在 PH 数据集上的表现好于 MH 数据集，可能是因为 MH 数据集中存在演示质量较差的数据。</li>
+<li>Batch RL 算法（BCQ, CQL）无法从人类数据集中学到东西。</li>
+</ul>
+<h4 id="不同质量的数据">不同质量的数据</h4>
+<p><img src="/img/robosuite/submodule.png" srcset="/img/loading.gif" lazyload alt="不同质量数据集结果"><br>
+结论：</p>
+<ul>
+<li>BC-RNN 在不同质量的数据集中是一个强 baseline，但是它仍然有提升空间。</li>
+<li>Batch RL 算法在更简单的数据集上也一筹莫展。</li>
+</ul>
+<h4 id="low-dim-变为-image-模式">low_dim 变为 image 模式</h4>
+<p><img src="/img/robosuite/image_mode.png" srcset="/img/loading.gif" lazyload alt="image模式的结果"><br>
+<img src="/img/robosuite/change.png" srcset="/img/loading.gif" lazyload alt="重要因素的影响"><br>
+结论：</p>
+<ul>
+<li>在 image 模式下的结论与 low_dim 模式下的结论一致。</li>
+<li>用于机器人本体感知的特征是重要的。对 low_dim 模式，添加末端执行器的信息会严重伤害机器人（性能下降 49%～88%），但 image 模式就比较包容这个信息（性能下降 2%～29%），性能下降的可能原因是过拟合。</li>
+<li>图像初始化和手腕的观察对操作任务是至关重要的。移除像素移动随机化和手腕相机会导致严重的性能下降。</li>
+</ul>
+<h4 id="超参数选择">超参数选择</h4>
+<p>图见上面。</p>
+<ol>
+<li>lr 从 1e-4 到 1e-3 变化，image 模式受很大影响而 low_dim 模式受影响小。</li>
+<li>大的 MLP 网络也会降低性能。</li>
+<li>浅层卷积网络代替 resnet 会降低性能。</li>
+<li>减少 RNN 隐藏层维度会降低性能。</li>
+<li>使用 GMM 策略和 resnet 编码器效果好。</li>
+</ol>
+<h4 id="最佳模型选择">最佳模型选择</h4>
+<img src=/img/robosuite/select_best.png width="50%" style="float:left; margin-right:20px;">
+<p>离线学习的最佳模型选择具有挑战性。左图是选择 val_loss 最小的模型或者最后一个 ckpt 与该策略的最佳模型的结果对比，可见选择最佳模型是 non-trivial 的。</p>
+<div style="clear:both"></div>
+<h4 id="数据集大小的影响">数据集大小的影响</h4>
+<p><img src="/img/robosuite/datasize.png" srcset="/img/loading.gif" lazyload alt="数据集大小的影响"><br>
+注意到，不太复杂的任务(Lift Can)可以使用一小部分数据产生熟练的策略(成功率75 % ~ 100 %)。其次，在更复杂的任务(Square Transport)上训练的政策在使用50 %或20 %的数据时受到了很大的影响。</p>
+<h4 id="转移到真实世界">转移到真实世界</h4>
+<p>训练的机器人可以熟练的掌握 Lift 和 Can 任务，非常难的 Tool Hang 任务也可以取得一定成功（3.3%）。这表明在模拟中训练出来的模型是有潜力转移到现实中的。</p>
+<h3 id="结论与探讨">结论与探讨</h3>
+<ol>
+<li>具有时间抽象性的模型可以非常有效地从人类数据集中学习。</li>
+<li>需要提高批量(离线) RL从次优人体数据集学习的能力。</li>
+<li>改善离线的政策选择对于现实世界的设定很重要。</li>
+<li>观测空间的作用很大，超参数也很重要。</li>
+<li>利用大规模的人类数据集来解决更复杂的任务是很有希望的。</li>
+<li>研究结果转移到真实世界环境中。</li>
+</ol>
 
                 
               </div>
