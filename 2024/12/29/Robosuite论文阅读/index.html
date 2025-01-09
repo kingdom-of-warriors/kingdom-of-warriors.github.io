@@ -32,8 +32,9 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/image_mode.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/change.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/datasize.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/Lift_epoch_500.gif">
 <meta property="article:published_time" content="2024-12-28T16:09:48.000Z">
-<meta property="article:modified_time" content="2025-01-06T05:00:07.426Z">
+<meta property="article:modified_time" content="2025-01-09T18:17:43.626Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
@@ -235,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          3.1k 字
         
       </span>
     
@@ -246,7 +247,7 @@
         
         
         
-          23 分钟
+          26 分钟
         
       </span>
     
@@ -593,7 +594,21 @@
 <li>利用大规模的人类数据集来解决更复杂的任务是很有希望的。</li>
 <li>研究结果转移到真实世界环境中。</li>
 </ol>
-
+<h2 id="本周报告（2025-1-3-–-2025-1-10）">本周报告（2025.1.3 – 2025.1.10）</h2>
+<h3 id="工作">工作</h3>
+<ol>
+<li>阅读完 Robomimic 论文，并写完论文阅读笔记；</li>
+<li>配置 robomimic 环境（需要 robomimic 版本为 1.4.0），根据<a target="_blank" rel="noopener" href="https://robomimic.github.io/docs/introduction/getting_started.html">教程</a>实现了一个简单的 low_dim 模式下的 BC 模型，在 Lift 任务上取得了 98% 的成功率，视频保存在 <code>/home/ljr/embodied/robomimic/bc_trained_models/test/20250104171913/videos</code>；<br>
+<img src="/img/robosuite/Lift_epoch_500.gif" srcset="/img/loading.gif" lazyload alt="Lift 任务成功率"></li>
+</ol>
+<h3 id="下周工作">下周工作</h3>
+<ol>
+<li>观察如何将 robomimic 训练出的模型接入 robosuite 中（如何直接加载训练模型？）并观察效果；</li>
+<li>尝试抛开 robomimic 框架训练一个简单的 Lift 任务模型，以熟练掌握机器人使用的具体代码而不是调用 API。</li>
+</ol>
+<h3 id="问题">问题</h3>
+<p>在训练时会报错，但不影响训练，可能是因为我的 linux 系统有桌面，导致 <code>OPENGL</code> 库报错。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash">  File <span class="hljs-string">&quot;/home/ljr/.conda/envs/robosuite/lib/python3.10/site-packages/OpenGL/error.py&quot;</span>, line 230, <span class="hljs-keyword">in</span> glCheckError<br>    raise self._errorClass(<br>OpenGL.raw.EGL._errors.EGLError: EGLError(<br>	err = EGL_NOT_INITIALIZED,<br>	baseOperation = eglMakeCurrent,<br>	cArguments = (<br>		&lt;OpenGL._opaque.EGLDisplay_pointer object at 0x79fb83fa35c0&gt;,<br>		&lt;OpenGL._opaque.EGLSurface_pointer object at 0x79fb900f8ec0&gt;,<br>		&lt;OpenGL._opaque.EGLSurface_pointer object at 0x79fb900f8ec0&gt;,<br>		&lt;OpenGL._opaque.EGLContext_pointer object at 0x79fb900f8e40&gt;,<br>	),<br>	result = 0<br>)<br>Exception ignored <span class="hljs-keyword">in</span>: &lt;<span class="hljs-keyword">function</span> EGLGLContext.__del__ at 0x79fb9018c790&gt;<br>Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;/home/ljr/.conda/envs/robosuite/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py&quot;</span>, line 155, <span class="hljs-keyword">in</span> __del__<br>    self.free()<br>  File <span class="hljs-string">&quot;/home/ljr/.conda/envs/robosuite/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py&quot;</span>, line 149, <span class="hljs-keyword">in</span> free<br>    EGL.eglMakeCurrent(EGL_DISPLAY, EGL.EGL_NO_SURFACE, EGL.EGL_NO_SURFACE, EGL.EGL_NO_CONTEXT)<br>  File <span class="hljs-string">&quot;/home/ljr/.conda/envs/robosuite/lib/python3.10/site-packages/OpenGL/error.py&quot;</span>, line 230, <span class="hljs-keyword">in</span> glCheckError<br>    raise self._errorClass(<br>OpenGL.raw.EGL._errors.EGLError: EGLError(<br>	err = EGL_NOT_INITIALIZED,<br>	baseOperation = eglMakeCurrent,<br>	cArguments = (<br>		&lt;OpenGL._opaque.EGLDisplay_pointer object at 0x79fb83fa35c0&gt;,<br>		&lt;OpenGL._opaque.EGLSurface_pointer object at 0x79fb900f8ec0&gt;,<br>		&lt;OpenGL._opaque.EGLSurface_pointer object at 0x79fb900f8ec0&gt;,<br>		&lt;OpenGL._opaque.EGLContext_pointer object at 0x79fb900f8e40&gt;,<br>	),<br>	result = 0<br>)<br></code></pre></td></tr></table></figure>
                 
               </div>
             
