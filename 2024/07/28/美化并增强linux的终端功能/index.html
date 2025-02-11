@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/linux_shell/zsh_image.jpg">
 <meta property="article:published_time" content="2024-07-28T06:24:50.000Z">
-<meta property="article:modified_time" content="2024-07-31T11:03:01.782Z">
+<meta property="article:modified_time" content="2025-02-11T10:26:00.785Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          933 字
+          1.1k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          8 分钟
+          9 分钟
         
       </span>
     
@@ -315,6 +315,10 @@
 接下来便会进入引导配置环节。如果没有进入引导配置或是配置好以后想重新配置的，输入下列命令： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">p10k configure<br></code></pre></td></tr></table></figure>
 配置的具体选择见<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_72357534/article/details/135453423">资料</a>，里面有每个问题详细的解释。</li>
 </ol>
+<h3 id="配置-AI-辅助的终端">配置 AI 辅助的终端</h3>
+<p>现在 AI 风靡全球，我觉得应该有人开发了 AI 辅助的终端工具，这样一些复杂的命令就可以不用死记硬背了。</p>
+<p><strong>Warp</strong> 是一个不错的选择，但是它集成了太多东西，不够轻量化，这里我更加推荐 <a target="_blank" rel="noopener" href="https://github.com/BuilderIO/ai-shell">ai-shell</a>。具体配置教程如库中所示，只不过我链接的是 deepseek 的 API，这样价格会非常便宜，而且使用体验非常不错，下面是一个使用示例：<br>
+<img src="/img/linux_shell/ai_shell.png" srcset="/img/loading.gif" lazyload alt="ai-shell 使用示例"></p>
 <h3 id="安装插件">安装插件</h3>
 <p>从github上下载两个插件<code>zsh-autosuggestions</code>和<code>zsh-syntax-highlighting</code>，分别用于自动补全和自动高亮。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="hljs-variable">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions<br>git <span class="hljs-built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="hljs-variable">$ZSH_CUSTOM</span>/plugins/zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
