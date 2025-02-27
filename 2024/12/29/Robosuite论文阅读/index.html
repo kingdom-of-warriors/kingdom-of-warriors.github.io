@@ -33,8 +33,14 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/change.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/datasize.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/Lift_epoch_500.gif">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/simpler_ex.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/genesis_ex.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/libero_ex.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid_light.png">
 <meta property="article:published_time" content="2024-12-28T16:09:48.000Z">
-<meta property="article:modified_time" content="2025-02-20T11:25:41.976Z">
+<meta property="article:modified_time" content="2025-02-27T09:02:39.848Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
@@ -236,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k 字
+          4.9k 字
         
       </span>
     
@@ -247,7 +253,7 @@
         
         
         
-          36 分钟
+          41 分钟
         
       </span>
     
@@ -685,6 +691,157 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 推理时看量化，在32fp下 1B 参数对应 3.75G 显存，int8 下对应 0.9G 显存；<br>
 训练时需要的显存是至少推理的9-10倍。</li>
 </ul>
+<p><br><br></p>
+<h2 id="本周报告（2025-2-21-–-2025-2-27）">本周报告（2025.2.21 – 2025.2.27）</h2>
+<h3 id="工作-3">工作</h3>
+<ol>
+<li>调整不同数据集的亮度，判断其 embed 输出和 last hidden state 输出有什么区别；</li>
+</ol>
+<ul>
+<li>获取数据集：一共使用了四个数据集，其情况如下表所示：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>数据集名称</th>
+<th>获取方式</th>
+<th>相机视角</th>
+<th>机械臂种类</th>
+<th>样例图片</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Droid</code></td>
+<td>真实</td>
+<td>三个相机视角，<code>exterior_1_left</code>, <code>wrist</code>,<code>exterior_2_left</code></td>
+<td>Franka</td>
+<td><img src="/img/robosuite/droid.png" srcset="/img/loading.gif" lazyload alt="Droid样例"></td>
+</tr>
+<tr>
+<td><code>simpler_env</code></td>
+<td>仿真</td>
+<td>单一固定视角，从样例视频生成</td>
+<td>Google robot</td>
+<td><img src="/img/robosuite/simpler_ex.png" srcset="/img/loading.gif" lazyload alt="Simpler样例"></td>
+</tr>
+<tr>
+<td><code>genesis</code></td>
+<td>仿真</td>
+<td>多视角，可配置相机位置，主要配置了左中右三种相机位置，从样例视频生成</td>
+<td>Franka</td>
+<td><img src="/img/robosuite/genesis_ex.png" srcset="/img/loading.gif" lazyload alt="Genesis样例"></td>
+</tr>
+<tr>
+<td><code>libero</code></td>
+<td>仿真</td>
+<td>两个相机视角，<code>agentview</code>, <code>wrist</code>，是给好的数据集</td>
+<td>Franka</td>
+<td><img src="/img/robosuite/libero_ex.png" srcset="/img/loading.gif" lazyload alt="Libero样例"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>更改亮度的代码：在照片左上角增加一个点光源</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_point_light</span>(<span class="hljs-params"></span><br><span class="hljs-params">    image_path, </span><br><span class="hljs-params">    center_position,  <span class="hljs-comment"># 光源中心坐标 (x, y)</span></span><br><span class="hljs-params">    radius=<span class="hljs-number">100</span>,        <span class="hljs-comment"># 光源半径</span></span><br><span class="hljs-params">    brightness=<span class="hljs-number">1.5</span>,    <span class="hljs-comment"># 亮度增强因子（1.0为原图）</span></span><br><span class="hljs-params">    light_color=(<span class="hljs-params"><span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span></span>)  <span class="hljs-comment"># 光源颜色（默认为白色）</span></span><br><span class="hljs-params"></span>):<br></code></pre></td></tr></table></figure>
+<div style="display: flex; gap: 20px;">
+  <div>
+      <p>Droid 原始图片：</p>
+      <img src="/img/robosuite/droid.png" srcset="/img/loading.gif" lazyload alt="原始图片" width="400"/>
+  </div>
+  <div>
+      <p>Droid 添加点光源后：</p>
+      <img src="/img/robosuite/droid_light.png" srcset="/img/loading.gif" lazyload alt="添加光源后的图片" width="400"/>
+  </div>
+</div>
+</li>
+<li>
+<p>判断向量之间的差异：主要是使用了余弦相似度和 MSE</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compare_vectors</span>(<span class="hljs-params">vec1, vec2, method=<span class="hljs-string">&quot;cosine&quot;</span></span>):<br>  <span class="hljs-string">&quot;&quot;&quot;比较两个向量的差异，支持余弦相似度或MSE&quot;&quot;&quot;</span><br>  <span class="hljs-keyword">if</span> method == <span class="hljs-string">&quot;cosine&quot;</span>:<br>      cos = torch.nn.CosineSimilarity(dim=<span class="hljs-number">0</span>)<br>      <span class="hljs-keyword">return</span> cos(vec1.flatten(), vec2.flatten()).item()<br>  <span class="hljs-keyword">elif</span> method == <span class="hljs-string">&quot;mse&quot;</span>:<br>      mse = torch.nn.MSELoss()<br>      <span class="hljs-keyword">return</span> mse(vec1, vec2).item()<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>最终结果<br>
+可以看出， gap 比较大的是 Libero 数据集，其它数据集的余弦相似度都在 0.8 以上。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>平均嵌入向量比较</th>
+<th>平均最后隐藏层比较</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Droid</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.7992</mn></mrow><annotation encoding="application/x-tex">0.7992</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.7992</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.8026</mn></mrow><annotation encoding="application/x-tex">0.8026</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.8026</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>Genesis</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.9608</mn></mrow><annotation encoding="application/x-tex">0.9608</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.9608</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.8570</mn></mrow><annotation encoding="application/x-tex">0.8570</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.8570</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>Libero</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.6564</mn></mrow><annotation encoding="application/x-tex">0.6564</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.6564</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.7427</mn></mrow><annotation encoding="application/x-tex">0.7427</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.7427</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>Simpler</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.9278</mn></mrow><annotation encoding="application/x-tex">0.9278</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.9278</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.8330</mn></mrow><annotation encoding="application/x-tex">0.8330</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.8330</span></span></span></span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<br>
+2. 不同数据集的图片输入 `qwen2-VL` ，其 `embed` 输出和 `last hidden state` 输出有什么区别
+- 仍然是对四张数据集的图片，进行统一化处理（即都 resize 为 224*224），并输入 `qwen2-vl` 模型中，这样可以保证输出的向量维度一样；
+- 对不同数据集的各种向量计算余弦相似度，得到的结果如下：
+<table>
+<thead>
+<tr>
+<th>数据集对比</th>
+<th>嵌入向量相似度</th>
+<th>最后隐藏层相似度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DROID</code> vs <code>Genesis</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.4665</mn></mrow><annotation encoding="application/x-tex">0.4665</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.4665</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.4954</mn></mrow><annotation encoding="application/x-tex">0.4954</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.4954</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>DROID</code> vs <code>Libero</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5317</mn></mrow><annotation encoding="application/x-tex">0.5317</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5317</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5814</mn></mrow><annotation encoding="application/x-tex">0.5814</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5814</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>DROID</code> vs <code>Simpler</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.4757</mn></mrow><annotation encoding="application/x-tex">0.4757</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.4757</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5661</mn></mrow><annotation encoding="application/x-tex">0.5661</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5661</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>Libero</code> vs <code>Genesis</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.6601</mn></mrow><annotation encoding="application/x-tex">0.6601</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.6601</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.6343</mn></mrow><annotation encoding="application/x-tex">0.6343</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.6343</span></span></span></span></td>
+</tr>
+<tr>
+<td><code>Libero</code> vs <code>Simpler</code></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.4494</mn></mrow><annotation encoding="application/x-tex">0.4494</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.4494</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5803</mn></mrow><annotation encoding="application/x-tex">0.5803</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.5803</span></span></span></span></td>
+</tr>
+</tbody>
+</table>
+<p>从结果可以观察到：</p>
+<ol>
+<li>大多数情况下，最后隐藏层的相似度比嵌入向量的相似度更高，这可能表明最后隐藏层包含了更丰富的特征信息</li>
+<li>Libero 和 Genesis 数据集之间的相似度最高，说明这两个数据集的图像特征可能更接近</li>
+<li>整体相似度都在 0.45-0.66 之间，表明不同数据集之间存在一定的差异性</li>
+</ol>
 
                 
               </div>
