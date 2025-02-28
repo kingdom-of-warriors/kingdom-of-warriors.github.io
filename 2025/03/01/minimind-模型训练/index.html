@@ -19,23 +19,21 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Relational data model Edgar F. Codd proposed the relational data model in 1970. Some features:  Store database in simple data structures Access data through high-level language Physical storage left u">
+    <meta name="description" content="我的配置 双卡 4090 服务器，48G 内存，VPN Download Datasets 我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下： 1234from huggingface_hub import snapshot_downloadrepo_id &#x3D; &quot;jingyaogong&#x2F;minimind_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据库原理笔记">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="minimind 模型训练">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="Relational data model Edgar F. Codd proposed the relational data model in 1970. Some features:  Store database in simple data structures Access data through high-level language Physical storage left u">
+<meta property="og:description" content="我的配置 双卡 4090 服务器，48G 内存，VPN Download Datasets 我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下： 1234from huggingface_hub import snapshot_downloadrepo_id &#x3D; &quot;jingyaogong&#x2F;minimind_">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/l1/data_model.png">
-<meta property="article:published_time" content="2025-02-23T16:04:36.000Z">
-<meta property="article:modified_time" content="2025-02-23T16:44:53.374Z">
+<meta property="article:published_time" content="2025-02-28T17:49:33.000Z">
+<meta property="article:modified_time" content="2025-02-28T18:28:15.167Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/l1/data_model.png">
   
   
   
-  <title>数据库原理笔记 - kingdom-of-warriors</title>
+  <title>minimind 模型训练 - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -46,6 +44,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -205,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="数据库原理笔记"></span>
+            <span id="subtitle" data-typed-text="minimind 模型训练"></span>
           
         </div>
 
@@ -216,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-02-24 00:04" pubdate>
-          2025年2月24日 凌晨
+        <time datetime="2025-03-01 01:49" pubdate>
+          2025年3月1日 凌晨
         </time>
       </span>
     
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          138 字
+          247 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -276,163 +276,98 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">数据库原理笔记</h1>
+            <h1 id="seo-header">minimind 模型训练</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>Relational data model</h1>
-<p>Edgar F. Codd proposed the relational data model in 1970.<br>
-Some features:</p>
-<ol>
-<li>Store database in simple data structures</li>
-<li>Access data through high-level language</li>
-<li>Physical storage left up to implementation</li>
-</ol>
-<h2 id="Physical-data-independence">Physical data independence</h2>
-<p>Applications should NOT worry about how data is physically structured and stored, and they should work with a logical data model and declarative query language, leave the implementation details and optimization to DBMS.</p>
-<h2 id="Data-model">Data model</h2>
-<p>A data model is a collection of concepts/tools for describing the data in a database.<br>
-<img src="/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/l1/data_model.png" srcset="/img/loading.gif" lazyload alt="structure of data model"></p>
-<h3 id="Defination-of-relational-data-model">Defination of relational data model</h3>
-<ol>
-<li>A database is a collection of relations and each<br>
-relation is an unordered set of tuples (or rows).</li>
-<li>Each relation has a set of attributes (or columns).</li>
-<li>Each attribute has a name and a domain and each<br>
-tuple has a value for each attribute of the relation.</li>
-<li>Values are atomic/scalar.</li>
-</ol>
-<h3 id="Schema-and-instance">Schema and instance</h3>
+                <h2 id="我的配置">我的配置</h2>
+<p>双卡 4090 服务器，48G 内存，VPN</p>
+<h2 id="Download-Datasets">Download Datasets</h2>
+<p>我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> huggingface_hub <span class="hljs-keyword">import</span> snapshot_download<br>repo_id = <span class="hljs-string">&quot;jingyaogong/minimind_dataset&quot;</span>  <span class="hljs-comment"># 数据集仓库 ID</span><br>local_dir = <span class="hljs-string">&quot;./dataset&quot;</span>  <span class="hljs-comment"># 本地下载目录</span><br>snapshot_download(repo_id=repo_id, repo_type=<span class="hljs-string">&quot;dataset&quot;</span>, local_dir=local_dir)<br></code></pre></td></tr></table></figure>
+<p>由于我的资源是足够的，所以打算训练完整的 <code>MiniMind2</code> 模型，参数如下：</p>
+<table>
+<thead>
+<tr>
+<th>Model Name</th>
+<th>params</th>
+<th>len_vocab</th>
+<th>rope_theta</th>
+<th>n_layers</th>
+<th>d_model</th>
+<th>share</th>
+<th>选择</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MiniMind2-Small</code></td>
+<td>26M</td>
+<td>6400</td>
+<td>1e6</td>
+<td>8</td>
+<td>512</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td><code>MiniMind2-MoE</code></td>
+<td>145M</td>
+<td>6400</td>
+<td>1e6</td>
+<td>8</td>
+<td>640</td>
+<td>1+4</td>
+<td></td>
+</tr>
+<tr>
+<td><code>MiniMind2</code></td>
+<td>104M</td>
+<td>6400</td>
+<td>1e6</td>
+<td>16</td>
+<td>768</td>
+<td>-</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
 <ul>
-<li>Schema: specifies the logical structure of data.（数据库的组织方式，不包含实际数据）</li>
-<li>Instance: concrete table content w.r.t. a given schema.（数据库在某一时刻的实际数据状态）<br>
-<em>A schema rarely changes after being defined, while an instance often changes rapidly.</em><br>
-<strong>An example</strong>:
-<ul>
-<li>
-<p>Database scheme</p>
-<ol>
-<li>Artists (ID, Artist, Year, City)</li>
-<li>Albums (ID, Album, Artist_ID, Year)</li>
-</ol>
-</li>
-<li>
-<p>Database instance</p>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Album</th>
-<th>Artist_ID</th>
-<th>Year</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>The Marriage of Figaro</td>
-<td>1</td>
-<td>1786</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Requiem Mass In D minor</td>
-<td>1</td>
-<td>1791</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Für Elise</td>
-<td>2</td>
-<td>1867</td>
-</tr>
-</tbody>
-</table>
-<p><em>Table: Albums(ID, Album, Artist_ID, Year)</em></p>
-<hr>
-<table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Artist</th>
-<th>Year</th>
-<th>City</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Mozart</td>
-<td>1756</td>
-<td>Salzburg</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Beethoven</td>
-<td>1770</td>
-<td>Bonn</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Chopin</td>
-<td>1810</td>
-<td>Warsaw</td>
-</tr>
-</tbody>
-</table>
-<p><em>Table: Artists(ID, Artist, Year, City)</em></p>
-</li>
+<li><code>rope_theta</code>:</li>
+<li><code>share+route</code>:</li>
 </ul>
-</li>
-</ul>
-<h2 id="Keys">Keys</h2>
-<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⊆</mo><mo stretchy="false">{</mo><msub><mi>A</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>A</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>A</mi><mi>n</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\subseteq \{A_1, A_2, \ldots, A_n\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">⊆</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">}</span></span></span></span> is a superkey of schema <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo stretchy="false">(</mo><msub><mi>A</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>A</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">R(A_1, \ldots, A_n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> if values for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> are sufficient to identify a unique tuple for each possible relation instance of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo stretchy="false">(</mo><msub><mi>A</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>A</mi><mn>2</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>A</mi><mi>n</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">R(A_1, A_2, \ldots, A_n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>.<br>
-A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> is a <strong>candidate key</strong> if <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi></mrow><annotation encoding="application/x-tex">K</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">K</span></span></span></span> is minimal.</p>
-<h3 id="Primary-keys">Primary keys</h3>
-<p>A primary key is a designated candidate key of a relation. Some DBMSs automatically create an internal primary key if we don’t define one.</p>
-<table style="width:100%">
-  <tr>
-    <td style="width:50%; vertical-align:top;">
+<h2 id="Training-Processure">Training Processure</h2>
+<p>两张 4090 可提供 48G 显存，所以我可以取比较大的 <code>batch_size</code>。以下是我的训练配置：</p>
 <table>
 <thead>
 <tr>
-<th>ID</th>
-<th>Artist</th>
-<th>Year</th>
-<th>City</th>
+<th>参数</th>
+<th>epochs</th>
+<th>batch_size</th>
+<th>dim</th>
+<th>n_layers</th>
+<th>max_seq_len</th>
+<th>len_vocab</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>Mozart</td>
-<td>1756</td>
-<td>Salzburg</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Beethoven</td>
-<td>1770</td>
-<td>Bonn</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Chopin</td>
-<td>1810</td>
-<td>Warsaw</td>
+<td>配置</td>
+<td>6</td>
+<td>48</td>
+<td>768</td>
+<td>16</td>
+<td>512</td>
+<td>6400</td>
 </tr>
 </tbody>
 </table>
-<p><em>Table: Artists(ID, Artist, Year, City)</em><br>
-</td><br>
-<td style="width:50%; vertical-align:top;"></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> Artists(<br>    ID <span class="hljs-type">varchar</span>(<span class="hljs-number">8</span>),<br>    Artist <span class="hljs-type">varchar</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>    <span class="hljs-keyword">Year</span> <span class="hljs-type">numeric</span>(<span class="hljs-number">4</span>,<span class="hljs-number">0</span>),<br>    City <span class="hljs-type">varchar</span>(<span class="hljs-number">20</span>),<br>    <span class="hljs-keyword">primary</span> key (ID)<br>)<br></code></pre></td></tr></table></figure>
-  </tr>
-</table>
-<h3 id="Foreign-key">Foreign key</h3>
-<p>A foreign key specifies that a tuple from one relation must map to a tuple in another relation.</p>
-
+<p>参数总量计算：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>s</mi><mo>≈</mo><mn>12</mn><mi>L</mi><msup><mi>h</mi><mn>2</mn></msup><mo>=</mo><mn>16</mn><mo>×</mo><mn>12</mn><mo>×</mo><mn>76</mn><msup><mn>8</mn><mn>2</mn></msup><mo>=</mo><mn>113</mn><mi>M</mi></mrow><annotation encoding="application/x-tex">Params\approx 12Lh^2=16\times12\times 768^2=113M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">am</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">12</span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">16</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">12</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">76</span><span class="mord"><span class="mord">8</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">113</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>，与实际的 104M 略有差异，之后会回来找原因。</p>
+<h3 id="训练命令">训练命令</h3>
+<p>注意，由于我的计算节点上是没有网络的，所以需要设置 <code>wandb</code> 为离线模式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wandb.init(project=args.wandb_project, name=args.wandb_run_name, mode=<span class="hljs-string">&quot;offline&quot;</span>) <span class="hljs-comment"># 需要修改</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">torchrun --nproc_per_node 2 train_pretrain.py --use_wandb<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -449,8 +384,8 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>数据库原理笔记</div>
-      <div>https://kingdom-of-warriors.github.io/2025/02/24/数据库原理笔记/</div>
+      <div>minimind 模型训练</div>
+      <div>https://kingdom-of-warriors.github.io/2025/03/01/minimind-模型训练/</div>
     </div>
     <div class="license-meta">
       
@@ -462,7 +397,7 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年2月24日</div>
+          <div>2025年3月1日</div>
         </div>
       
       
@@ -494,18 +429,12 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" title="minimind 模型训练">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">minimind 模型训练</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/29/Robosuite%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="Robosuite 论文阅读">
-                        <span class="hidden-mobile">Robosuite 论文阅读</span>
+                      <a href="/2025/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/" title="数据库原理笔记">
+                        <span class="hidden-mobile">数据库原理笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -528,7 +457,7 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
         var options = Object.assign(
           {"clientID":"Ov23liz6eV0VasfLM4z1","clientSecret":"65c93e1b98781b2517f0ae355361bb087488e8f7","repo":"kingdom-of-warriors.github.io","owner":"kingdom-of-warriors","admin":["kingdom-of-warriors"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'bae388d6c86c0f632aa7870a1bde42a8'
+            id: '8601d97fe9906e994db8ff2408634f74'
           }
         )
         var gitalk = new Gitalk(options);
@@ -589,6 +518,11 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
 
 
   
+
+
+  
+  
+
 
 
 
