@@ -26,12 +26,12 @@
 <meta property="og:site_name" content="kingdom-of-warriors">
 <meta property="og:description" content="Relational data model Edgar F. Codd proposed the relational data model in 1970. Some features:  Store database in simple data structures Access data through high-level language Physical storage left u">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/l1/data_model.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/sql.jpg">
 <meta property="article:published_time" content="2025-02-23T16:04:36.000Z">
-<meta property="article:modified_time" content="2025-02-23T16:44:53.374Z">
+<meta property="article:modified_time" content="2025-03-01T08:32:33.695Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/l1/data_model.png">
+<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/sql.jpg">
   
   
   
@@ -46,6 +46,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -228,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          138 字
+          304 字
         
       </span>
     
@@ -239,7 +241,7 @@
         
         
         
-          2 分钟
+          3 分钟
         
       </span>
     
@@ -431,8 +433,192 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
   </tr>
 </table>
 <h3 id="Foreign-key">Foreign key</h3>
-<p>A foreign key specifies that a tuple from one relation must map to a tuple in another relation.</p>
-
+<p>A foreign key specifies that a tuple from one relation must map to a tuple in another relation.<br>
+<strong>Constraints</strong>:</p>
+<ul>
+<li>Referenced attributes must be a <strong>PRIMARY KEY</strong>.（外部指针一定是另一个表格的 primary key）</li>
+<li>No <strong>dangling pointers</strong> from the attributes of a foreign key.（没有空指针）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> Albums(<br>    ID, <span class="hljs-type">varchar</span>(<span class="hljs-number">8</span>),<br>    Album <span class="hljs-type">varchar</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>    Artist_ID <span class="hljs-type">varchar</span> (<span class="hljs-number">8</span>),<br>    <span class="hljs-keyword">primary</span> key ID,<br>    <span class="hljs-keyword">foreign</span> key (Artist_ID) <span class="hljs-keyword">references</span> Artists(ID),<br>)<br></code></pre></td></tr></table></figure>
+<div style="display: flex;">
+  <div style="flex: 1; margin-right: 20px;">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Album</th>
+          <th>Artist_ID</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>The Marriage of Figaro</td>
+          <td>1</td>
+          <td>1786</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Requiem Mass In D minor</td>
+          <td>1</td>
+          <td>1791</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Für Elise</td>
+          <td>2</td>
+          <td>1867</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Table: Albums(ID, Album, Artist ID, Year)</p>
+  </div>
+  <div style="flex: 1;">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Artist</th>
+          <th>Year</th>
+          <th>City</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mozart</td>
+          <td>1756</td>
+          <td>Salzburg</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Beethoven</td>
+          <td>1770</td>
+          <td>Bonn</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Chopin</td>
+          <td>1810</td>
+          <td>Warsaw</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Table: Artists(ID, Artist, Year, City)</p>
+  </div>
+</div>
+<h1>Relational model and algebra</h1>
+<ul>
+<li>A language for querying relational data based on<br>
+fundamental relational operations.</li>
+<li>Each operation takes one or more relations (i.e.,<br>
+tables) as its input and output a new relation, so can easily composed to make comples queries.</li>
+</ul>
+<h2 id="Selection">Selection</h2>
+<ul>
+<li>The <strong>selection</strong> operation selects tuples that satisfy a given predicate.</li>
+<li>Notation: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>p</mi></msub><mo stretchy="false">(</mo><mi>R</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sigma_p(R)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span></li>
+<li>Example: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mrow><mtext>dept_name</mtext><mo>=</mo><mtext>&quot;Physics&quot;</mtext></mrow></msub><mo stretchy="false">(</mo><mtext>instructor</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\sigma_{\text{dept\_name}=\text{&quot;Physics&quot;}}(\text{instructor})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.117em;vertical-align:-0.367em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">dept_name</span></span><span class="mrel mtight">=</span><span class="mord text mtight"><span class="mord mtight">&quot;Physics&quot;</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.367em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord text"><span class="mord">instructor</span></span><span class="mclose">)</span></span></span></span></li>
+<li>Boolean connectives <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">=</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo mathvariant="normal">≠</mo></mrow><annotation encoding="application/x-tex">\neq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">&lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo></mrow><annotation encoding="application/x-tex">\leq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≤</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&gt;</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo></mrow><annotation encoding="application/x-tex">\geq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≥</span></span></span></span> are allowed in predicates</li>
+<li>Combine predicates with logical connectives <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∧</mo></mrow><annotation encoding="application/x-tex">\wedge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="mord">∧</span></span></span></span> (and), <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∨</mo></mrow><annotation encoding="application/x-tex">\vee</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5556em;"></span><span class="mord">∨</span></span></span></span> (or), <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">¬</mi></mrow><annotation encoding="application/x-tex">\neg</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord">¬</span></span></span></span> (not).</li>
+</ul>
+<h2 id="Projection">Projection</h2>
+<ul>
+<li>The <strong>projection</strong> produces from an input relation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> a new <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi mathvariant="normal">‘</mi></mrow><annotation encoding="application/x-tex">R`</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord">‘</span></span></span></span> that has only some of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi mathvariant="normal">‘</mi></mrow><annotation encoding="application/x-tex">R`</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord">‘</span></span></span></span>s attributes.</li>
+<li>Notation: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Π</mi><mrow><msub><mi>A</mi><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>A</mi><mi>n</mi></msub></mrow></msub><mo stretchy="false">(</mo><mi>R</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Pi_{A_1,...,A_n}(R)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord">Π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3173em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span><span class="mpunct mtight">,</span><span class="mord mtight">...</span><span class="mpunct mtight">,</span><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1645em;"><span style="top:-2.357em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span></li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span> is the input relation and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">A_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, …, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> are attributes of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span></span></span></span>.</li>
+<li>Example: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Π</mi><mrow><mtext>ID</mtext><mo separator="true">,</mo><mtext>Salary</mtext><mi mathvariant="normal">/</mi><mn>12</mn></mrow></msub><mo stretchy="false">(</mo><mtext>instructor</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Pi_{\text{ID}, \text{Salary}/12}(\text{instructor})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1052em;vertical-align:-0.3552em;"></span><span class="mord"><span class="mord">Π</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">ID</span></span><span class="mpunct mtight">,</span><span class="mord text mtight"><span class="mord mtight">Salary</span></span><span class="mord mtight">/12</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3552em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord text"><span class="mord">instructor</span></span><span class="mclose">)</span></span></span></span></li>
+<li>Duplicated output tuples are <strong>removed</strong> (by definition).</li>
+</ul>
+<h2 id="Cartesian-product">Cartesian product</h2>
+<ul>
+<li>The <strong>Cartesian product</strong> (or just product) of two relations R and S, is the set of all possible combinations of tuples from R and S.</li>
+<li>Notation: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mo>×</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">R\times S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span></span></span></span></li>
+</ul>
+<div style="display: flex; justify-content: space-around;">
+  <div style="text-align: center;">
+    <table>
+      <thead>
+        <tr>
+          <th>A</th>
+          <th>B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Table: R(A, B)</p>
+  </div>
+  <div style="text-align: center;">
+    <table>
+      <thead>
+        <tr>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>8</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Table: S(B, C)</p>
+  </div>
+  <div style="text-align: center;">
+    <table>
+      <thead>
+        <tr>
+          <th>R.A</th>
+          <th>R.B</th>
+          <th>S.B</th>
+          <th>S.C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>2</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4</td>
+          <td>2</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4</td>
+          <td>3</td>
+          <td>8</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Table: R × S</p>
+  </div>
+</div>
                 
               </div>
             
@@ -494,9 +680,9 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" title="minimind 模型训练">
+                      <a href="/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" title="Minimind 模型训练">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">minimind 模型训练</span>
+                        <span class="hidden-mobile">Minimind 模型训练</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -589,6 +775,11 @@ A superkey <span class="katex"><span class="katex-mathml"><math xmlns="http://ww
 
 
   
+
+
+  
+  
+
 
 
 

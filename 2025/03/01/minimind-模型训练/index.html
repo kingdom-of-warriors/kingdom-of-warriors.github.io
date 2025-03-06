@@ -19,21 +19,23 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="我的配置 双卡 4090 服务器，48G 内存，VPN Download Datasets 我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下： 1234from huggingface_hub import snapshot_downloadrepo_id &#x3D; &quot;jingyaogong&#x2F;minimind_">
+    <meta name="description" content="尝试训练一个自己的 LLM！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="minimind 模型训练">
+<meta property="og:title" content="Minimind 模型训练">
 <meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="我的配置 双卡 4090 服务器，48G 内存，VPN Download Datasets 我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下： 1234from huggingface_hub import snapshot_downloadrepo_id &#x3D; &quot;jingyaogong&#x2F;minimind_">
+<meta property="og:description" content="尝试训练一个自己的 LLM！">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/minimind/logo.png">
 <meta property="article:published_time" content="2025-02-28T17:49:33.000Z">
-<meta property="article:modified_time" content="2025-02-28T18:28:15.167Z">
+<meta property="article:modified_time" content="2025-03-02T01:37:12.797Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/minimind/logo.png">
   
   
   
-  <title>minimind 模型训练 - kingdom-of-warriors</title>
+  <title>Minimind 模型训练 - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +207,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="minimind 模型训练"></span>
+            <span id="subtitle" data-typed-text="Minimind 模型训练"></span>
           
         </div>
 
@@ -228,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          247 字
+          282 字
         
       </span>
     
@@ -276,13 +278,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">minimind 模型训练</h1>
+            <h1 id="seo-header">Minimind 模型训练</h1>
             
             
               <div class="markdown-body">
                 
                 <h2 id="我的配置">我的配置</h2>
-<p>双卡 4090 服务器，48G 内存，VPN</p>
+<p>四卡 4090 服务器，160G 内存，VPN</p>
 <h2 id="Download-Datasets">Download Datasets</h2>
 <p>我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> huggingface_hub <span class="hljs-keyword">import</span> snapshot_download<br>repo_id = <span class="hljs-string">&quot;jingyaogong/minimind_dataset&quot;</span>  <span class="hljs-comment"># 数据集仓库 ID</span><br>local_dir = <span class="hljs-string">&quot;./dataset&quot;</span>  <span class="hljs-comment"># 本地下载目录</span><br>snapshot_download(repo_id=repo_id, repo_type=<span class="hljs-string">&quot;dataset&quot;</span>, local_dir=local_dir)<br></code></pre></td></tr></table></figure>
@@ -365,9 +367,12 @@
 </table>
 <p>参数总量计算：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>s</mi><mo>≈</mo><mn>12</mn><mi>L</mi><msup><mi>h</mi><mn>2</mn></msup><mo>=</mo><mn>16</mn><mo>×</mo><mn>12</mn><mo>×</mo><mn>76</mn><msup><mn>8</mn><mn>2</mn></msup><mo>=</mo><mn>113</mn><mi>M</mi></mrow><annotation encoding="application/x-tex">Params\approx 12Lh^2=16\times12\times 768^2=113M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">am</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">12</span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">16</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">12</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">76</span><span class="mord"><span class="mord">8</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">113</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>，与实际的 104M 略有差异，之后会回来找原因。</p>
 <h3 id="训练命令">训练命令</h3>
-<p>注意，由于我的计算节点上是没有网络的，所以需要设置 <code>wandb</code> 为离线模式。</p>
+<ol>
+<li>注意，由于我的计算节点上是没有网络的，所以需要设置 <code>wandb</code> 为离线模式；</li>
+<li>SFT 用多卡服务器跑的时候需要大量的内存（&gt; 100G），不然会报错；</li>
+</ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wandb.init(project=args.wandb_project, name=args.wandb_run_name, mode=<span class="hljs-string">&quot;offline&quot;</span>) <span class="hljs-comment"># 需要修改</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">torchrun --nproc_per_node 2 train_pretrain.py --use_wandb<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">torchrun --nproc_per_node 2 train_pretrain.py --use_wandb<br>torchrun --nproc_per_node 4 train_full_sft.py --epochs 4 --use_wandb<br>torchrun --nproc_per_node 4 train_full_sft.py --epochs 3 --use_wandb --max_seq_len 2048 --batch_size 8<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -384,7 +389,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>minimind 模型训练</div>
+      <div>Minimind 模型训练</div>
       <div>https://kingdom-of-warriors.github.io/2025/03/01/minimind-模型训练/</div>
     </div>
     <div class="license-meta">
