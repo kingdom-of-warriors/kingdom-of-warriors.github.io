@@ -41,8 +41,10 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid_light.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/genesis.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/visualization_results.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/train_log.png">
 <meta property="article:published_time" content="2024-12-28T16:09:48.000Z">
-<meta property="article:modified_time" content="2025-03-12T19:31:09.273Z">
+<meta property="article:modified_time" content="2025-03-13T10:52:24.344Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
@@ -244,7 +246,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.4k 字
+          7.3k 字
         
       </span>
     
@@ -255,7 +257,7 @@
         
         
         
-          54 分钟
+          61 分钟
         
       </span>
     
@@ -1226,6 +1228,30 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 <p>仿照 simpler_env 对 genesis 加一个桌子，目前正在进行试验（未成功）。</p>
 <p><br><br></p>
 <h2 id="本周报告（2025-3-7-–-2025-3-13）">本周报告（2025.3.7 – 2025.3.13）</h2>
+<h3 id="本周工作">本周工作</h3>
+<ol>
+<li>实现光照变化、背景纯色和杂乱、相机抖动在仿真环境的代码，还未在训练和验证中测试；</li>
+<li>修改了数据采集的代码，使得它在我的电脑上可以运行，并成功采集了一条数据；</li>
+<li>正在训练一个基础模型用于测试。</li>
+</ol>
+<h4 id="光照变化">光照变化</h4>
+<p>实现函数 <code>add_lighting_effect</code>，用于实现图像的光照变化。具体思路是光源可选择在四个角落，然后根据光源位置和图片大小，计算出每个像素点距离光源的距离，然后根据距离计算出光照强度，最后将光照强度乘以图片的像素值，得到光照变化后的图片。也就是说离光源越远，图像亮度变化越小。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_lighting_effect</span>(<span class="hljs-params">image, light_position=<span class="hljs-string">&#x27;top_left&#x27;</span>, intensity=<span class="hljs-number">0.5</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    给图像添加光照效果</span><br><span class="hljs-string">    image: numpy数组，输入图像</span><br><span class="hljs-string">    light_position: 字符串，光源位置 (&#x27;top_left&#x27;, &#x27;top_right&#x27;, &#x27;bottom_left&#x27;, &#x27;bottom_right&#x27;)</span><br><span class="hljs-string">    intensity: float, 光照强度 (-1.0 到 1.0)</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h4 id="背景纯色和杂乱">背景纯色和杂乱</h4>
+<p>使用传统计算机视觉的方法（像素颜色比较、膨胀和腐蚀）来找到属于背景的部分，对其加上mask。再选取任意杂乱图片作为背景，在mask=1的部分使用杂乱图片，mask=0的部分使用原图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_wall_background</span>(<span class="hljs-params">image, target_color, threshold=<span class="hljs-number">3</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    提取特定颜色的墙壁背景</span><br><span class="hljs-string">    参数:</span><br><span class="hljs-string">        image: RGB格式图像</span><br><span class="hljs-string">        target_color: 目标RGB颜色值</span><br><span class="hljs-string">        threshold: 允许的颜色差异阈值</span><br><span class="hljs-string">        min_area: 最小连通区域面积，小于此面积的区域将被过滤掉</span><br><span class="hljs-string">    返回:</span><br><span class="hljs-string">        wall_mask: 二值mask</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h4 id="相机抖动">相机抖动</h4>
+<p>利用传统计算机视觉的运动卷积来模拟模糊效果，用平移和旋转模拟相机抖动，注意平移的角度就是运动方向。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_camera_jitter_and_blur</span>(<span class="hljs-params">image, max_translation=<span class="hljs-number">5</span>, max_rotation=<span class="hljs-number">2</span>, blur_kernel_size=<span class="hljs-number">15</span>, blur_intensity=<span class="hljs-number">3</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    模拟相机抖动和运动模糊效果，避免产生黑边</span><br><span class="hljs-string">    image: 输入图像</span><br><span class="hljs-string">    max_translation: 最大平移像素数</span><br><span class="hljs-string">    max_rotation: 最大旋转角度(度)</span><br><span class="hljs-string">    blur_kernel_size: 模糊卷积核大小</span><br><span class="hljs-string">    blur_intensity: 模糊强度</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h4 id="最后处理图片的效果">最后处理图片的效果</h4>
+<p><img src="/img/robosuite/visualization_results.png" srcset="/img/loading.gif" lazyload alt="最后处理图片的效果"></p>
+<h3 id="数据收集-2">数据收集</h3>
+<p>Libero 数据收集分为两个部分，一是通过键盘操作人工完成任务，这个时间段收集的数据只包含 <code>action</code> 和 <code>state</code>，感觉是用于复现的；二是通过上面采集的数据进行任务复现，同时再记录别的数据（如相机图像等等）。命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">python scripts/collect_demonstration.py --bddl-file /home/ljr/embodied/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_alphabet_soup_and_place_it_in_the_basket.bddl --device keyboard --robots Panda <span class="hljs-comment"># 键盘操作人工完成任务</span><br>python scripts/create_dataset.py --demo-file demonstration_data/robosuite_ln_libero_floor_manipulation_1741832510_5507832_pick_the_alphabet_soup_and_place_it_in_the_basket/demo.hdf5 --use-camera-obs <span class="hljs-comment"># 复现任务，并记录相机图像等</span><br></code></pre></td></tr></table></figure>
+<h3 id="跑通训练模型的代码">跑通训练模型的代码</h3>
+<p>编写一个 <code>run.sh</code> 文件用于训练 <code>libero object</code> 10个任务的模型，目前已经训练到第9个任务。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> CUDA_VISIBLE_DEVICES=0<br><span class="hljs-built_in">export</span> MUJOCO_EGL_DEVICE_ID=0<br><br><span class="hljs-comment"># 运行程序</span><br>python lifelong/main.py \<br>    seed=1234 \<br>    benchmark_name=libero_object \<br>    policy=bc_transformer_policy \<br>    lifelong=single_task<br></code></pre></td></tr></table></figure>
+<p><img src="/img/robosuite/train_log.png" srcset="/img/loading.gif" lazyload alt="训练log记录"></p>
 <h3 id="工作内容与问题记录">工作内容与问题记录</h3>
 <h4 id="环境配置问题修复">环境配置问题修复</h4>
 <ol>
@@ -1237,7 +1263,7 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 </ul>
 </li>
 <li>
-<p><strong>数据采集脚本修改</strong><br>
+<p><strong>数据采集脚本修改1</strong><br>
 在 <code>scripts/collect_demonstration.py</code> 中需要修改回调函数设置：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 原代码</span><br>env.viewer.add_keypress_callback(<span class="hljs-string">&quot;any&quot;</span>, device.on_press)<br>env.viewer.add_keyup_callback(<span class="hljs-string">&quot;any&quot;</span>, device.on_release)<br>env.viewer.add_keyrepeat_callback(<span class="hljs-string">&quot;any&quot;</span>, device.on_press)<br><br><span class="hljs-comment"># 修改后</span><br>env.viewer.add_keypress_callback(device.on_press)<br></code></pre></td></tr></table></figure>
 <p>修改原因：</p>
@@ -1247,6 +1273,14 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 </ul>
 </li>
 <li>
+<p><strong>数据采集脚本修改2</strong><br>
+在 <code>scripts/create_dataset.py</code> 中需要修改路径设置：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">hdf5_path = os.path.join(get_libero_path(<span class="hljs-string">&quot;datasets&quot;</span>), bddl_file_dir.split(<span class="hljs-string">&quot;bddl_files/&quot;</span>)[-<span class="hljs-number">1</span>].replace(<span class="hljs-string">&quot;.bddl&quot;</span>, <span class="hljs-string">&quot;_demo.hdf5&quot;</span>))<br><span class="hljs-comment"># 修改为</span><br>hdf5_path = os.path.join(get_libero_path(<span class="hljs-string">&quot;datasets&quot;</span>), bddl_file_name.split(<span class="hljs-string">&quot;bddl_files/&quot;</span>)[-<span class="hljs-number">1</span>].replace(<span class="hljs-string">&quot;.bddl&quot;</span>, <span class="hljs-string">&quot;_demo.hdf5&quot;</span>))<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改原因：应该使用文件路径而不是文件夹路径，否则文件名中不会出现.bddl</p>
+<ol start="3">
+<li>
 <p><strong>pynput库bug修复</strong><br>
 在文件 <code>pynput/_util/xorg.py</code> 第472行需要修改：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 原代码</span><br><span class="hljs-variable language_">self</span>._handle(<span class="hljs-variable language_">self</span>._display_stop, event, injected)<br><span class="hljs-variable language_">self</span>._handle_message(<span class="hljs-variable language_">self</span>._display_stop, event, injected)<br><br><span class="hljs-comment"># 修改后</span><br><span class="hljs-variable language_">self</span>._handle_message(<span class="hljs-variable language_">self</span>._display_stop, event, injected)<br></code></pre></td></tr></table></figure>
@@ -1254,10 +1288,17 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 <p>推测原因：代码合并时未正确删除重复代码</p>
 </li>
 </ol>
+<h3 id="下周工作-2">下周工作</h3>
+<ol>
+<li>弄清楚 libero 自定义仿真环境的流程，并尝试自定义仿真环境；</li>
+<li>在训练好一个 libero_object 10 个任务的模型后，在evaluation时对动作加入高斯噪声；</li>
+<li>尝试使用深度学习的方式让背景识别更加精准（SAM？）；</li>
+<li>…</li>
+</ol>
 <h3 id="待解决问题">待解决问题</h3>
 <p>数据采集环境选择：</p>
 <ul>
-<li>服务器是headless环境，需要使用如<code>Xvfb</code>等软件进行远程投屏（当前无权限）</li>
+<li>服务器是headless环境，需要使用如<code>Xvfb</code>等软件进行远程投屏（当前无权限安装）</li>
 <li>是否应该改为在本地电脑进行数据采集？</li>
 </ul>
 <p>需要确定最佳的数据采集方案。</p>
