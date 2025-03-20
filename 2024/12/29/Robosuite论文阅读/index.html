@@ -41,10 +41,14 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid_light.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/genesis.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/droid.png">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/visualization_results.png">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/train_log.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/3/visualization_results.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/3/train_log.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/visualization_results.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/raw_data.gif">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/my_data.gif">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/log.png">
 <meta property="article:published_time" content="2024-12-28T16:09:48.000Z">
-<meta property="article:modified_time" content="2025-03-13T10:52:24.344Z">
+<meta property="article:modified_time" content="2025-03-20T10:30:05.477Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
@@ -246,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.3k 字
+          8k 字
         
       </span>
     
@@ -257,7 +261,7 @@
         
         
         
-          61 分钟
+          67 分钟
         
       </span>
     
@@ -1244,14 +1248,14 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 <p>利用传统计算机视觉的运动卷积来模拟模糊效果，用平移和旋转模拟相机抖动，注意平移的角度就是运动方向。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_camera_jitter_and_blur</span>(<span class="hljs-params">image, max_translation=<span class="hljs-number">5</span>, max_rotation=<span class="hljs-number">2</span>, blur_kernel_size=<span class="hljs-number">15</span>, blur_intensity=<span class="hljs-number">3</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    模拟相机抖动和运动模糊效果，避免产生黑边</span><br><span class="hljs-string">    image: 输入图像</span><br><span class="hljs-string">    max_translation: 最大平移像素数</span><br><span class="hljs-string">    max_rotation: 最大旋转角度(度)</span><br><span class="hljs-string">    blur_kernel_size: 模糊卷积核大小</span><br><span class="hljs-string">    blur_intensity: 模糊强度</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 <h4 id="最后处理图片的效果">最后处理图片的效果</h4>
-<p><img src="/img/robosuite/visualization_results.png" srcset="/img/loading.gif" lazyload alt="最后处理图片的效果"></p>
+<p><img src="/img/robosuite/3/visualization_results.png" srcset="/img/loading.gif" lazyload alt="最后处理图片的效果"></p>
 <h3 id="数据收集-2">数据收集</h3>
 <p>Libero 数据收集分为两个部分，一是通过键盘操作人工完成任务，这个时间段收集的数据只包含 <code>action</code> 和 <code>state</code>，感觉是用于复现的；二是通过上面采集的数据进行任务复现，同时再记录别的数据（如相机图像等等）。命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">python scripts/collect_demonstration.py --bddl-file /home/ljr/embodied/LIBERO/libero/libero/bddl_files/libero_object/pick_up_the_alphabet_soup_and_place_it_in_the_basket.bddl --device keyboard --robots Panda <span class="hljs-comment"># 键盘操作人工完成任务</span><br>python scripts/create_dataset.py --demo-file demonstration_data/robosuite_ln_libero_floor_manipulation_1741832510_5507832_pick_the_alphabet_soup_and_place_it_in_the_basket/demo.hdf5 --use-camera-obs <span class="hljs-comment"># 复现任务，并记录相机图像等</span><br></code></pre></td></tr></table></figure>
 <h3 id="跑通训练模型的代码">跑通训练模型的代码</h3>
 <p>编写一个 <code>run.sh</code> 文件用于训练 <code>libero object</code> 10个任务的模型，目前已经训练到第9个任务。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> CUDA_VISIBLE_DEVICES=0<br><span class="hljs-built_in">export</span> MUJOCO_EGL_DEVICE_ID=0<br><br><span class="hljs-comment"># 运行程序</span><br>python lifelong/main.py \<br>    seed=1234 \<br>    benchmark_name=libero_object \<br>    policy=bc_transformer_policy \<br>    lifelong=single_task<br></code></pre></td></tr></table></figure>
-<p><img src="/img/robosuite/train_log.png" srcset="/img/loading.gif" lazyload alt="训练log记录"></p>
+<p><img src="/img/robosuite/3/train_log.png" srcset="/img/loading.gif" lazyload alt="训练log记录"></p>
 <h3 id="工作内容与问题记录">工作内容与问题记录</h3>
 <h4 id="环境配置问题修复">环境配置问题修复</h4>
 <ol>
@@ -1302,6 +1306,81 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
 <li>是否应该改为在本地电脑进行数据采集？</li>
 </ul>
 <p>需要确定最佳的数据采集方案。</p>
+<p><br><br></p>
+<h2 id="本周报告（2025-3-14-–-2025-3-20）">本周报告（2025.3.14 – 2025.3.20）</h2>
+<h3 id="主要工作">主要工作</h3>
+<p>本周主要完成了以下几个方面的工作：</p>
+<ol>
+<li><strong>背景图片替换</strong>：成功实现了仿真环境背景图片的替换。</li>
+<li><strong>模型训练与验证</strong>：完成了 <code>libero_object</code> 10 个任务模型的训练，并验证了其准确率。</li>
+<li><strong>手柄控制适配</strong>：调整了学长的 <code>xbox.py</code> 代码，适配了自己的手柄，解决了按键漂移问题。</li>
+<li><strong>数据采集与训练</strong>：使用手柄采集了新任务的数据，并进行了训练，获得了初步结果。</li>
+</ol>
+<hr>
+<h3 id="1-背景图片替换">1. 背景图片替换</h3>
+<p>与之前的任务类似，本次任务通过替换墙壁的 texture 图片来实现背景的更换。具体步骤如下：</p>
+<ul>
+<li>
+<p><strong>添加图片</strong>：在 <code>/LIBERO/libero/libero/assets/textures</code> 文件夹下添加新的背景图片，例如 <code>flower.png</code>。</p>
+</li>
+<li>
+<p><strong>修改样式文件</strong>：在 <code>/LIBERO/libero/libero/envs/arenas/style.py</code> 文件中找到 <code>WALL_STYLE</code> 字典，添加 <code>&quot;flower&quot;: &quot;flower.png&quot;</code>。</p>
+</li>
+<li>
+<p><strong>应用纹理</strong>：在代码中指定使用该纹理图片：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">env_args = &#123;<br>    <span class="hljs-string">&quot;bddl_file_name&quot;</span>: task_bddl_file,<br>    <span class="hljs-string">&quot;camera_heights&quot;</span>: <span class="hljs-number">256</span>,<br>    <span class="hljs-string">&quot;camera_widths&quot;</span>: <span class="hljs-number">256</span>, <br>    <span class="hljs-string">&quot;scene_properties&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;floor_style&quot;</span>: <span class="hljs-string">&quot;light-gray&quot;</span>,<br>        <span class="hljs-string">&quot;wall_style&quot;</span>: <span class="hljs-string">&quot;flower&quot;</span>,  <span class="hljs-comment"># customize wall style</span><br>    &#125;<br>&#125;<br>env = OffScreenRenderEnv(**env_args)<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>效果展示</strong>：替换后的效果比上周的计算机视觉识别方法更加清晰自然。</p>
+<div align="center">
+    <img src="/img/robosuite/4/visualization_results.png" srcset="/img/loading.gif" lazyload width="500"/>
+    <p>背景图片替换效果</p>
+</div>
+</li>
+</ul>
+<hr>
+<h3 id="2-手柄控制适配">2. 手柄控制适配</h3>
+<p>针对我的手柄特点（无背键、存在摇杆漂移），我对 <code>xbox.py</code> 进行了如下修改：</p>
+<ul>
+<li><strong>移除背键暂停代码</strong>：由于我的手柄没有背键，因此移除了相关代码。</li>
+<li><strong>调整灵敏度</strong>：根据手感调整了摇杆的灵敏度。</li>
+<li><strong>增加死区</strong>：设置了死区，将摇杆在小范围内的值置零，以消除摇杆漂移的影响。</li>
+</ul>
+<p><strong>注意：</strong> <code>receive_controller</code> 函数中 <code>self.device = self.find_device('Xbox')</code> 的 <code>Xbox</code> 需要根据实际设备名称进行修改（例如，学长的电脑上为 <code>X-Box</code>）。</p>
+<p>修改后，可以使用手柄进行数据采集。</p>
+<hr>
+<h3 id="3-数据采集与训练">3. 数据采集与训练</h3>
+<p>我重复使用了 <code>libero_object</code> 的第一个任务，并在环境中增加了一瓶饮料。使用手柄采集了 50 条数据，并进行了训练。</p>
+<ul>
+<li><strong>环境修改</strong>：使用 <code>.bddl</code> 文件添加了一瓶饮料（可从下面的视频中看出）。</li>
+<li><strong>任务注册</strong>：在多个文件中添加了新任务的信息，使其加入到 benchmark 中。</li>
+</ul>
+<p>初步训练结果（50 epoch）：AoC 值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.07</mn></mrow><annotation encoding="application/x-tex">0.07</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.07</span></span></span></span>，最高完成率为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1</mn></mrow><annotation encoding="application/x-tex">0.1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.1</span></span></span></span>，效果不理想。</p>
+<div align="center">
+  <table>
+    <tr>
+      <th>原始数据</th>
+      <th>我的数据</th>
+    </tr>
+    <tr>
+      <td><img src="/img/robosuite/4/raw_data.gif" srcset="/img/loading.gif" lazyload width="300"/></td>
+      <td><img src="/img/robosuite/4/my_data.gif" srcset="/img/loading.gif" lazyload width="300"/></td>
+    </tr>
+  </table>
+  <p>数据对比</p>
+</div>
+<p><strong>分析：</strong></p>
+<ul>
+<li>原始数据采集流畅，可以同时移动多个视角，延迟较小。</li>
+<li>手柄采集的数据较为僵硬，只能同时移动一个视角，控制不便。</li>
+<li>更倾向于使用 spacemouse 进行数据采集。</li>
+</ul>
+<p><strong>后续：</strong></p>
+<p>将训练 epoch 增加到 200 后，模型准确率显著提高，且仍有增长空间。可以考虑进一步增加训练轮次。训练 Log 如下：</p>
+<div align="center">
+    <img src="/img/robosuite/4/log.png" srcset="/img/loading.gif" lazyload width="600"/>
+    <p>训练 Log</p>
+</div>
 
                 
               </div>
