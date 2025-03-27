@@ -47,8 +47,9 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/raw_data.gif">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/my_data.gif">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/4/log.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/robosuite/5/upside.gif">
 <meta property="article:published_time" content="2024-12-28T16:09:48.000Z">
-<meta property="article:modified_time" content="2025-03-20T10:30:05.477Z">
+<meta property="article:modified_time" content="2025-03-27T08:16:31.872Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/robosuite/robosuite.png">
@@ -250,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8k 字
+          8.5k 字
         
       </span>
     
@@ -261,7 +262,7 @@
         
         
         
-          67 分钟
+          72 分钟
         
       </span>
     
@@ -1381,6 +1382,37 @@ hidden state 和 embedding的输出有没有明显区别(具体什么区别需�
     <img src="/img/robosuite/4/log.png" srcset="/img/loading.gif" lazyload width="600"/>
     <p>训练 Log</p>
 </div>
+<p><br><br></p>
+<h2 id="本周报告（2025-3-21-–-2025-3-27）">本周报告（2025.3.21 – 2025.3.27）</h2>
+<h3 id="主要工作-2">主要工作</h3>
+<ol>
+<li>阅读 <code>Openvla</code>，<code>Octo</code> 论文，看看它们是怎么在虚拟环境下进行验证的，由此来创造并改进一些数据集；</li>
+<li>实现了一个新任务的创建（<strong>upsidedown</strong>）；</li>
+<li>思考了接下来的路线。</li>
+</ol>
+<h3 id="阅读论文">阅读论文</h3>
+<p><code>Octo</code> 论文的方法与 <code>Libero</code> 类似，可以认为是一个小的 <code>VLA</code> 模型，而<code>Octo</code>主要优势在于使用了<strong>vit</strong>作为处理图像的模型，具有更强大的泛化性；<code>Openvla</code> 的方法就是非常纯正的 <code>VLA</code> 模型。<br>
+<code>Octo</code> 和 <code>Openvla</code> 主要是在真实环境下进行训练和测试，但是可以给我创建数据集一些启发。</p>
+<ul>
+<li>没见过的动作任务：<strong>Flip</strong>，<strong>Move_away</strong>，…</li>
+<li>物品初始位置的变化：可以在任务创建的时候，给物品的初始化位置增加<strong>随机性</strong>，而不是几乎一样的位置（实现可能是增加<strong>随机数</strong>和<strong>随机交换位置</strong>），<br>
+或者<strong>随机</strong>把目标物品放在某件东西的上面，来测试模型对高度的泛化性；</li>
+<li>增加一个<strong>中途失败</strong>的判定：若碰倒了某样东西或者是把两样东西一起移到篮子里，则直接判定为失败；</li>
+<li>模拟真实环境：<em>花纹的变化</em>，<em>场景的变化</em>（如厨房，卧室，客厅），<em>光照的变化</em>，<em>相机随机抖动</em>，<em>动作数据高斯随机噪声</em>；</li>
+</ul>
+<h3 id="实现新任务">实现新任务</h3>
+<p>这个基于 <em>没见过的动作任务</em>，在 <code>Openvla</code> 中，有一个 <strong>Flip</strong> 的任务，于是我发现可以给 <code>libero</code> 也增添一个差不多的任务：</p>
+<div align="center">
+    <img src="/img/robosuite/5/upside.gif" srcset="/img/loading.gif" lazyload width="400"/>
+</div>
+实现难点主要是需要增加一个函数来判断一个物品是否是倒置的，目前已经实现。
+<h3 id="思考路线">思考路线</h3>
+<ol>
+<li>这个<code>benchmark</code>是作为训练还是测试用的还是两者皆有？</li>
+<li>是否需要增加一个 <strong>vla</strong> 的 <code>evaluate</code> 接口？</li>
+<li>是不是可以实现一个<strong>多卡训练</strong>？</li>
+<li>是否应该抛弃 <code>libero</code> 的非 <code>multitask</code> 的训练？这样的话我可以重新写一个 <code>evaluate.py</code>。</li>
+</ol>
 
                 
               </div>
