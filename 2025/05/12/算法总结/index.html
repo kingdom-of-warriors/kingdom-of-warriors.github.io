@@ -19,23 +19,22 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="尝试训练一个自己的 LLM！">
+    <meta name="description" content="二分法 下面是二分法的经典题目和代码： 题目描述  Problem: T35：搜索插入位置 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。  Solve 1234567891011121314class Solution &#123;public:    int searchInsert(vector&lt;int&gt;&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Minimind 模型训练">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/index.html">
+<meta property="og:title" content="算法总结">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/05/12/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="尝试训练一个自己的 LLM！">
+<meta property="og:description" content="二分法 下面是二分法的经典题目和代码： 题目描述  Problem: T35：搜索插入位置 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。  Solve 1234567891011121314class Solution &#123;public:    int searchInsert(vector&lt;int&gt;&amp;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/minimind/logo.png">
-<meta property="article:published_time" content="2025-02-28T17:49:33.000Z">
-<meta property="article:modified_time" content="2025-03-07T07:49:34.725Z">
+<meta property="article:published_time" content="2025-05-12T12:07:57.000Z">
+<meta property="article:modified_time" content="2025-05-12T12:22:05.971Z">
 <meta property="article:author" content="Rayy">
+<meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/minimind/logo.png">
   
   
   
-  <title>Minimind 模型训练 - kingdom-of-warriors</title>
+  <title>算法总结 - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -207,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Minimind 模型训练"></span>
+            <span id="subtitle" data-typed-text="算法总结"></span>
           
         </div>
 
@@ -218,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-03-01 01:49" pubdate>
-          2025年3月1日 凌晨
+        <time datetime="2025-05-12 20:07" pubdate>
+          2025年5月12日 晚上
         </time>
       </span>
     
@@ -230,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          596 字
+          132 字
         
       </span>
     
@@ -241,7 +240,7 @@
         
         
         
-          5 分钟
+          2 分钟
         
       </span>
     
@@ -278,150 +277,20 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Minimind 模型训练</h1>
+            <h1 id="seo-header">算法总结</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="我的配置">我的配置</h2>
-<p>四卡 4090 服务器，160G 内存，VPN</p>
-<h2 id="Download-Datasets">Download Datasets</h2>
-<p>我并没有找到在服务器环境下只下载单个数据集的方法，只能通过 huggingface（或modelscope） 全部下载下来，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> huggingface_hub <span class="hljs-keyword">import</span> snapshot_download<br>repo_id = <span class="hljs-string">&quot;jingyaogong/minimind_dataset&quot;</span>  <span class="hljs-comment"># 数据集仓库 ID</span><br>local_dir = <span class="hljs-string">&quot;./dataset&quot;</span>  <span class="hljs-comment"># 本地下载目录</span><br>snapshot_download(repo_id=repo_id, repo_type=<span class="hljs-string">&quot;dataset&quot;</span>, local_dir=local_dir)<br></code></pre></td></tr></table></figure>
-<p>由于我的资源是足够的，所以打算训练完整的 <code>MiniMind2</code> 模型，参数如下：</p>
-<table>
-<thead>
-<tr>
-<th>Model Name</th>
-<th>params</th>
-<th>len_vocab</th>
-<th>rope_theta</th>
-<th>n_layers</th>
-<th>d_model</th>
-<th>share</th>
-<th>选择</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>MiniMind2-Small</code></td>
-<td>26M</td>
-<td>6400</td>
-<td>1e6</td>
-<td>8</td>
-<td>512</td>
-<td>-</td>
-<td></td>
-</tr>
-<tr>
-<td><code>MiniMind2-MoE</code></td>
-<td>145M</td>
-<td>6400</td>
-<td>1e6</td>
-<td>8</td>
-<td>640</td>
-<td>1+4</td>
-<td></td>
-</tr>
-<tr>
-<td><code>MiniMind2</code></td>
-<td>104M</td>
-<td>6400</td>
-<td>1e6</td>
-<td>16</td>
-<td>768</td>
-<td>-</td>
-<td>✓</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><code>rope_theta</code>:</li>
-<li><code>share+route</code>:</li>
-</ul>
-<h2 id="Training-Processure">Training Processure</h2>
-<p>两张 4090 可提供 48G 显存，所以我可以取比较大的 <code>batch_size</code>。以下是我的训练配置：</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>epochs</th>
-<th>batch_size</th>
-<th>dim</th>
-<th>n_layers</th>
-<th>max_seq_len</th>
-<th>len_vocab</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>配置</td>
-<td>6</td>
-<td>48</td>
-<td>768</td>
-<td>16</td>
-<td>512</td>
-<td>6400</td>
-</tr>
-</tbody>
-</table>
-<p>参数总量计算：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>s</mi><mo>≈</mo><mn>12</mn><mi>L</mi><msup><mi>h</mi><mn>2</mn></msup><mo>=</mo><mn>16</mn><mo>×</mo><mn>12</mn><mo>×</mo><mn>76</mn><msup><mn>8</mn><mn>2</mn></msup><mo>=</mo><mn>113</mn><mi>M</mi></mrow><annotation encoding="application/x-tex">Params\approx 12Lh^2=16\times12\times 768^2=113M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">am</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">12</span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">16</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">12</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord">76</span><span class="mord"><span class="mord">8</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">113</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>，与实际的 104M 略有差异，之后会回来找原因。</p>
-<h3 id="训练命令">训练命令</h3>
-<ol>
-<li>注意，由于我的计算节点上是没有网络的，所以需要设置 <code>wandb</code> 为离线模式；</li>
-<li>SFT 用多卡服务器跑的时候需要大量的内存（&gt; 100G），不然会报错；</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">wandb.init(project=args.wandb_project, name=args.wandb_run_name, mode=<span class="hljs-string">&quot;offline&quot;</span>) <span class="hljs-comment"># 需要修改</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">torchrun --nproc_per_node 2 train_pretrain.py --use_wandb<br>torchrun --nproc_per_node 4 train_full_sft.py --epochs 4 --use_wandb<br>torchrun --nproc_per_node 4 train_full_sft.py --epochs 3 --use_wandb --max_seq_len 2048 --batch_size 8<br></code></pre></td></tr></table></figure>
-<h3 id="测试-LLM-命令">测试 LLM 命令</h3>
-<p>这里选择的测试框架是 lm-evaluation-harness，可以参考 <a target="_blank" rel="noopener" href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> 的文档。<br>
-在开始测试之前，需要把我们训练好的 <code>pytorch</code> 模型转化为 <code>huggingface</code> 的模型。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python convert_model.py<br></code></pre></td></tr></table></figure>
-<p>在按照文档配置好环境后，运行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lm_eval --model hf --model_args pretrained=<span class="hljs-string">&quot;you/hf/model/path&quot;</span>,device=cuda,dtype=auto --task arc_challenge,arc_easy,boolq,ceval-valid,cmmlu,translation --batch_size 16 --trust_remote_code --output_path <span class="hljs-string">&quot;your/output/path&quot;</span><br></code></pre></td></tr></table></figure>
-<p>即可获得模型的评估结果。我这里选择了以下几个评估任务：</p>
-<table>
-<thead>
-<tr>
-<th>任务名称</th>
-<th>类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>arc_challenge</code></td>
-<td>科学推理</td>
-<td>AI2 Reasoning Challenge 的挑战集，包含需要复杂推理的科学问题，主要是验证模型英文能力</td>
-</tr>
-<tr>
-<td><code>arc_easy</code></td>
-<td>科学推理</td>
-<td>AI2 Reasoning Challenge 的简单集，包含基础科学知识问题，主要是验证模型英文能力</td>
-</tr>
-<tr>
-<td><code>boolq</code></td>
-<td>阅读理解</td>
-<td>自然语言的是/否问题回答任务，主要是验证模型英文能力</td>
-</tr>
-<tr>
-<td><code>ceval-valid</code></td>
-<td>中文评估</td>
-<td>中文基础模型评估基准，覆盖多个学科领域，主要是验证模型中文能力</td>
-</tr>
-<tr>
-<td><code>cmmlu</code></td>
-<td>中文评估</td>
-<td>中文多任务语言理解基准，测试模型在专业领域的表现，主要是验证模型中文能力</td>
-</tr>
-<tr>
-<td><code>translation</code></td>
-<td>翻译</td>
-<td>主要是测试模型的中英互译能力</td>
-</tr>
-</tbody>
-</table>
-
+                <h1>二分法</h1>
+<p>下面是二分法的经典题目和代码：</p>
+<h2 id="题目描述">题目描述</h2>
+<blockquote>
+<p>Problem: <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/search-insert-position/description/">T35：搜索插入位置</a><br>
+给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</p>
+</blockquote>
+<h2 id="Solve">Solve</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">searchInsert</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span>&#123;<br>        <span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(left &lt;= right)<br>        &#123;<br>            <span class="hljs-type">int</span> mid = (right - left) / <span class="hljs-number">2</span> + left;<br>            <span class="hljs-keyword">if</span>(nums[mid] == target) <span class="hljs-keyword">return</span> mid;<br>            <span class="hljs-keyword">if</span>(nums[mid] &gt; target) right = mid - <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">else</span> left = mid + <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> left;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -429,6 +298,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/algorithm/" class="category-chain-item">algorithm</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/leetcode/" class="print-no-link">#leetcode</a>
+      
+    </div>
   
 </div>
 
@@ -438,8 +335,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Minimind 模型训练</div>
-      <div>https://kingdom-of-warriors.github.io/2025/03/01/minimind-模型训练/</div>
+      <div>算法总结</div>
+      <div>https://kingdom-of-warriors.github.io/2025/05/12/算法总结/</div>
     </div>
     <div class="license-meta">
       
@@ -451,7 +348,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年3月1日</div>
+          <div>2025年5月12日</div>
         </div>
       
       
@@ -483,18 +380,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/12/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/" title="算法总结">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">算法总结</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/02/24/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/" title="数据库原理笔记">
-                        <span class="hidden-mobile">数据库原理笔记</span>
+                      <a href="/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/" title="Minimind 模型训练">
+                        <span class="hidden-mobile">Minimind 模型训练</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -517,7 +408,7 @@
         var options = Object.assign(
           {"clientID":"Ov23liz6eV0VasfLM4z1","clientSecret":"65c93e1b98781b2517f0ae355361bb087488e8f7","repo":"kingdom-of-warriors.github.io","owner":"kingdom-of-warriors","admin":["kingdom-of-warriors"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: '8601d97fe9906e994db8ff2408634f74'
+            id: '0425030163fe25fd69ca218646fd61a4'
           }
         )
         var gitalk = new Gitalk(options);

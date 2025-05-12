@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>算法总结</title>
+    <link href="/2025/05/12/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"/>
+    <url>/2025/05/12/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<h1>二分法</h1><p>下面是二分法的经典题目和代码：</p><h2 id="题目描述">题目描述</h2><blockquote><p>Problem: <a href="https://leetcode.cn/problems/search-insert-position/description/">T35：搜索插入位置</a><br>给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</p></blockquote><h2 id="Solve">Solve</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">searchInsert</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> target)</span> </span>&#123;<br>        <span class="hljs-type">int</span> left = <span class="hljs-number">0</span>, right = nums.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(left &lt;= right)<br>        &#123;<br>            <span class="hljs-type">int</span> mid = (right - left) / <span class="hljs-number">2</span> + left;<br>            <span class="hljs-keyword">if</span>(nums[mid] == target) <span class="hljs-keyword">return</span> mid;<br>            <span class="hljs-keyword">if</span>(nums[mid] &gt; target) right = mid - <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">else</span> left = mid + <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> left;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>algorithm</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>leetcode</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Minimind 模型训练</title>
     <link href="/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/"/>
     <url>/2025/03/01/minimind-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83/</url>
