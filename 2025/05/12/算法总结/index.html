@@ -27,7 +27,7 @@
 <meta property="og:description" content="为机考做准备！">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-12T12:07:57.000Z">
-<meta property="article:modified_time" content="2025-06-01T05:05:37.879Z">
+<meta property="article:modified_time" content="2025-06-04T08:19:50.497Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          772 字
+          1.1k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          7 分钟
+          10 分钟
         
       </span>
     
@@ -323,6 +323,9 @@
 <li>整数右对齐，填充 0  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++">cout &lt;&lt; right &lt;&lt; <span class="hljs-built_in">setfill</span>(<span class="hljs-string">&#x27;0&#x27;</span>) &lt;&lt; <span class="hljs-built_in">setw</span>(<span class="hljs-number">9</span>) &lt;&lt; n;<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
+<h2 id="最大-int-使用">最大 int 使用</h2>
+<p>一般在图中表示两个点之间没有边。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = INT_MAX;<br></code></pre></td></tr></table></figure>
 <h2 id="Switch-写法">Switch 写法</h2>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">switch</span> (n) <span class="hljs-comment">// 注意这个n不能是string，只能是char这样</span><br>&#123;<br>    <span class="hljs-keyword">case</span> n1:<br>        pass;<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> n2:<br>        pass;<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">default</span>:<br>        pass;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="String-类型">String 类型</h2>
@@ -336,6 +339,17 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++">queue&lt;<span class="hljs-type">int</span>&gt; que;<br><span class="hljs-type">int</span> a = <span class="hljs-number">5</span>;<br>que.<span class="hljs-built_in">push</span>(a);<br><span class="hljs-type">int</span> b = que.<span class="hljs-built_in">front</span>(); <span class="hljs-comment">// 返回a</span><br>que.<span class="hljs-built_in">pop</span>();<br></code></pre></td></tr></table></figure>
 <h2 id="链表">链表</h2>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 类定义</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">ListNode</span> &#123;<br>    <span class="hljs-type">int</span> val;<br>    ListNode* next;<br>    <span class="hljs-built_in">ListNode</span>(<span class="hljs-type">int</span> x) : <span class="hljs-built_in">val</span>(x), <span class="hljs-built_in">next</span>(<span class="hljs-literal">nullptr</span>) &#123;&#125;<br>&#125;;<br><br>ListNode* head = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(<span class="hljs-number">-1</span>); <span class="hljs-comment">// 一般来说，链表操作需要一个头节点！</span><br>ListNode* p = head-&gt;next;<br><span class="hljs-comment">// 在p后插入一个节点，值为val1</span><br>ListNode *tmp = p-&gt;next; <span class="hljs-comment">// 保存一开始p后面的节点</span><br>ListNode *new_node = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ListNode</span>(val1);<br>p-&gt;next = new_node;<br>new_node-&gt;next = tmp;<br><br><span class="hljs-comment">// 删除p后面的这个节点</span><br>ListNode* node = p-&gt;next;<br>p-&gt;next = p-&gt;next-&gt;next;<br><span class="hljs-keyword">delete</span> node; <span class="hljs-comment">// 释放内存</span><br></code></pre></td></tr></table></figure>
+<h2 id="图算法">图算法</h2>
+<ol>
+<li>
+<p><code>Dijkstra</code> 和 最小生成树：都是贪心算法，每次寻找<code>dis[i]</code>最小的点，将它放到<code>visited</code>数组中，然后再根据这个变化去更新<code>dis</code>数组。下面是最小生成树示例：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">miniSpanningTree</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> m, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt; &gt;&amp; cost)</span> </span>&#123;<br>    <span class="hljs-comment">// write code here</span><br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">tab</span>(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n + <span class="hljs-number">1</span>, INT_MAX));<br>    <span class="hljs-keyword">for</span>(vector&lt;<span class="hljs-type">int</span>&gt; c : cost)<br>    &#123;<br>        tab[c[<span class="hljs-number">0</span>]][c[<span class="hljs-number">1</span>]] = <span class="hljs-built_in">min</span>(tab[c[<span class="hljs-number">0</span>]][c[<span class="hljs-number">1</span>]], c[<span class="hljs-number">2</span>]);<br>        tab[c[<span class="hljs-number">1</span>]][c[<span class="hljs-number">0</span>]] = tab[c[<span class="hljs-number">0</span>]][c[<span class="hljs-number">1</span>]];<br>    &#125;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">visited</span><span class="hljs-params">(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span></span>; <span class="hljs-comment">// 表示一个点有没有被选中</span><br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dis</span><span class="hljs-params">(n + <span class="hljs-number">1</span>, INT_MAX)</span></span>; <span class="hljs-comment">// dis[i]表示没选到的点离选到的点的距离</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) dis[i] = tab[<span class="hljs-number">1</span>][i]; <span class="hljs-comment">// 假设第一个点是1，赋初值</span><br>    visited[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt; n; j++) <span class="hljs-comment">// 每次找出一个点来，</span><br>    &#123;<br>        <span class="hljs-type">int</span> mini = INT_MAX, idx = <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-comment">// 找到dis[i]最小的点</span><br>        &#123;<br>            <span class="hljs-keyword">if</span>(visited[i] == <span class="hljs-number">1</span>) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 已经访问过</span><br>            <span class="hljs-keyword">if</span>(dis[i] &lt;= mini)<br>            &#123;<br>                mini = dis[i];<br>                idx = i;<br>            &#125;<br>        &#125;<br>        res += mini;<br>        visited[idx] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 标记已经访问</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-comment">// 更新与i相连节点的dis值</span><br>        &#123;<br>            <span class="hljs-keyword">if</span>(tab[idx][i] == I N) <span class="hljs-keyword">continue</span>;<br>            dis[i] = <span class="hljs-built_in">min</span>(dis[i], tab[idx][i]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>floyd</code> 算法：</p>
+</li>
+</ol>
+
                 
               </div>
             
