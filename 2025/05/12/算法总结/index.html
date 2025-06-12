@@ -27,7 +27,7 @@
 <meta property="og:description" content="为机考做准备！">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-12T12:07:57.000Z">
-<meta property="article:modified_time" content="2025-06-08T15:46:02.667Z">
+<meta property="article:modified_time" content="2025-06-11T15:00:22.562Z">
 <meta property="article:author" content="Rayy">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary_large_image">
@@ -240,7 +240,7 @@
         
         
         
-          11 分钟
+          12 分钟
         
       </span>
     
@@ -328,6 +328,8 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = INT_MAX;<br></code></pre></td></tr></table></figure>
 <h2 id="定义-long-long-类型">定义 <code>long long</code> 类型</h2>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">using</span> LL = <span class="hljs-type">long</span> <span class="hljs-type">long</span>; <span class="hljs-comment">// 新方法</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> LL; <span class="hljs-comment">// 兼容性更好</span><br></code></pre></td></tr></table></figure>
+<h2 id="迅速找出最大最小元素">迅速找出最大最小元素</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">vector&lt;<span class="hljs-type">int</span>&gt; a = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;;<br><span class="hljs-type">int</span> maxi = *<span class="hljs-built_in">max_element</span>(a.<span class="hljs-built_in">begin</span>(), a.<span class="hljs-built_in">end</span>());<br><span class="hljs-type">int</span> mini = *<span class="hljs-built_in">min_element</span>(a.<span class="hljs-built_in">begin</span>(), a.<span class="hljs-built_in">end</span>());<br></code></pre></td></tr></table></figure>
 <h2 id="Switch-写法">Switch 写法</h2>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">switch</span> (n) <span class="hljs-comment">// 注意这个n不能是string，只能是char这样</span><br>&#123;<br>    <span class="hljs-keyword">case</span> n1:<br>        pass;<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> n2:<br>        pass;<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">default</span>:<br>        pass;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="String-类型">String 类型</h2>
