@@ -19,24 +19,21 @@
   <meta name="author" content="Rayy">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Report this week (5.30 — 6.5)  Inverse kinematics to control Piper going up and down; Try to reproduce GraspNet-1B.  使用 IK 控制 Piper 机械臂的运动 Use curobo project, needs the urdf and usd of Piper   Python">
+    <meta name="description" content="把一个矩阵的行列反过来：  123a &#x3D; [[1, 2], [3, 4]]b &#x3D; list(zip(*a))# b &#x3D; [[1, 3], [2, 4]]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实验室工作">
-<meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/06/04/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%B7%A5%E4%BD%9C/index.html">
+<meta property="og:title" content="AI_Leetcode">
+<meta property="og:url" content="https://kingdom-of-warriors.github.io/2025/06/19/AI-Leetcode/index.html">
 <meta property="og:site_name" content="kingdom-of-warriors">
-<meta property="og:description" content="Report this week (5.30 — 6.5)  Inverse kinematics to control Piper going up and down; Try to reproduce GraspNet-1B.  使用 IK 控制 Piper 机械臂的运动 Use curobo project, needs the urdf and usd of Piper   Python">
+<meta property="og:description" content="把一个矩阵的行列反过来：  123a &#x3D; [[1, 2], [3, 4]]b &#x3D; list(zip(*a))# b &#x3D; [[1, 3], [2, 4]]">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/2/sphere.png">
-<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/2/exp.png">
-<meta property="article:published_time" content="2025-06-04T15:19:44.000Z">
-<meta property="article:modified_time" content="2025-06-12T11:18:01.561Z">
+<meta property="article:published_time" content="2025-06-19T11:40:22.000Z">
+<meta property="article:modified_time" content="2025-06-21T13:18:51.785Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/Lab/2/sphere.png">
   
   
   
-  <title>实验室工作 - kingdom-of-warriors</title>
+  <title>AI_Leetcode - kingdom-of-warriors</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -47,6 +44,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.16.2/katex.min.css" />
 
 
 
@@ -206,7 +205,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="实验室工作"></span>
+            <span id="subtitle" data-typed-text="AI_Leetcode"></span>
           
         </div>
 
@@ -217,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-06-04 23:19" pubdate>
-          2025年6月4日 晚上
+        <time datetime="2025-06-19 19:40" pubdate>
+          2025年6月19日 晚上
         </time>
       </span>
     
@@ -229,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          174 字
+          25 字
         
       </span>
     
@@ -240,7 +239,7 @@
         
         
         
-          2 分钟
+          1 分钟
         
       </span>
     
@@ -277,45 +276,13 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">实验室工作</h1>
+            <h1 id="seo-header">AI_Leetcode</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Report-this-week-5-30-—-6-5">Report this week (5.30 — 6.5)</h2>
-<ol>
-<li><code>Inverse kinematics</code> to control Piper going up and down;</li>
-<li>Try to reproduce <code>GraspNet-1B</code>.</li>
-</ol>
-<h3 id="使用-IK-控制-Piper-机械臂的运动">使用 IK 控制 Piper 机械臂的运动</h3>
-<p>Use <code>curobo</code> project, needs the <code>urdf</code> and <code>usd</code> of Piper</p>
-<details>
-<summary> Python 代码示例 (IK/FK 控制 Piper 机械臂)</summary>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python">robot_cfg = RobotConfig.from_basic(URDF_PATH, BASE_LINK, EE_LINK)<br>ik_config = IKSolverConfig.load_from_robot_config(<br>    robot_cfg,<br>    position_threshold=<span class="hljs-number">0.05</span>, <span class="hljs-comment"># 位置阈值 (米)</span><br>    rotation_threshold=<span class="hljs-number">0.3</span>, <span class="hljs-comment"># 旋转阈值 (弧度)</span><br>    self_collision_check=<span class="hljs-literal">False</span>,<br>    self_collision_opt=<span class="hljs-literal">False</span>,<br>)<br>ik_solver = IKSolver(ik_config)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">IK</span>(<span class="hljs-params">ee_position: torch.tensor, ee_quat: torch.tensor</span>):<br>    <span class="hljs-comment"># 确保是float32</span><br>    ee_position = ee_position.<span class="hljs-built_in">float</span>()<br>    ee_quat = ee_quat.<span class="hljs-built_in">float</span>()  <br>    goal = Pose(ee_position, ee_quat)<br>    result = ik_solver.solve_batch(goal)<br>    <br>    <span class="hljs-keyword">if</span> torch.count_nonzero(result.success).item() &gt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> result.solution[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>].cpu().numpy()<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">raise</span> RuntimeError(<span class="hljs-string">&quot;IK solution not found.&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">K</span>(<span class="hljs-params">joint_angles: torch.tensor</span>):<br>    joint_angles = joint_angles.<span class="hljs-built_in">float</span>() <span class="hljs-comment"># 确保是float32</span><br>    kin_state = ik_solver.fk(joint_angles)<br>    <span class="hljs-keyword">return</span> kin_state.ee_position.cpu().numpy(), kin_state.ee_quaternion.cpu().numpy()<br></code></pre></td></tr></table></figure>
-</details>
-<h3 id="安装-GraspNet-环境">安装 GraspNet 环境</h3>
-<ul>
-<li><code>python</code> needs 3.8, the only one which can compile drivers successfully, but <code>open3d</code> errors (need <code>glibc 2.18</code>)</li>
-<li>Compile <code>open3d</code> by source code ot install by <code>conda</code>(conda cannot do this)?(need <code>clang</code> but I do not have <code>SUDO</code>)</li>
-<li><code>python3.7</code>, cannot compile other cuda drivers.</li>
-</ul>
-<h2 id="Report-this-week-6-6-–-6-12">Report this week (6.6 – 6.12)</h2>
-<h3 id="Curobo-in-server">Curobo in server</h3>
-<ul>
-<li>load pytorch by <code>pip</code>, <code>conda</code> gets <code>glibc</code> error,</li>
-<li>need to run <code>pip install scikit_build_core</code> after load pytorch,</li>
-<li><code>module load cuda/12.1 gcc/9.3.0</code> before <code>pip install -e . --no-build-isolation  </code></li>
-<li>暂时无法解决</li>
-</ul>
-<h3 id="Configure-Curobo-of-Piper">Configure Curobo of Piper</h3>
-<ul>
-<li>urdf and usd,</li>
-<li>use Lula Robot to create sphere,<br>
-<img src="/img/Lab/2/sphere.png" srcset="/img/loading.gif" lazyload alt=""></li>
-<li>some configure need to change,</li>
-<li>current result:<br>
-<img src="/img/Lab/2/exp.png" srcset="/img/loading.gif" lazyload alt=""></li>
-<li>possible result: FK different from hands and gripper.</li>
+                <ul>
+<li>把一个矩阵的行列反过来：  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">a = [[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]]<br>b = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">zip</span>(*a))<br><span class="hljs-comment"># b = [[1, 3], [2, 4]]</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 
                 
@@ -334,8 +301,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>实验室工作</div>
-      <div>https://kingdom-of-warriors.github.io/2025/06/04/实验室工作/</div>
+      <div>AI_Leetcode</div>
+      <div>https://kingdom-of-warriors.github.io/2025/06/19/AI-Leetcode/</div>
     </div>
     <div class="license-meta">
       
@@ -347,7 +314,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年6月4日</div>
+          <div>2025年6月19日</div>
         </div>
       
       
@@ -379,18 +346,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/19/AI-Leetcode/" title="AI_Leetcode">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">AI_Leetcode</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/12/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/" title="算法总结">
-                        <span class="hidden-mobile">算法总结</span>
+                      <a href="/2025/06/04/%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%B7%A5%E4%BD%9C/" title="实验室工作">
+                        <span class="hidden-mobile">实验室工作</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -413,7 +374,7 @@
         var options = Object.assign(
           {"clientID":"Ov23liz6eV0VasfLM4z1","clientSecret":"65c93e1b98781b2517f0ae355361bb087488e8f7","repo":"kingdom-of-warriors.github.io","owner":"kingdom-of-warriors","admin":["kingdom-of-warriors"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
           {
-            id: 'd0c9ac7a727a386bd38c136283eb53c1'
+            id: '845fed80d065ccaeaa2ba3993398e99e'
           }
         )
         var gitalk = new Gitalk(options);
@@ -474,6 +435,11 @@
 
 
   
+
+
+  
+  
+
 
 
 
