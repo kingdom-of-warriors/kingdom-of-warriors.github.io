@@ -31,8 +31,9 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/3/vlm_structure.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/3/vla_structure.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/3/loss.png">
+<meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/4/train.png">
 <meta property="article:published_time" content="2025-06-04T15:19:44.000Z">
-<meta property="article:modified_time" content="2025-07-10T09:23:59.701Z">
+<meta property="article:modified_time" content="2025-07-17T11:21:41.422Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/Lab/2/sphere.png">
@@ -234,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.3k 字
         
       </span>
     
@@ -482,6 +483,15 @@ The pretrained model has not been evaluated yet, given the huge loss gap compare
 <ol>
 <li><strong>模型格式问题</strong>：发现 <code>minimind-v</code> 预训练模型似乎没有可用的 <code>.pth</code> 格式权重。加载官方提供的 <code>.pth</code> 文件会导致输出乱码，只有 <code>Hugging Face</code> 格式的 <code>model.bin</code> 则可以正常使用。这是否意味着我们还是需要再进行预训练？</li>
 <li><strong>语言能力限制</strong>：当前模型主要处理中文，这是否会对 <code>VLA</code> (Vision-Language-Action) 模型的性能，产生负面影响？</li>
+</ol>
+<p><br><br></p>
+<h2 id="Report-this-week-7-10-–-7-17">Report this week (7.10 – 7.17)</h2>
+<ol>
+<li>成功让训练代码跑起来，但是结果还没有进行验证，也就是并没有训练到底，有可能训练代码存在问题；<br>
+<img src="/img/Lab/4/train.png" srcset="/img/loading.gif" lazyload alt="train"></li>
+<li>全量微调正好需要吃掉24G显存</li>
+<li>下周先训练一下这个模型，并且查看一下代码是否有问题，写一下 evaluation 的脚本</li>
+<li>感觉可以在训练时给长任务分配大一点权重。</li>
 </ol>
 
                 
