@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/3/loss.png">
 <meta property="og:image" content="https://kingdom-of-warriors.github.io/img/Lab/4/train.png">
 <meta property="article:published_time" content="2025-06-04T15:19:44.000Z">
-<meta property="article:modified_time" content="2025-07-17T11:21:41.422Z">
+<meta property="article:modified_time" content="2025-07-24T09:56:42.256Z">
 <meta property="article:author" content="Rayy">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://kingdom-of-warriors.github.io/img/Lab/2/sphere.png">
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          2k 字
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          11 分钟
+          17 分钟
         
       </span>
     
@@ -493,6 +493,76 @@ The pretrained model has not been evaluated yet, given the huge loss gap compare
 <li>下周先训练一下这个模型，并且查看一下代码是否有问题，写一下 evaluation 的脚本</li>
 <li>感觉可以在训练时给长任务分配大一点权重。</li>
 </ol>
+<p><br><br></p>
+<h2 id="Report-this-week-7-17-–-7-24">Report this week (7.17 – 7.24)</h2>
+<ol>
+<li>训练代码中增加动作正确率检测环节；</li>
+<li>写好Libero的evaluation代码，但是还没有检查细节；</li>
+<li>对数据集的处理进行了一些改动；</li>
+</ol>
+<h3 id="Training-Scripts">Training Scripts</h3>
+<p>训练代码中增加动作检测环节：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_action_metrics</span>(<span class="hljs-params">outputs, batch, action_tokenizer: ActionTokenizer, num_vision_patches=<span class="hljs-number">196</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算动作预测准确率</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    action_preds = outputs[<span class="hljs-string">&#x27;logits&#x27;</span>][:, <span class="hljs-number">2</span> * num_vision_patches + <span class="hljs-number">1</span>:, ].argmax(dim=<span class="hljs-number">2</span>)<br>    action_gt = batch[<span class="hljs-string">&#x27;input_ids&#x27;</span>][:, <span class="hljs-number">1</span>:].to(action_preds.device)<br>    <br>    <span class="hljs-comment"># 创建mask来标识真正的动作token位置</span><br>    action_token_ids = <span class="hljs-built_in">set</span>(action_tokenizer.action_to_token_id.values())<br>    mask = torch.zeros_like(action_gt, dtype=torch.<span class="hljs-built_in">bool</span>)<br>    <span class="hljs-keyword">for</span> token_id <span class="hljs-keyword">in</span> action_token_ids:<br>        mask |= (action_gt == token_id)<br>    <span class="hljs-keyword">if</span> mask.<span class="hljs-built_in">sum</span>() == <span class="hljs-number">0</span>: <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span><br>    <br>    <span class="hljs-comment"># 计算准确率</span><br>    correct_preds = (action_preds == action_gt) &amp; mask<br>    action_accuracy = correct_preds.<span class="hljs-built_in">sum</span>().<span class="hljs-built_in">float</span>() / mask.<span class="hljs-built_in">sum</span>().<span class="hljs-built_in">float</span>()<br>    <br>    <span class="hljs-keyword">return</span> action_accuracy<br></code></pre></td></tr></table></figure>
+<p>目前动作输出正确率如下，不知道结果是否正常。</p>
+<table>
+<thead>
+<tr>
+<th>训练轮数</th>
+<th>训练集Loss</th>
+<th>测试集Loss</th>
+<th>训练集动作准确率</th>
+<th>测试集动作准确率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.7787</mn></mrow><annotation encoding="application/x-tex">0.7787</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.7787</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.8006</mn></mrow><annotation encoding="application/x-tex">0.8006</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.8006</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1609</mn></mrow><annotation encoding="application/x-tex">0.1609</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.1609</span></span></span></span></td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1416</mn></mrow><annotation encoding="application/x-tex">0.1416</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.1416</span></span></span></span></td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.6424</td>
+<td>0.8550</td>
+<td>0.1272</td>
+<td>0.1165</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.5552</td>
+<td>0.9446</td>
+<td>0.1001</td>
+<td>0.1016</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.4880</td>
+<td>1.0350</td>
+<td>0.0862</td>
+<td>0.0949</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.4332</td>
+<td>1.1186</td>
+<td>0.0785</td>
+<td>0.0793</td>
+</tr>
+</tbody>
+</table>
+<h3 id="LIBERO-Evaluation">LIBERO Evaluation</h3>
+<p>这个代码已经写好，现在正在检查细节是否有问题，预计下周可以测试一下训练出来的模型是否有效果。</p>
+<h3 id="Dataset">Dataset</h3>
+<ul>
+<li>对main image 和wrist image使用不同的归一化代码<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.stats = load_stats(<span class="hljs-variable language_">self</span>.stats_path)<br>      <span class="hljs-variable language_">self</span>.main_tfs = transforms.Compose([<br>          transforms.Resize((<span class="hljs-number">224</span>, <span class="hljs-number">224</span>)),<br>          transforms.ToTensor(),<br>          transforms.Normalize(<br>              mean=<span class="hljs-variable language_">self</span>.stats[<span class="hljs-string">&#x27;image&#x27;</span>][<span class="hljs-string">&#x27;mean&#x27;</span>],      <span class="hljs-comment"># [0.485, 0.456, 0.406]</span><br>              std=<span class="hljs-variable language_">self</span>.stats[<span class="hljs-string">&#x27;image&#x27;</span>][<span class="hljs-string">&#x27;std&#x27;</span>]         <span class="hljs-comment"># [0.229, 0.224, 0.225]</span><br>          )<br>      ])<br>      <span class="hljs-variable language_">self</span>.wrist_tfs = transforms.Compose([<br>          transforms.Resize((<span class="hljs-number">224</span>, <span class="hljs-number">224</span>)),<br>          transforms.ToTensor(),<br>          transforms.Normalize(<br>              mean=<span class="hljs-variable language_">self</span>.stats[<span class="hljs-string">&#x27;wrist_image&#x27;</span>][<span class="hljs-string">&#x27;mean&#x27;</span>], <span class="hljs-comment"># [0.512, 0.398, 0.321]</span><br>              std=<span class="hljs-variable language_">self</span>.stats[<span class="hljs-string">&#x27;wrist_image&#x27;</span>][<span class="hljs-string">&#x27;std&#x27;</span>]    <span class="hljs-comment"># [0.201, 0.189, 0.243]</span><br>          )<br>      ])<br></code></pre></td></tr></table></figure>
+</li>
+<li>由于我认为动作准确率不高，所以对action数据，根据openvla论文中说的，首先收集好了每个动作维度的1st和99th中位数，将其放入stats.json中，接下来以它们为min action和max action，这样就可以减少异常动作的影响。（这个因为有7维动作，似乎需要7个min和max，但openvla中好像没有这个考虑，具体代码我还在实现中。）<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_and_save_action_quantiles</span>(<span class="hljs-params">self, quantiles=[<span class="hljs-number">1</span>, <span class="hljs-number">99</span>]</span>):<br>      <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">      计算动作数据的分位数并保存到stats.json文件</span><br><span class="hljs-string">      quantiles: 要计算的分位数列表，例如 [1, 99]</span><br><span class="hljs-string">      stats_path: stats.json文件路径</span><br><span class="hljs-string">      &quot;&quot;&quot;</span><br>      stats_path = <span class="hljs-variable language_">self</span>.stats_path<br>      total_samples = <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.dataset)<br>      all_actions = []<br>      <br>      <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> tqdm(<span class="hljs-built_in">range</span>(total_samples), desc=<span class="hljs-string">&quot;Loading actions&quot;</span>):<br>          sample = <span class="hljs-variable language_">self</span>.dataset[i]<br>          actions = np.array(sample[<span class="hljs-string">&#x27;actions&#x27;</span>])<br>          all_actions.append(actions)<br>      <br>      all_actions = np.array(all_actions)<br>      <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Action data shape: <span class="hljs-subst">&#123;all_actions.shape&#125;</span>&quot;</span>)<br>      <br>      <span class="hljs-comment"># 计算每个维度的分位数</span><br>      action_quantiles = &#123;&#125;<br>      <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> quantiles: <br>          action_quantiles[<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;q&#125;</span>th_percentile&#x27;</span>] = np.percentile(all_actions, q, axis=<span class="hljs-number">0</span>).tolist()<br>      <br>      <span class="hljs-comment"># 读取现有的stats.json</span><br>      <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(stats_path, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>          stats_data = json.load(f)<br><br>      <span class="hljs-comment"># 更新actions部分</span><br>      <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;actions&#x27;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> stats_data: stats_data[<span class="hljs-string">&#x27;actions&#x27;</span>] = &#123;&#125;<br>      stats_data[<span class="hljs-string">&#x27;actions&#x27;</span>].update(action_quantiles)<br>      <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(stats_path, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>          json.dump(stats_data, f, indent=<span class="hljs-number">4</span>, ensure_ascii=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Problems-2">Problems</h3>
+<p>我觉得可以增加一些框架，对state进行处理。</p>
 
                 
               </div>
